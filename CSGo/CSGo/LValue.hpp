@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "Expression.hpp"
 #include "Assignment.hpp"

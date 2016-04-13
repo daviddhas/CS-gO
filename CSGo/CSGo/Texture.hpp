@@ -20,12 +20,17 @@ namespace csgo
             : v(v)
         { }
 
+        int opengltype() override
+        {
+            return 0;
+        }
+
     private:
         std::vector <T> v;
     };
 
     template <typename T>
-    class WriteTexture : public Texture<T>, public Output<std::vector<T>>
+    class WriteTexture : public Texture<T>, public Output
     {
     public:
         WriteTexture(int size)
@@ -40,14 +45,19 @@ namespace csgo
             return output;
         }
 
-        void set(const std::vector<T>& val)
-        {
-            output = val;
-        }
-
         Assignment operator=(const Expression& rhs)
         {
             return LValue::operator=(rhs);
+        }
+
+        void set(const std::vector<int>& val)
+        {
+            output = T::fromBytes(val);
+        }
+
+        int opengltype() override
+        {
+            return 1;
         }
 
     private:

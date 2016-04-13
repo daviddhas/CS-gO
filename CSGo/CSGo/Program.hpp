@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Input.hpp"
-#include "LValue.hpp"
+#include "Output.hpp"
+#include "UnfinishedProgramException.hpp"
+
 #include <vector>
 #include <algorithm>
 
@@ -10,34 +12,48 @@ namespace csgo
     class Program
     {
     public:
-        Program(std::initializer_list<Input> inputs, std::initializer_list<LValue> outputs)
+
+        Program(std::initializer_list<Input> inputs, std::initializer_list<Output*> outputs)
         {
-            toPointers<Input>(inputs, _inputs);
-            toPointers<LValue>(outputs, _outputs);
+            for (const Input& i : inputs)
+                _inputs.push_back(&i);
+
+            for (Output *o : outputs)
+                _outputs.push_back(o);
+
+        }
+
+        void set(std::initializer_list<Assignment> assignments)
+        {
+            for (const Assignment& a : assignments)
+                _assignments.push_back(a);
+        }
+
+        void finish()
+        {
+            _finished = true;
+            _program = makeProgram();
         }
 
         void run()
         {
+            if (_finished);
+            else
+                throw UnfinishedProgramException("Must call finish before running");
         }
 
     private:
-        std::vector<Input*> _inputs;
+        bool _finished = false;
+        std::string _program;
+
+        std::vector<Assignment> _assignments;
+
+        std::vector<const Input*> _inputs;
         std::vector<LValue*> _outputs;
 
         std::string makeProgram()
         {
             return "";
-        }
-
-        void fillOutputs()
-        {
-        }
-
-        template<typename T>
-        static void toPointers(const std::initializer_list<T>& in, std::vector<T*>& out)
-        {
-            out.resize(in.size());
-            std::transform(in.begin(), in.end(), out.begin(), [](T i) { return &i; });
         }
     };
 }

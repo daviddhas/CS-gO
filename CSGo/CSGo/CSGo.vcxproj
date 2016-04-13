@@ -28,6 +28,7 @@
     <ClInclude Include="Primitives.hpp" />
     <ClInclude Include="Program.hpp" />
     <ClInclude Include="Texture.hpp" />
+    <ClInclude Include="UnfinishedProgramException.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LValue.hpp" />

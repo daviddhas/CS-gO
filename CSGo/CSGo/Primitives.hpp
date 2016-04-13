@@ -2,6 +2,8 @@
 
 #include "LValue.hpp"
 
+#include <algorithm>
+
 namespace csgo
 {
     class Float : public LValue
@@ -19,6 +21,14 @@ namespace csgo
         {
             return f;
         }
+
+        static std::vector<Float> fromBytes(const std::vector<int>& data)
+        {
+            std::vector<Float> fs(data.size());
+            std::transform(data.begin(), data.end(), fs.begin(), [](int i) { return (float)i; });
+            return fs;
+        }
+
 
     private:
         float f;
