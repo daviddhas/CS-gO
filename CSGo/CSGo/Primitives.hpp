@@ -22,13 +22,17 @@ namespace csgo
             return f;
         }
 
+        std::string toCode() const override
+        {
+            return std::to_string(f);
+        }
+
         static std::vector<Float> fromBytes(const std::vector<int>& data)
         {
             std::vector<Float> fs(data.size());
             std::transform(data.begin(), data.end(), fs.begin(), [](int i) { return (float)i; });
             return fs;
         }
-
 
     private:
         float f;

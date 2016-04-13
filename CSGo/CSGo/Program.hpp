@@ -1,5 +1,7 @@
 #pragma once
 
+#include <GL/glew.h>
+
 #include "ProgramExceptions.hpp"
 #include "Compiler.hpp"
 
@@ -12,25 +14,36 @@ namespace csgo
     {
     public:
 
-        /* Creates a CS Go program with the given inputs and outputs
+        // TODO: appropriately infer number of work groups
+        Program(std::initializer_list<std::shared_ptr<Input>> inputs, std::initializer_list<std::shared_ptr<Output>> outputs)
+            : Program(inputs, outputs, 16, 16, 1)
+        { }
+
+        /* Creates a CS Go program with the given inputs, outputs,
+         * and work group dimensions
         */
-        Program(std::initializer_list<Input> inputs, std::initializer_list<Output*> outputs)
+        Program(std::initializer_list<std::shared_ptr<Input>> inputs, std::initializer_list<std::shared_ptr<Output>> outputs,
+                int x, int y, int z)
+            : _inputs({ inputs })
+            , _outputs({ outputs })
+            , _x(x)
+            , _y(y)
+            , _z(z)
         {
-            for (const Input& i : inputs)
-                _inputs.push_back(&i);
 
-            for (Output *o : outputs)
-                _outputs.push_back(o);
-
+            GLint major, minor;
+            glGetIntegerv(GL_MAJOR_VERSION, &major);
+            glGetIntegerv(GL_MAJOR_VERSION, &minor);
+            if (major < 4 || minor < 3)
+                throw ComputeShaderSupportException();
         }
 
         /* Adds the list of assignments to the prorgam
         */
-        void add(std::initializer_list<Assignment> assignments)
+        void set(std::shared_ptr<LValue> lhs, std::shared_ptr<Expression> rhs)
         {
             if (!_finished)
-                for (const Assignment& a : assignments)
-                    _assignments.push_back(a);
+                _assignments.push_back(Assignment(lhs, rhs));
             else
                 throw FinishedProgramException();
         }
@@ -41,7 +54,7 @@ namespace csgo
         {
             if (!_finished)
             {
-                Compiler::compile(_assignments, _inputs, _outputs);
+                Compiler::compile(_assignments, _inputs, _outputs, _x, _y, _z);
                 _finished = true;
             }
         }
@@ -57,6 +70,8 @@ namespace csgo
         }
 
     private:
+        // work group dimensions
+        int _x, _y, _z;
 
         // has the program been compiled
         bool _finished = false;
@@ -65,7 +80,7 @@ namespace csgo
         std::vector<Assignment> _assignments;
 
         // pointers to inputs and outputs
-        std::vector<const Input*> _inputs;
-        std::vector<Output*> _outputs;
+        std::vector<std::shared_ptr<Input>> _inputs;
+        std::vector<std::shared_ptr<Output>> _outputs;
     };
 }

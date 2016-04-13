@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Variable.hpp"
+#include <string>
+
 namespace csgo
 {
-    class Input
+    class Input : public Variable
     {
-        // TODO: make this return an OpenGL type
-        virtual int opengltype() = 0;
     };
 }

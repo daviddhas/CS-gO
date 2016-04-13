@@ -15,10 +15,11 @@ namespace csgo
          * internal representation
         */
         static void compile(const std::vector<Assignment>& assignments,
-            const std::vector<const Input*> inputs,
-            const std::vector<Output*> outputs)
+            const std::vector<std::shared_ptr<Input>> inputs,
+            const std::vector<std::shared_ptr<Output>> outputs,
+            int x, int y, int z)
         {
-            std::string code = CodeGenerator::generateCode(assignments, inputs, outputs);
+            std::string code = CodeGenerator::generateCode(assignments, inputs, outputs, x, y, z);
             // TODO: finish this @JeanHeyd
         }
     };
