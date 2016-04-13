@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Input.hpp"
-#include "Output.hpp"
 #include "ProgramExceptions.hpp"
+#include "Compiler.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -34,25 +33,28 @@ namespace csgo
 
         void finish()
         {
-            _finished = true;
-            _program = makeProgram();
+            if (!_finished)
+            {
+                Compiler::compile(_assignments, _inputs, _outputs);
+                _finished = true;
+            }
         }
 
         void run()
         {
-            if (_finished);
+            if (_finished)
+                ;
             else
                 throw UnfinishedProgramException();
         }
 
     private:
         bool _finished = false;
-        std::string _program;
 
         std::vector<Assignment> _assignments;
 
         std::vector<const Input*> _inputs;
-        std::vector<LValue*> _outputs;
+        std::vector<Output*> _outputs;
 
         std::string makeProgram()
         {

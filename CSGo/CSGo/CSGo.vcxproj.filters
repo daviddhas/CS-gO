@@ -42,7 +42,10 @@
     <ClInclude Include="Output.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="UnfinishedProgramException.hpp">
+    <ClInclude Include="ProgramExceptions.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

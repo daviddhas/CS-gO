@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Assignment.hpp" />
     <ClInclude Include="BinaryOperator.hpp" />
+    <ClInclude Include="Compiler.hpp" />
     <ClInclude Include="csgo.hpp" />
     <ClInclude Include="Expression.hpp" />
     <ClInclude Include="Input.hpp" />
@@ -28,7 +29,7 @@
     <ClInclude Include="Primitives.hpp" />
     <ClInclude Include="Program.hpp" />
     <ClInclude Include="Texture.hpp" />
-    <ClInclude Include="UnfinishedProgramException.hpp" />
+    <ClInclude Include="ProgramExceptions.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LValue.hpp" />
