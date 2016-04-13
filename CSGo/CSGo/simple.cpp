@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     csgo::Program p({ in1, in2 }, { &out });
 
-    p.set({
+    p.add({
         out = (in1 + in2) + in1,
     });
 

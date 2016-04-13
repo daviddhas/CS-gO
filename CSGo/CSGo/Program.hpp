@@ -2,7 +2,7 @@
 
 #include "Input.hpp"
 #include "Output.hpp"
-#include "UnfinishedProgramException.hpp"
+#include "ProgramExceptions.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -23,10 +23,13 @@ namespace csgo
 
         }
 
-        void set(std::initializer_list<Assignment> assignments)
+        void add(std::initializer_list<Assignment> assignments)
         {
-            for (const Assignment& a : assignments)
-                _assignments.push_back(a);
+            if (!_finished)
+                for (const Assignment& a : assignments)
+                    _assignments.push_back(a);
+            else
+                throw FinishedProgramException();
         }
 
         void finish()
@@ -39,7 +42,7 @@ namespace csgo
         {
             if (_finished);
             else
-                throw UnfinishedProgramException("Must call finish before running");
+                throw UnfinishedProgramException();
         }
 
     private:
