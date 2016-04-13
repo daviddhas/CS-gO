@@ -8,13 +8,11 @@
 
 namespace csgo
 {
-    class Program
+    class program
     {
     public:
 
-        /* Creates a CS Go program with the given inputs and outputs
-        */
-        Program(std::initializer_list<Input> inputs, std::initializer_list<Output*> outputs)
+        program(std::string code, program_ast& ast)
         {
             for (const Input& i : inputs)
                 _inputs.push_back(&i);
@@ -41,7 +39,7 @@ namespace csgo
         {
             if (!_finished)
             {
-                Compiler::compile(_assignments, _inputs, _outputs);
+                compiler::compile(_assignments, _inputs, _outputs);
                 _finished = true;
             }
         }

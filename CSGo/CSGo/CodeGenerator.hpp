@@ -2,6 +2,7 @@
 
 #include "Input.hpp"
 #include "Output.hpp"
+#include "ast.hpp"
 #include <string>
 #include <vector>
 
@@ -11,11 +12,11 @@ namespace csgo
     {
     public:
 
+	    CodeGenerator()
+
         /* Generates a string of GLSL code from the CS Go internal representation
         */
-        static std::string generateCode(const std::vector<Assignment>& assignments,
-            const std::vector<const Input*> inputs,
-            const std::vector<Output*> outputs)
+        static std::string generateCode(abstract_syntax_tree& ast)
         {
             // TODO: finish this @Jett
             std::string code;
