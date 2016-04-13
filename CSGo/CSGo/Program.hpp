@@ -34,10 +34,10 @@ namespace csgo
         }
 
         template<typename T>
-        static void toPointers(const std::initializer_list<T>& in, const std::vector<T*>& out)
+        static void toPointers(const std::initializer_list<T>& in, std::vector<T*>& out)
         {
             out.resize(in.size());
-            std::transform(in.begin(), inp.end(), out.begin(), [](T i) { return &i; });
+            std::transform(in.begin(), in.end(), out.begin(), [](T i) { return &i; });
         }
     };
 }

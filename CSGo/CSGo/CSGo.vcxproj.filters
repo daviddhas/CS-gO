@@ -33,6 +33,15 @@
     <ClInclude Include="BinaryOperator.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Program.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Output.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="simple.cpp">

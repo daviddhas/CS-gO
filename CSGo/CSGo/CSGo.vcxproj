@@ -23,7 +23,10 @@
     <ClInclude Include="BinaryOperator.hpp" />
     <ClInclude Include="csgo.hpp" />
     <ClInclude Include="Expression.hpp" />
+    <ClInclude Include="Input.hpp" />
+    <ClInclude Include="Output.hpp" />
     <ClInclude Include="Primitives.hpp" />
+    <ClInclude Include="Program.hpp" />
     <ClInclude Include="Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
