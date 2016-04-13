@@ -42,12 +42,45 @@
     <ClInclude Include="Output.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="gl\gl_4_5.core.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="platform_gl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics_device.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor_glfw.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_source.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_stage.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gl_detail\gl_enums.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enums.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="error.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="simple.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LValue.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl\gl_4_5.core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
