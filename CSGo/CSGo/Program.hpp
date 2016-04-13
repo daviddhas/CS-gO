@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Input.hpp"
-#include "LValue.hpp"
+#include "ProgramExceptions.hpp"
+#include "Compiler.hpp"
+
 #include <vector>
 #include <algorithm>
 
@@ -10,34 +11,61 @@ namespace csgo
     class Program
     {
     public:
-        Program(std::initializer_list<Input> inputs, std::initializer_list<LValue> outputs)
+
+        /* Creates a CS Go program with the given inputs and outputs
+        */
+        Program(std::initializer_list<Input> inputs, std::initializer_list<Output*> outputs)
         {
-            toPointers<Input>(inputs, _inputs);
-            toPointers<LValue>(outputs, _outputs);
+            for (const Input& i : inputs)
+                _inputs.push_back(&i);
+
+            for (Output *o : outputs)
+                _outputs.push_back(o);
+
         }
 
+        /* Adds the list of assignments to the prorgam
+        */
+        void add(std::initializer_list<Assignment> assignments)
+        {
+            if (!_finished)
+                for (const Assignment& a : assignments)
+                    _assignments.push_back(a);
+            else
+                throw FinishedProgramException();
+        }
+
+        /* Compiles the program
+        */
+        void finish()
+        {
+            if (!_finished)
+            {
+                Compiler::compile(_assignments, _inputs, _outputs);
+                _finished = true;
+            }
+        }
+
+        /* Runs the compiled program
+        */
         void run()
         {
+            if (_finished)
+                ;
+            else
+                throw UnfinishedProgramException();
         }
 
     private:
-        std::vector<Input*> _inputs;
-        std::vector<LValue*> _outputs;
 
-        std::string makeProgram()
-        {
-            return "";
-        }
+        // has the program been compiled
+        bool _finished = false;
 
-        void fillOutputs()
-        {
-        }
+        // assignments stored so far
+        std::vector<Assignment> _assignments;
 
-        template<typename T>
-        static void toPointers(const std::initializer_list<T>& in, std::vector<T*>& out)
-        {
-            out.resize(in.size());
-            std::transform(in.begin(), in.end(), out.begin(), [](T i) { return &i; });
-        }
+        // pointers to inputs and outputs
+        std::vector<const Input*> _inputs;
+        std::vector<Output*> _outputs;
     };
 }

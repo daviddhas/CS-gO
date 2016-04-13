@@ -7,11 +7,15 @@
 
 namespace csgo
 {
+    /* A templated container of 1, 2, or 3 dimensions
+    */
     template <typename T>
     class Texture : public Expression
     {
     };
 
+    /* A texture that can be used as input to a program
+    */
     template <typename T>
     class ReadTexture : public Texture<T>, public Input
     {
@@ -20,12 +24,19 @@ namespace csgo
             : v(v)
         { }
 
+        int opengltype() override
+        {
+            return 0;
+        }
+
     private:
         std::vector <T> v;
     };
 
+    /* A texture that can be used as output to a program
+    */
     template <typename T>
-    class WriteTexture : public Texture<T>, public Output<std::vector<T>>
+    class WriteTexture : public Texture<T>, public Output
     {
     public:
         WriteTexture(int size)
@@ -40,14 +51,19 @@ namespace csgo
             return output;
         }
 
-        void set(const std::vector<T>& val)
-        {
-            output = val;
-        }
-
         Assignment operator=(const Expression& rhs)
         {
             return LValue::operator=(rhs);
+        }
+
+        void set(const std::vector<int>& val)
+        {
+            output = T::fromBytes(val);
+        }
+
+        int opengltype() override
+        {
+            return 1;
         }
 
     private:

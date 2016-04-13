@@ -4,11 +4,11 @@
 
 namespace csgo
 {
-    template<typename T>
     class Output : public LValue
     {
     public:
-        virtual T read() = 0;
-        virtual void set(const T& val) = 0;
+        // TODO: make these OpenGL types
+        virtual void set(const std::vector<int>& data) = 0;
+        virtual int opengltype() = 0;
     };
 }

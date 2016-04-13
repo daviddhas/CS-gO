@@ -37,7 +37,7 @@
     <ClInclude Include="shader_source.hpp" />
     <ClInclude Include="shader_stage.hpp" />
     <ClInclude Include="Texture.hpp" />
-    <ClInclude Include="vendor_glfw.hpp" />
+    <ClInclude Include="ProgramExceptions.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gl\gl_4_5.core.cpp" />
@@ -105,22 +105,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../vendor/glfw/include</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../vendor/glfw/include</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
