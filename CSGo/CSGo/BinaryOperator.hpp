@@ -24,14 +24,18 @@ namespace csgo
             std::string opString;
             switch (op)
             {
-            case PLUS:
+            case Op::PLUS:
                 opString = "+";
-            case MINUS:
+                break;
+            case Op::MINUS:
                 opString = "-";
-            case TIMES:
+                break;
+            case Op::TIMES:
                 opString = "*";
+                break;
             default:
                 opString = "/";
+                break;
             }
 
             return "(" + lhs->toCode() + opString + rhs->toCode() + ")";
