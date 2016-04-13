@@ -29,4 +29,17 @@ namespace csgo
             return runtime_error::what();
         }
     };
+
+    class ComputeShaderSupportException : public std::runtime_error
+    {
+    public:
+        ComputeShaderSupportException()
+            : runtime_error("Card doesn't support GL_ARB_shader_language420pack")
+        { }
+
+        virtual const char* what() const throw()
+        {
+            return runtime_error::what();
+        }
+    };
 }

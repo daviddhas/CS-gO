@@ -10,23 +10,28 @@ namespace csgo
     /* A templated container of 1, 2, or 3 dimensions
     */
     template <typename T>
-    class Texture : public Expression
+    class Texture
     {
     };
 
     /* A texture that can be used as input to a program
     */
     template <typename T>
-    class ReadTexture : public Texture<T>, public Input
+    class ReadTexture : public Texture<T>, public Input, public Expression
     {
     public:
         ReadTexture(const std::vector<T>& v)
             : v(v)
         { }
 
-        int opengltype() override
+        std::string getType() const override
         {
-            return 0;
+            return "image2D";
+        }
+
+        std::string toCode() const override
+        {
+            return Input::name + "[ivec2(gl_GlobalInvocationID.xy)]";
         }
 
     private:
@@ -56,14 +61,19 @@ namespace csgo
             return LValue::operator=(rhs);
         }
 
+        std::string toCode() const override
+        {
+            return name + "[ivec2(gl_GlobalInvocationID.xy)]";
+        }
+
         void set(const std::vector<int>& val)
         {
             output = T::fromBytes(val);
         }
 
-        int opengltype() override
+        std::string getType() const override
         {
-            return 1;
+            return "image2D";
         }
 
     private:

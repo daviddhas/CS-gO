@@ -13,35 +13,42 @@ namespace csgo
     class BinaryOperator : public Expression
     {
     public:
-        BinaryOperator(const Expression& lhs, const Expression& rhs, Op op)
+        BinaryOperator(std::shared_ptr<Expression> lhs, std::shared_ptr<Expression> rhs, Op op)
             : lhs(lhs)
             , rhs(rhs)
             , op(op)
         { }
 
+        std::string toCode() const override
+        {
+            std::string opString;
+            switch (op)
+            {
+            case Op::PLUS:
+                opString = "+";
+                break;
+            case Op::MINUS:
+                opString = "-";
+                break;
+            case Op::TIMES:
+                opString = "*";
+                break;
+            default:
+                opString = "/";
+                break;
+            }
+
+            return "(" + lhs->toCode() + opString + rhs->toCode() + ")";
+        }
+
     private:
-        Expression lhs;
-        Expression rhs;
+        std::shared_ptr<Expression> lhs;
+        std::shared_ptr<Expression> rhs;
         Op op;
     };
 
-    BinaryOperator operator+(const Expression& lhs, const Expression& rhs)
+    std::shared_ptr<BinaryOperator> operator+(std::shared_ptr<Expression> lhs, std::shared_ptr<Expression> rhs)
     {
-        return BinaryOperator(lhs, rhs, Op::PLUS);
-    }
-
-    BinaryOperator operator-(const Expression& lhs, const Expression& rhs)
-    {
-        return BinaryOperator(lhs, rhs, Op::MINUS);
-    }
-
-    BinaryOperator operator*(const Expression& lhs, const Expression& rhs)
-    {
-        return BinaryOperator(lhs, rhs, Op::TIMES);
-    }
-
-    BinaryOperator operator/(const Expression& lhs, const Expression& rhs)
-    {
-        return BinaryOperator(lhs, rhs, Op::DIVIDE);
+        return std::make_shared<BinaryOperator>(lhs, rhs, Op::PLUS);
     }
 }

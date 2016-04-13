@@ -9,13 +9,19 @@ namespace csgo
     class Assignment : public Expression
     {
     public:
-        Assignment(const Expression& lhs, const Expression& rhs)
+        Assignment(std::shared_ptr<Expression> lhs, std::shared_ptr<Expression> rhs)
             : lhs(lhs)
             , rhs(rhs)
         { }
 
+        std::string toCode() const override
+        {
+            return lhs->toCode() + " = " + rhs->toCode();
+        }
+
     private:
-        Expression lhs;
-        Expression rhs;
+        std::shared_ptr<Expression> lhs;
+        std::shared_ptr<Expression> rhs;
+        std::unique_ptr<Expression> rhs_managed;
     };
 }

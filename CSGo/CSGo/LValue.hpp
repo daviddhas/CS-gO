@@ -13,9 +13,9 @@ namespace csgo
     class LValue : public Expression
     {
     public:
-        Assignment operator=(const Expression& rhs)
+        static std::shared_ptr<Assignment> assign(std::shared_ptr<LValue> lhs, std::shared_ptr<Expression> rhs)
         {
-            return Assignment(*this, rhs);
+            return std::make_shared<Assignment>(lhs, rhs);
         }
     };
 }

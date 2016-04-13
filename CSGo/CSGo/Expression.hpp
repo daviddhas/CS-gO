@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <string>
 #include <memory>
 
 namespace csgo
@@ -9,5 +9,7 @@ namespace csgo
     */
     class Expression
     {
+    public:
+        virtual std::string toCode() const = 0;
     };
 }
