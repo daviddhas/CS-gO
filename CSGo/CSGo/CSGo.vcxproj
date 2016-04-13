@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Assignment.hpp" />
     <ClInclude Include="BinaryOperator.hpp" />
+    <ClInclude Include="CodeGenerator.hpp" />
     <ClInclude Include="Compiler.hpp" />
     <ClInclude Include="csgo.hpp" />
     <ClInclude Include="Expression.hpp" />

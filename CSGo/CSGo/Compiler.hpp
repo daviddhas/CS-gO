@@ -4,6 +4,7 @@
 #include "Assignment.hpp"
 #include "Input.hpp"
 #include "Output.hpp"
+#include "CodeGenerator.hpp"
 
 namespace csgo
 {
@@ -14,18 +15,8 @@ namespace csgo
             const std::vector<const Input*> inputs,
             const std::vector<Output*> outputs)
         {
-            std::string code = generateCode(assignments, inputs, outputs);
+            std::string code = CodeGenerator::generateCode(assignments, inputs, outputs);
             // TODO: finish this @JeanHeyd
         }
-
-    private:
-        static std::string generateCode(const std::vector<Assignment>& assignments,
-            const std::vector<const Input*> inputs,
-            const std::vector<Output*> outputs)
-        {
-            // TODO: finish this @Jett
-            return "";
-        }
-
     };
 }

@@ -48,6 +48,9 @@
     <ClInclude Include="Compiler.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="CodeGenerator.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="simple.cpp">
