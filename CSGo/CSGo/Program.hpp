@@ -12,6 +12,8 @@ namespace csgo
     {
     public:
 
+        /* Creates a CS Go program with the given inputs and outputs
+        */
         Program(std::initializer_list<Input> inputs, std::initializer_list<Output*> outputs)
         {
             for (const Input& i : inputs)
@@ -22,6 +24,8 @@ namespace csgo
 
         }
 
+        /* Adds the list of assignments to the prorgam
+        */
         void add(std::initializer_list<Assignment> assignments)
         {
             if (!_finished)
@@ -31,6 +35,8 @@ namespace csgo
                 throw FinishedProgramException();
         }
 
+        /* Compiles the program
+        */
         void finish()
         {
             if (!_finished)
@@ -40,6 +46,8 @@ namespace csgo
             }
         }
 
+        /* Runs the compiled program
+        */
         void run()
         {
             if (_finished)
@@ -49,16 +57,15 @@ namespace csgo
         }
 
     private:
+
+        // has the program been compiled
         bool _finished = false;
 
+        // assignments stored so far
         std::vector<Assignment> _assignments;
 
+        // pointers to inputs and outputs
         std::vector<const Input*> _inputs;
         std::vector<Output*> _outputs;
-
-        std::string makeProgram()
-        {
-            return "";
-        }
     };
 }

@@ -8,6 +8,8 @@
 
 namespace csgo
 {
+    /* Returns an asignment when assigned to
+    */
     class LValue : public Expression
     {
     public:

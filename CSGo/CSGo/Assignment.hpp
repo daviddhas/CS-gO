@@ -4,6 +4,8 @@
 
 namespace csgo
 {
+    /* An object representing an assignment
+    */
     class Assignment : public Expression
     {
     public:

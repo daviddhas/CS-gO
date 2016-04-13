@@ -7,11 +7,15 @@
 
 namespace csgo
 {
+    /* A templated container of 1, 2, or 3 dimensions
+    */
     template <typename T>
     class Texture : public Expression
     {
     };
 
+    /* A texture that can be used as input to a program
+    */
     template <typename T>
     class ReadTexture : public Texture<T>, public Input
     {
@@ -29,6 +33,8 @@ namespace csgo
         std::vector <T> v;
     };
 
+    /* A texture that can be used as output to a program
+    */
     template <typename T>
     class WriteTexture : public Texture<T>, public Output
     {

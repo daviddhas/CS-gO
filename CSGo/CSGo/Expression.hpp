@@ -5,6 +5,8 @@
 
 namespace csgo
 {
+    /* Any evaluable code
+    */
     class Expression
     {
     };
