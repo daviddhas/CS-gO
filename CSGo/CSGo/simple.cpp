@@ -13,11 +13,13 @@ int main(int argc, char *argv[])
 
     csgo::WriteTexture<csgo::Float> out(size);
 
-    //csgo::Program program(in1, in2, out);
-    out = (in1 + in2) + in1;
-    //program.run();
+    csgo::Program program({ in1, in2 }, { out });
 
-    //std::vector<csgo::Float> output = out.read();
+    out = (in1 + in2) + in1;
+
+    program.run();
+
+    std::vector<csgo::Float> output = out.read();
 
     return 0;
 

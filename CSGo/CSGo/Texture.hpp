@@ -2,17 +2,18 @@
 
 #include <vector>
 
-#include "LValue.hpp"
+#include "Output.hpp"
+#include "Input.hpp"
 
 namespace csgo
 {
-    template <class T>
+    template <typename T>
     class Texture : public Expression
     {
     };
 
-    template <class T>
-    class ReadTexture : public Texture<T>
+    template <typename T>
+    class ReadTexture : public Texture<T>, public Input
     {
     public:
         ReadTexture(const std::vector<T>& v)
@@ -23,15 +24,26 @@ namespace csgo
         std::vector <T> v;
     };
 
-    template <class T>
-    class WriteTexture : public Texture<T>, public LValue
+    template <typename T>
+    class WriteTexture : public Texture<T>, public Output<std::vector<T>>
     {
     public:
         WriteTexture(int size)
             : sizex(size)
             , sizey(1)
             , sizez(1)
+            , output(size)
         { }
+
+        std::vector<T> read()
+        {
+            return output;
+        }
+
+        void set(const std::vector<T>& val)
+        {
+            output = val;
+        }
 
         Assignment operator=(const Expression& rhs)
         {
@@ -40,5 +52,7 @@ namespace csgo
 
     private:
         int sizex, sizey, sizez;
+
+        std::vector<T> output;
     };
 }

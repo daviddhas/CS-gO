@@ -2,8 +2,7 @@
 
 namespace csgo
 {
-    class Expression
+    class Input
     {
-    public:
     };
 }
