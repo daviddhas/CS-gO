@@ -1,5 +1,10 @@
 #pragma once
 
+#include "Input.hpp"
+#include "Output.hpp"
+#include <string>
+#include <vector>
+
 namespace csgo
 {
     class CodeGenerator
@@ -13,7 +18,8 @@ namespace csgo
             const std::vector<Output*> outputs)
         {
             // TODO: finish this @Jett
-            return "";
+            std::string code;
+            return code;
         }
     };
 }
