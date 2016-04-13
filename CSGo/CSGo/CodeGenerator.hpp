@@ -12,7 +12,7 @@ namespace csgo
     {
     public:
 
-	    CodeGenerator()
+	    CodeGenerator() {}
 
         /* Generates a string of GLSL code from the CS Go internal representation
         */
