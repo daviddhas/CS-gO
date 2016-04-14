@@ -1,69 +1,28 @@
 #pragma once
 
-#include "ProgramExceptions.hpp"
-#include "Compiler.hpp"
+#include "graphics_device.hpp"
+#include "shader.hpp"
 
-#include <vector>
-#include <algorithm>
 
-namespace csgo
-{
-    class program
-    {
+namespace csgo {
+
+    class compute_program {
     public:
-
-        program(std::string code, program_ast& ast)
-        {
-            for (const Input& i : inputs)
-                _inputs.push_back(&i);
-
-            for (Output *o : outputs)
-                _outputs.push_back(o);
-
+        compute_program(shader_source code, int wgx, int wgy, int wgz) : _cshader(code), _workgroupx(wgx), _workgroupy(wgy), _workgroupz(wgz)  {
+            
         }
 
-        /* Adds the list of assignments to the prorgam
-        */
-        void add(std::initializer_list<Assignment> assignments)
-        {
-            if (!_finished)
-                for (const Assignment& a : assignments)
-                    _assignments.push_back(a);
-            else
-                throw FinishedProgramException();
-        }
-
-        /* Compiles the program
-        */
-        void finish()
-        {
-            if (!_finished)
-            {
-                compiler::compile(_assignments, _inputs, _outputs);
-                _finished = true;
-            }
-        }
-
-        /* Runs the compiled program
-        */
-        void run()
-        {
-            if (_finished)
-                ;
-            else
-                throw UnfinishedProgramException();
-        }
+	   void run() {
+		   // Do all the bindings here...
+		   GLuint programid = _cshader.shader_resource();
+		   gl::UseProgram(programid); // Compute shader program.
+		   gl::DispatchCompute(_workgroupx, _workgroupy, _workgroupz);
+	   }
 
     private:
-
-        // has the program been compiled
-        bool _finished = false;
-
-        // assignments stored so far
-        std::vector<Assignment> _assignments;
-
-        // pointers to inputs and outputs
-        std::vector<const Input*> _inputs;
-        std::vector<Output*> _outputs;
+	    uint32_t _workgroupx;
+	    uint32_t _workgroupy;
+	    uint32_t _workgroupz;
+	    compute_shader _cshader;
     };
 }

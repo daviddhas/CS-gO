@@ -33,9 +33,6 @@
     <ClInclude Include="BinaryOperator.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Program.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Input.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -49,9 +46,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graphics_device.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor_glfw.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shader.hpp">
@@ -75,12 +69,54 @@
     <ClInclude Include="Variable.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProgramExceptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor_glfw.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="compute_program.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeGenerator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Compiler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ast.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="program.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsl\expression.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsl\constant.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsl\binary_operation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsl\function_call.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsl\unary_operation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsl\intrinsic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="simple.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LValue.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl\gl_4_5.core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

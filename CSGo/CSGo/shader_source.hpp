@@ -21,14 +21,14 @@ namespace csgo {
 		std::string source;
 		
 		bool compilable() const {
-			return !entry_point.empty() && (!source.empty() || (source_file));
+			return !entry_point.empty() && (!source.empty() || (source_file.empty()));
 		}
 
 		operator bool() const {
 			return compilable();
 		}
 
-		shader_source(shader_stage stage, std::string source, std::string entrypoint, std::string file = "") :
+		shader_source(shader_stage stage, std::string source, std::string entrypoint = "main", std::string file = "") :
 			source(std::move(source)), entry_point(std::move(entrypoint)),
 			stage(stage),
 			source_file(file) {
@@ -40,18 +40,18 @@ namespace csgo {
 				return;
 			}
 			// Allocate memory up front from tellg()
-			source.reserve(sourcecontents.tellg());
+			source.reserve(static_cast<std::size_t>(sourcecontents.tellg()));
 			sourcecontents.seekg(0, std::ios::beg);
-			source.assign((std::istreambuf_iterator<char>(sourcecontents)), std::istreambuf_iterator<char>());
+			source.assign(std::istreambuf_iterator<char>(sourcecontents), std::istreambuf_iterator<char>());
 		}
 	};
 
-	class shader_byte_code {
+	struct shader_byte_code {
 	private:
-		friend class shader;
+		friend struct shader;
 		struct bytecode_deleter {
 			void operator() (void* p) {
-				
+				// Nothing need doing for OpenGL
 			}
 		};
 
@@ -81,7 +81,9 @@ namespace csgo {
 			return bytecode.get();
 		}
 
-		shader_stage stage() const;
+		shader_stage stage() const {
+			return bytecodesource.stage;
+		}
 
 		const std::string& errors() const {
 			return err;

@@ -9,7 +9,7 @@ namespace csgo {
 	};
 
 	struct shader_error : error {
-		shader_error(int errc, std::string message) : std::runtime_error(std::to_string( errc ) + ": " + message) {}
+		shader_error(int errc, std::string message) : error(std::to_string( errc ) + ": " + message) {}
 	};
 
 }

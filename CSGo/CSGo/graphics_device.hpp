@@ -20,12 +20,19 @@ namespace csgo {
 		graphics_device() {
 			GLboolean r = glfwInit();
 			if (r == gl::FALSE_) {
-				// Something bad happened
+				throw error("Failed to initialize OpenGL - glfwInit");
 			}
 			// Window needs to be invisible, at least for the final version
 			glfwWindowHint(GLFW_VISIBLE, gl::FALSE_);
+
+			// Demand a 4.3 OpenGL context, at least
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 			// Make the window
 			window.reset(glfwCreateWindow(0, 0, "csgo blank window", nullptr, nullptr));
+			if (window.get() == nullptr) {
+				throw error("Failed to initialize OpenGL - glfwCreateWindow");
+			}
 			glfwMakeContextCurrent(window.get());
 		}
 
