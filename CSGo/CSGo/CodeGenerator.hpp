@@ -44,13 +44,15 @@ namespace csgo
 
             code += "layout(";
             code += "local_size_x=" + std::to_string(x) + ",";
-            code += "local_size_y=" + std::to_string(y) + ",";
+            code += "local_size_y=" + std::to_string(y);
 
             // TODO: figure out when you can exclude x/y/z
-            if (z != 1)
-                code += "local_size_z=" + std::to_string(z) + ")\n";
+		  if (z != 1) {
+			  code += ", local_size_z=" + std::to_string(z) + ")\n";
+		  }
+		  code += ") in;\n";
 
-            code += "int main()\n{\n";
+            code += "void main()\n{\n";
 
             return code;
         }
@@ -68,14 +70,19 @@ namespace csgo
             std::string name = "a";
             for (std::shared_ptr<Input> input : inputs)
             {
-                code += "uniform " + input->getType() + " " + name + ";\n";
+			  // TODO: @Jett - need to have more layout and type information for ALL variables
+			  // All inputs (of the image type) need to have a layout specifier for the type
+			  // Currently hardcording in floats since that's what we want
+                code += "layout(r32f) uniform " + input->getType() + " " + name + ";\n";
                 input->name = name;
                 updateName(name);
             }
 
             for (std::shared_ptr<Output> output : outputs)
             {
-                code += "uniform " + output->getType() + " " + name + ";\n";
+			  // TODO: @Jett - need to have more layout and type information for ALL variables
+			  // Output variable types usually need either their layout specifier OR the writeonly qualifier
+			  code += "writeonly uniform " + output->getType() + " " + name + ";\n";
                 output->name = name;
                 updateName(name);
             }

@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gl\gl_4_5.core.cpp" />
-    <ClCompile Include="LValue.hpp" />
+    <ClInclude Include="LValue.hpp" />
     <ClCompile Include="simple.cpp" />
   </ItemGroup>
   <ItemGroup>

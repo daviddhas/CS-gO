@@ -2,6 +2,7 @@
 
 #include "platform_gl.hpp"
 #include "vendor_glfw.hpp"
+#include "error.hpp"
 #include <memory>
 
 namespace csgo {
@@ -29,7 +30,7 @@ namespace csgo {
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 			// Make the window
-			window.reset(glfwCreateWindow(0, 0, "csgo blank window", nullptr, nullptr));
+			window.reset(glfwCreateWindow(800, 600, "csgo blank window", nullptr, nullptr));
 			if (window.get() == nullptr) {
 				throw error("Failed to initialize OpenGL - glfwCreateWindow");
 			}
