@@ -1,9 +1,9 @@
-#include "csgo.hpp"
+#include "main.hpp"
+#include <csgo/csgo.hpp>
 
 #include <iostream>
 
-int main(int argc, char *argv[])
-{
+void simple() {
     int size = 256;
     std::vector<csgo::Float> vec1(size, 2);
     std::vector<csgo::Float> vec2(size, 3);
@@ -21,8 +21,6 @@ int main(int argc, char *argv[])
     p.run();
 
     std::vector<csgo::Float> output = out->read();
-
-    return 0;
 }
 
 

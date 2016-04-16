@@ -19,45 +19,73 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Assignment.hpp" />
-    <ClInclude Include="ast.hpp" />
-    <ClInclude Include="BinaryOperator.hpp" />
-    <ClInclude Include="CodeGenerator.hpp" />
-    <ClInclude Include="Compiler.hpp" />
-    <ClInclude Include="compute_program.hpp" />
-    <ClInclude Include="dsl\binary_operation.hpp" />
-    <ClInclude Include="dsl\constant.hpp" />
-    <ClInclude Include="dsl\expression.hpp" />
-    <ClInclude Include="dsl\function_call.hpp" />
-    <ClInclude Include="dsl\intrinsic.hpp" />
-    <ClInclude Include="dsl\unary_operation.hpp" />
-    <ClInclude Include="enums.hpp" />
-    <ClInclude Include="error.hpp" />
-    <ClInclude Include="gl_detail\gl_enums.hpp" />
-    <ClInclude Include="program.hpp" />
-    <ClInclude Include="shader.hpp" />
-    <ClInclude Include="csgo.hpp" />
-    <ClInclude Include="Expression.hpp" />
-    <ClInclude Include="gl\gl_4_5.core.hpp" />
-    <ClInclude Include="graphics_device.hpp" />
-    <ClInclude Include="Input.hpp" />
-    <ClInclude Include="Output.hpp" />
-    <ClInclude Include="platform_gl.hpp" />
-    <ClInclude Include="Primitives.hpp" />
-    <ClInclude Include="shader_source.hpp" />
-    <ClInclude Include="shader_stage.hpp" />
-    <ClInclude Include="Texture.hpp" />
-    <ClInclude Include="ProgramExceptions.hpp" />
-    <ClInclude Include="Variable.hpp" />
-    <ClInclude Include="vendor_glfw.hpp" />
+    <ClInclude Include="include\csgo\Assignment.hpp" />
+    <ClInclude Include="include\csgo\dsl\ast.hpp" />
+    <ClInclude Include="include\csgo\BinaryOperator.hpp" />
+    <ClInclude Include="include\csgo\CodeGenerator.hpp" />
+    <ClInclude Include="include\csgo\Compiler.hpp" />
+    <ClInclude Include="include\csgo\compute_program.hpp" />
+    <ClInclude Include="include\csgo\dsl\binary_expression.hpp" />
+    <ClInclude Include="include\csgo\dsl\binary_operations.hpp" />
+    <ClInclude Include="include\csgo\dsl\built_in.hpp" />
+    <ClInclude Include="include\csgo\dsl\compiler.hpp" />
+    <ClInclude Include="include\csgo\dsl\constant.hpp" />
+    <ClInclude Include="include\csgo\dsl\container_variable.hpp" />
+    <ClInclude Include="include\csgo\dsl\expression.hpp" />
+    <ClInclude Include="include\csgo\dsl\function_call.hpp" />
+    <ClInclude Include="include\csgo\dsl\intrinsic.hpp" />
+    <ClInclude Include="include\csgo\dsl\symbol_table.hpp" />
+    <ClInclude Include="include\csgo\in_place.hpp" />
+    <ClInclude Include="include\csgo\dsl\program.hpp" />
+    <ClInclude Include="include\csgo\dsl\type.hpp" />
+    <ClInclude Include="include\csgo\dsl\unary_operations.hpp" />
+    <ClInclude Include="include\csgo\type_traits.hpp" />
+    <ClInclude Include="include\csgo\dsl\unary_expression.hpp" />
+    <ClInclude Include="include\csgo\dsl\variable.hpp" />
+    <ClInclude Include="include\csgo\meta\bare_naked.hpp" />
+    <ClInclude Include="include\csgo\meta\callable_enable_if.hpp" />
+    <ClInclude Include="include\csgo\meta\enable_disable.hpp" />
+    <ClInclude Include="include\csgo\meta\bind_traits.hpp" />
+    <ClInclude Include="include\csgo\meta\is_specialization.hpp" />
+    <ClInclude Include="include\csgo\meta\logic.hpp" />
+    <ClInclude Include="include\csgo\meta\qualify.hpp" />
+    <ClInclude Include="include\csgo\meta\sfinae_types.hpp" />
+    <ClInclude Include="include\csgo\meta\tuple_tricks.hpp" />
+    <ClInclude Include="include\csgo\meta\types.hpp" />
+    <ClInclude Include="include\csgo\meta\unqualified.hpp" />
+    <ClInclude Include="include\csgo\meta\unwrap.hpp" />
+    <ClInclude Include="include\csgo\meta\void_type.hpp" />
+    <ClInclude Include="include\csgo\variant.hpp" />
+    <ClInclude Include="include\csgo\enums.hpp" />
+    <ClInclude Include="include\csgo\error.hpp" />
+    <ClInclude Include="include\csgo\gl_detail\gl_enums.hpp" />
+    <ClInclude Include="include\csgo\program.hpp" />
+    <ClInclude Include="include\csgo\shader.hpp" />
+    <ClInclude Include="include\csgo\csgo.hpp" />
+    <ClInclude Include="include\csgo\Expression.hpp" />
+    <ClInclude Include="include\csgo\gl\gl_4_5.core.hpp" />
+    <ClInclude Include="include\csgo\graphics_device.hpp" />
+    <ClInclude Include="include\csgo\Input.hpp" />
+    <ClInclude Include="include\csgo\Output.hpp" />
+    <ClInclude Include="include\csgo\platform_gl.hpp" />
+    <ClInclude Include="include\csgo\Primitives.hpp" />
+    <ClInclude Include="include\csgo\shader_source.hpp" />
+    <ClInclude Include="include\csgo\shader_stage.hpp" />
+    <ClInclude Include="include\csgo\Texture.hpp" />
+    <ClInclude Include="include\csgo\ProgramExceptions.hpp" />
+    <ClInclude Include="include\csgo\Variable.hpp" />
+    <ClInclude Include="include\csgo\vendor_glfw.hpp" />
+    <ClInclude Include="include\csgo\LValue.hpp" />
+    <ClInclude Include="examples\main.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gl\gl_4_5.core.cpp" />
-    <ClInclude Include="LValue.hpp" />
-    <ClCompile Include="simple.cpp" />
+    <ClCompile Include="examples\main.cpp" />
+    <ClCompile Include="examples\function_based.cpp" />
+    <ClCompile Include="source\gl\gl_4_5.core.cpp" />
+    <ClCompile Include="examples\simple.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\vendor\glfw.vcxproj">
+    <ProjectReference Include="vendor\glfw.vcxproj">
       <Project>{d64ea22e-67c0-3ac1-9e26-da2c1fd19950}</Project>
     </ProjectReference>
   </ItemGroup>
@@ -118,10 +146,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../vendor/glfw/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;vendor/glfw/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\jettca\Dropbox\Cormorant\lib\Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies);</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -130,10 +157,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../vendor/glfw/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;vendor/glfw/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\jettca\Dropbox\Cormorant\lib\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies);</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -144,7 +170,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../vendor/glfw/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor/glfw/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -159,7 +185,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../vendor/glfw/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor/glfw/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

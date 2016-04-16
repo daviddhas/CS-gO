@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <string.h>
 #include <stddef.h>
-#include "gl_4_5.core.hpp"
+#include <csgo/gl/gl_4_5.core.hpp>
 
 #if defined(__APPLE__)
 #include <dlfcn.h>
