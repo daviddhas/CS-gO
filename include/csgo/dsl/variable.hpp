@@ -3,6 +3,7 @@
 #include <csgo/dsl/type.hpp>
 #include <csgo/dsl/expression.hpp>
 #include <csgo/type_traits.hpp>
+#include <glm/glm.hpp>
 #include <cstddef>
 
 namespace csgo {
@@ -40,6 +41,69 @@ namespace csgo {
 
 		template <>
 		struct type_for<double> : std::integral_constant<type, type::double_precision> {};
+
+		template <>
+		struct type_for<glm::vec2> : std::integral_constant<type, type::single_vector_2> {};
+
+		template <>
+		struct type_for<glm::vec3> : std::integral_constant<type, type::single_vector_3> {};
+
+		template <>
+		struct type_for<glm::vec4> : std::integral_constant<type, type::single_vector_4> {};
+
+		template <>
+		struct type_for<glm::mat2x2> : std::integral_constant<type, type::single_matrix_22> {};
+
+		template <>
+		struct type_for<glm::mat2x3> : std::integral_constant<type, type::single_matrix_23> {};
+
+		template <>
+		struct type_for<glm::mat2x4> : std::integral_constant<type, type::single_matrix_24> {};
+
+		template <>
+		struct type_for<glm::mat3x2> : std::integral_constant<type, type::single_matrix_32> {};
+
+		template <>
+		struct type_for<glm::mat3x3> : std::integral_constant<type, type::single_matrix_33> {};
+
+		template <>
+		struct type_for<glm::mat3x4> : std::integral_constant<type, type::single_matrix_34> {};
+
+		template <>
+		struct type_for<glm::mat4x2> : std::integral_constant<type, type::single_matrix_42> {};
+
+		template <>
+		struct type_for<glm::mat4x3> : std::integral_constant<type, type::single_matrix_43> {};
+
+		template <>
+		struct type_for<glm::mat4x4> : std::integral_constant<type, type::single_matrix_44> {};
+
+		template <>
+		struct type_for<glm::dmat2x2> : std::integral_constant<type, type::double_matrix_22> {};
+
+		template <>
+		struct type_for<glm::dmat2x3> : std::integral_constant<type, type::double_matrix_23> {};
+
+		template <>
+		struct type_for<glm::dmat2x4> : std::integral_constant<type, type::double_matrix_24> {};
+
+		template <>
+		struct type_for<glm::dmat3x2> : std::integral_constant<type, type::double_matrix_32> {};
+
+		template <>
+		struct type_for<glm::dmat3x3> : std::integral_constant<type, type::double_matrix_33> {};
+
+		template <>
+		struct type_for<glm::dmat3x4> : std::integral_constant<type, type::double_matrix_34> {};
+
+		template <>
+		struct type_for<glm::dmat4x2> : std::integral_constant<type, type::double_matrix_42> {};
+
+		template <>
+		struct type_for<glm::dmat4x3> : std::integral_constant<type, type::double_matrix_43> {};
+
+		template <>
+		struct type_for<glm::dmat4x4> : std::integral_constant<type, type::double_matrix_44> {};
 
 	}
 }

@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSGo", "CSGo.vcxproj", "{F1
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "vendor\glfw.vcxproj", "{D64EA22E-67C0-3AC1-9E26-DA2C1FD19950}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{25C1EE6C-CC47-48B8-A31B-398729E0045E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glm", "vendor\glm.vcxproj", "{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,8 +35,20 @@ Global
 		{D64EA22E-67C0-3AC1-9E26-DA2C1FD19950}.Release|x64.Build.0 = Release|x64
 		{D64EA22E-67C0-3AC1-9E26-DA2C1FD19950}.Release|x86.ActiveCfg = Release|Win32
 		{D64EA22E-67C0-3AC1-9E26-DA2C1FD19950}.Release|x86.Build.0 = Release|Win32
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Debug|x64.ActiveCfg = Debug|x64
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Debug|x64.Build.0 = Debug|x64
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Debug|x86.ActiveCfg = Debug|Win32
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Debug|x86.Build.0 = Debug|Win32
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Release|x64.ActiveCfg = Release|x64
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Release|x64.Build.0 = Release|x64
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Release|x86.ActiveCfg = Release|Win32
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D64EA22E-67C0-3AC1-9E26-DA2C1FD19950} = {25C1EE6C-CC47-48B8-A31B-398729E0045E}
+		{D0B4B806-7C8F-4978-9BA7-5A940F8E6665} = {25C1EE6C-CC47-48B8-A31B-398729E0045E}
 	EndGlobalSection
 EndGlobal

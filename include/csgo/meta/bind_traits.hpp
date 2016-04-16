@@ -118,7 +118,7 @@ namespace csgo { namespace meta {
 		struct fx_traits<T, true> : detail::non_functor_function_traits<decltype(&unqualified_t<T>::operator())> { };
 		
 		template <typename T, bool = std::is_member_object_pointer<T>::value>
-		struct callable_traits : detail::fx_traits<decltype(&unqualified_t<T>::operator())> { };
+		struct callable_traits : detail::fx_traits<T> { };
 		
 		template <typename T>
 		struct callable_traits<T, true> : member_traits<T> {};
