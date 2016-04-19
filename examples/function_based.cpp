@@ -11,7 +11,8 @@ csgo::dsl::entry_point average(csgo::dsl::image2d<float> in1, csgo::dsl::image2d
 }
 
 void function_based() {
-    csgo::program p(average);
+    csgo::program p(average, true);
+    p.run();
 	// TODO: actual proper codegen
 	// TODO: insert compilation, figure out higher level interface to wrap all of this work up into a single call and return a single
 	// csgo::compute_program ...
