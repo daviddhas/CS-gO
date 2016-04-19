@@ -76,7 +76,7 @@ namespace csgo {
 		ir_program make_ir_program(F&& f) {
 			// determine the arguments of F
 			typedef typename meta::bind_traits<meta::unqualified_t<F>>::args_type args_type;
-			return dsl_detail::make_program(args_type(), std::forward<F>(f));
+			return dsl_detail::make_ir_program(args_type(), std::forward<F>(f));
 		}
 	}
 }
