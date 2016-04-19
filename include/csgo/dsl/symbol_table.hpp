@@ -30,8 +30,8 @@ namespace csgo {
 				// Check if we have a id collision
 				auto varfind = variable_id_indices.find(v.id);
 				if (varfind != variable_id_indices.cend()) {
-					variable& found = variables[varfind->second];
-					if (v.variable_type == found.variable_type) {
+                    variable found = variables[varfind->second];
+					if (v.variable_type != found.variable_type) {
 						throw std::runtime_error("two variables of differing types share the same id: BAD!");
 					}
 				}
