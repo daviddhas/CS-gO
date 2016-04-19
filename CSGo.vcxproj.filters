@@ -180,9 +180,6 @@
     <ClInclude Include="examples\main.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\compiler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\var.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -192,9 +189,6 @@
     <ClInclude Include="include\csgo\dsl\statement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\glsl_generator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\generator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -202,6 +196,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\dsl\variable_id.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\qualifiers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\memory_qualifier.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\format_qualifier.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\glsl\glsl_generator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\glsl\to_string.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

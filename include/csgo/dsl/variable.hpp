@@ -3,6 +3,7 @@
 #include <csgo/dsl/type.hpp>
 #include <csgo/dsl/expression.hpp>
 #include <csgo/dsl/variable_id.hpp>
+#include <csgo/qualifiers.hpp>
 #include <csgo/type_traits.hpp>
 #include <memory>
 #include <atomic>
@@ -24,12 +25,13 @@ namespace csgo {
 			}
 		};
 
-		struct container_variable : variable {
-			type contained_type;
-			container_variable() : container_variable(type::single_precision, type::image_2d) {}
-			container_variable(type innertype) : container_variable(innertype, type::image_2d) {}
-			container_variable(type innertype, type thistype) : variable(thistype), contained_type(innertype) {}
-			container_variable(std::unique_ptr<expression> initilization, type innertype, type thistype) : variable(std::move(initilization), thistype), contained_type(innertype) {}
+		struct layout_variable : variable {
+			qualifiers layout;
+			
+			layout_variable() : layout_variable({}, type::image_2d) {}
+			layout_variable(qualifiers q) : layout_variable(q, type::image_2d) {}
+			layout_variable(qualifiers q, type thistype) : variable(thistype), layout(std::move(q)) {}
+			layout_variable(std::unique_ptr<expression> initilization, qualifiers q, type thistype) : variable(std::move(initilization), thistype), layout(std::move(q)) {}
 
 			virtual void accept(expression_visitor& v) override {
 				v.visit(*this);

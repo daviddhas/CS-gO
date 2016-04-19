@@ -1,6 +1,6 @@
 #pragma once
 
-#include <csgo/dsl/program.hpp>
+#include <csgo/dsl/entry_point.hpp>
 #include <csgo/dsl/symbol_table.hpp>
 #include <iostream>
 
@@ -12,22 +12,20 @@ namespace csgo {
 		struct abstract_syntax_tree {
 		public:
 			symbol_table symbols;
+			std::vector<std::unique_ptr<variable>> returns;
 
-			abstract_syntax_tree(entry_point& p) {
-				expression_namer v(symbols);
-				construct(p, v);
+			abstract_syntax_tree(entry_point& entry) {
+				expression_namer v(symbols, returns);
+				entry.accept(v);
 			}
 
 		private:
-			void construct(entry_point& ep, expression_visitor& v) {
-				ep.root.accept(v);
-			}
-
 			struct expression_namer : expression_visitor {
 				symbol_table& symbols;
+				std::vector<std::unique_ptr<variable>>& returns;
 				std::ostream& ostr;
 
-				expression_namer(symbol_table& symbols) : symbols(symbols), ostr(std::cout) {}
+				expression_namer(symbol_table& symbols, std::vector<std::unique_ptr<variable>>& returns) : symbols(symbols), returns(returns), ostr(std::cout) {}
 
 				virtual void visit(statement& s) {
 					for (auto& pexpr : s.expressions) {
@@ -35,6 +33,11 @@ namespace csgo {
 							continue;
 						expression& expr = *pexpr;
 						expr.accept(*this);
+						ostr << "\n";
+						// TODO: derive proper return type of expressions
+						// TODO: semantic analyzer??
+						returns.push_back(std::make_unique<image2d<float>>());
+						symbols.give_name(*returns.back());
 					}
 				}
 
@@ -43,8 +46,27 @@ namespace csgo {
 				}
 
 				virtual void visit(variable& v) override {
-					symbols.give_name(v);
-					ostr << "[ " << v.id.id << " - " << to_string(v.variable_type) << " ]";
+					const std::string& name = symbols.give_name(v);
+					ostr << "[ " << v.id.id << ", '" << name << "' - " << to_string(v.variable_type);
+					if (v.initialization == nullptr) {
+						ostr << " ]";
+						return;
+					}
+					ostr << " = ";
+					v.initialization->accept(*this);
+					ostr << " ]";
+				}
+
+				virtual void visit(layout_variable& v) override {
+					const std::string& name = symbols.give_name(v);
+					ostr << "[ " << v.id.id << ", '" << name << "' - " << to_string(v.variable_type) << "<" << to_string(v.layout.format) << ">";
+					if (v.initialization == nullptr) {
+						ostr << " ]";
+						return;
+					}
+					ostr << " = ";
+					v.initialization->accept(*this);
+					ostr << " ]";
 				}
 
 				virtual void visit(constant& v) override {
@@ -54,24 +76,19 @@ namespace csgo {
 						ostr << std::boolalpha << dynamic_cast<typed_constant<bool>&>(v).value;
 						break;
 					case type::integer:
-						ostr << std::boolalpha << dynamic_cast<typed_constant<int32_t>&>(v).value;
+						ostr << dynamic_cast<typed_constant<int32_t>&>(v).value;
 						break;
 					case type::single_precision:
-						ostr << std::boolalpha << dynamic_cast<typed_constant<float>&>(v).value;
+						ostr << dynamic_cast<typed_constant<float>&>(v).value;
 						break;
 					case type::double_precision:
-						ostr << std::boolalpha << dynamic_cast<typed_constant<float>&>(v).value;
+						ostr << dynamic_cast<typed_constant<double>&>(v).value;
 						break;
 					default:
 						throw std::runtime_error("Unhandled variable type for constant");
 						break;
 					}
 					ostr << "]";
-				}
-
-				virtual void visit(container_variable& v) override {
-					symbols.give_name(v);
-					ostr << "[ " << v.id.id << " - " << to_string(v.variable_type) << "<" << to_string(v.contained_type) << "> ]";
 				}
 
 				virtual void visit(binary_expression& e) override {

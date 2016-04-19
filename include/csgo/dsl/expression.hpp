@@ -8,7 +8,7 @@ namespace csgo {
 		struct expression;
 		
 		struct variable;
-		struct container_variable;
+		struct layout_variable;
 		struct constant;
 		
 		struct binary_expression;
@@ -32,7 +32,7 @@ namespace csgo {
 			virtual void visit(multiplication& e) = 0;
 
 			virtual void visit(variable& v) = 0;
-			virtual void visit(container_variable& v) = 0;
+			virtual void visit(layout_variable& v) = 0;
 			virtual void visit(constant& v) = 0;
 		};
 

@@ -41,12 +41,10 @@ namespace csgo {
 				name.reserve(32);
 				name += "_";
 				name += std::to_string(v.id.id);
-				name += " ";
-				name += to_string(v.variable_type);
-
+				
+				variable_id_indices.insert(varfind, { v.id, variables.size() });
 				names.push_back(std::move(name));
 				variables.push_back(v);
-				
 				return names.back();
 			}
 		};

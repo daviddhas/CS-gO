@@ -16,10 +16,10 @@ namespace csgo {
 		};
 
 		template <typename P>
-		struct image2d : container_variable {
-			image2d() : container_variable(type_for<P>::value, type::image_2d) {}
+		struct image2d : layout_variable {
+			image2d() : layout_variable({format_qualifier_for<P>::value}, type::image_2d) {}
 			template <typename T>
-			image2d(T initialization) : container_variable(make_unique_expression(std::move(initialization)), type_for<T>::value, type::image_2d) {}
+			image2d(T initialization) : layout_variable(make_unique_expression(std::move(initialization)), { format_qualifier_for<P>::value }, type::image_2d) {}
 
 			virtual void accept(expression_visitor& v) {
 				v.visit(*this);
