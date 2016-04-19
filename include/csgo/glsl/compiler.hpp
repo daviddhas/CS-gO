@@ -43,6 +43,9 @@ namespace csgo {
 
         private:
             static void makeContext() {
+                if (glfwGetCurrentContext() != nullptr)
+                    return;
+
                 if (!glfwInit())
                     throw std::runtime_error("GLFW failed to initialize");
 
