@@ -19,11 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\csgo\Assignment.hpp" />
     <ClInclude Include="include\csgo\dsl\ast.hpp" />
-    <ClInclude Include="include\csgo\BinaryOperator.hpp" />
-    <ClInclude Include="include\csgo\CodeGenerator.hpp" />
-    <ClInclude Include="include\csgo\Compiler.hpp" />
     <ClInclude Include="include\csgo\compute_program.hpp" />
     <ClInclude Include="include\csgo\dsl\binary_expression.hpp" />
     <ClInclude Include="include\csgo\dsl\binary_operations.hpp" />
@@ -32,18 +28,20 @@
     <ClInclude Include="include\csgo\dsl\expression.hpp" />
     <ClInclude Include="include\csgo\dsl\function_call.hpp" />
     <ClInclude Include="include\csgo\dsl\generator.hpp" />
+    <ClInclude Include="include\csgo\glsl\compiler.hpp" />
     <ClInclude Include="include\csgo\glsl\glsl_generator.hpp" />
     <ClInclude Include="include\csgo\dsl\intrinsic.hpp" />
     <ClInclude Include="include\csgo\format_qualifier.hpp" />
     <ClInclude Include="include\csgo\glsl\to_string.hpp" />
     <ClInclude Include="include\csgo\memory_qualifier.hpp" />
+    <ClInclude Include="include\csgo\program.hpp" />
     <ClInclude Include="include\csgo\qualifiers.hpp" />
     <ClInclude Include="include\csgo\dsl\statement.hpp" />
     <ClInclude Include="include\csgo\dsl\symbol_table.hpp" />
     <ClInclude Include="include\csgo\dsl\var.hpp" />
     <ClInclude Include="include\csgo\dsl\variable_id.hpp" />
     <ClInclude Include="include\csgo\in_place.hpp" />
-    <ClInclude Include="include\csgo\dsl\program.hpp" />
+    <ClInclude Include="include\csgo\dsl\ir_program.hpp" />
     <ClInclude Include="include\csgo\dsl\type.hpp" />
     <ClInclude Include="include\csgo\dsl\unary_operations.hpp" />
     <ClInclude Include="include\csgo\type_traits.hpp" />
@@ -66,23 +64,17 @@
     <ClInclude Include="include\csgo\enums.hpp" />
     <ClInclude Include="include\csgo\error.hpp" />
     <ClInclude Include="include\csgo\gl_detail\gl_enums.hpp" />
-    <ClInclude Include="include\csgo\program.hpp" />
     <ClInclude Include="include\csgo\shader.hpp" />
     <ClInclude Include="include\csgo\csgo.hpp" />
     <ClInclude Include="include\csgo\Expression.hpp" />
     <ClInclude Include="include\csgo\gl\gl_4_5.core.hpp" />
     <ClInclude Include="include\csgo\graphics_device.hpp" />
     <ClInclude Include="include\csgo\Input.hpp" />
-    <ClInclude Include="include\csgo\Output.hpp" />
     <ClInclude Include="include\csgo\platform_gl.hpp" />
     <ClInclude Include="include\csgo\Primitives.hpp" />
     <ClInclude Include="include\csgo\shader_source.hpp" />
     <ClInclude Include="include\csgo\shader_stage.hpp" />
-    <ClInclude Include="include\csgo\Texture.hpp" />
-    <ClInclude Include="include\csgo\ProgramExceptions.hpp" />
-    <ClInclude Include="include\csgo\Variable.hpp" />
     <ClInclude Include="include\csgo\vendor_glfw.hpp" />
-    <ClInclude Include="include\csgo\LValue.hpp" />
     <ClInclude Include="examples\main.hpp" />
     <ClInclude Include="include\csgo\workgroup.hpp" />
   </ItemGroup>
@@ -90,7 +82,6 @@
     <ClCompile Include="examples\main.cpp" />
     <ClCompile Include="examples\function_based.cpp" />
     <ClCompile Include="source\gl\gl_4_5.core.cpp" />
-    <ClCompile Include="examples\simple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw.vcxproj">

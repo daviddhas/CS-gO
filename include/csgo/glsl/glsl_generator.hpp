@@ -60,11 +60,11 @@ namespace csgo {
 				}
 			};
 
-			void preamble(dsl::program& p, std::ostream& ostr) {
+			void preamble(dsl::ir_program& p, std::ostream& ostr) {
 				ostr << "#version 430" << "\n\n";
 			}
 
-			void uniform_variable(bool isoutput, const std::string& name, const dsl::variable& v, dsl::program& p, std::ostream& ostr) {
+			void uniform_variable(bool isoutput, const std::string& name, const dsl::variable& v, dsl::ir_program& p, std::ostream& ostr) {
 				// Do layout bindings
 				ostr << "layout(";
 				ostr << " binding = " << binding_index++;
@@ -105,7 +105,7 @@ namespace csgo {
 				ostr << "\n";
 			}
 
-			void input(dsl::program& p, std::ostream& ostr) {
+			void input(dsl::ir_program& p, std::ostream& ostr) {
 				for (std::size_t index = 0; index < p.inputs.size(); ++index ) {
 					dsl::uniform_reference& ud = p.inputs[index];
 					auto namedvar = p.ast.symbols.find(ud.id);
@@ -116,7 +116,7 @@ namespace csgo {
 				ostr << "\n";
 			}
 
-			void output(dsl::program& p, std::ostream& ostr) {
+			void output(dsl::ir_program& p, std::ostream& ostr) {
 				for (std::size_t index = 0; index < p.outputs.size(); ++index) {
 					dsl::uniform_reference& ud = p.outputs[index];
 					auto namedvar = p.ast.symbols.find(ud.id);
@@ -127,7 +127,7 @@ namespace csgo {
 				ostr << "\n";
 			}
 
-			void open(dsl::program& p, std::ostream& ostr) {
+			void open(dsl::ir_program& p, std::ostream& ostr) {
 				workgroup& wg = p.main.wg;
 				// Can only drop end if it is 1, plus things before it are also 1
 				bool dropz = wg.z == 1;
@@ -155,12 +155,12 @@ namespace csgo {
 				++indentation_level;
 			}
 
-			void close(dsl::program& p, std::ostream& ostr) {
+			void close(dsl::ir_program& p, std::ostream& ostr) {
 				ostr << "}";
 				--indentation_level;
 			}
 
-			virtual void generate(dsl::program& p, std::ostream& ostr) override {
+			virtual void generate(dsl::ir_program& p, std::ostream& ostr) override {
 				// setup variables
 				preamble(p, ostr);
 				input(p, ostr);
@@ -169,7 +169,7 @@ namespace csgo {
 				// open main
 				open(p, ostr);
 				
-				// Recursive write of the actual program now
+				// Recursive write of the actual ir_program now
 				writer mainwriter(ostr);
 				p.main.accept(mainwriter);
 
