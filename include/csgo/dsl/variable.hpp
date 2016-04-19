@@ -2,108 +2,129 @@
 
 #include <csgo/dsl/type.hpp>
 #include <csgo/dsl/expression.hpp>
+#include <csgo/dsl/variable_id.hpp>
 #include <csgo/type_traits.hpp>
-#include <glm/glm.hpp>
-#include <cstddef>
+#include <memory>
+#include <atomic>
+#include <cstdint>
 
 namespace csgo {
 	namespace dsl {
-
 		struct variable : expression {
+			variable_id id = generate_id<variable>();
 			type variable_type;
+			std::shared_ptr<expression> initialization;
 
 			variable() : variable_type(type::user_defined_type) {}
-			variable(type vartype) : variable_type(vartype) {}
+			variable(type vartype) : variable_type(vartype), initialization(std::move(initialization)) {}
+			variable(std::unique_ptr<expression> initialization, type vartype) : variable_type(vartype), initialization(std::move(initialization)) {}
 
-			virtual ~variable() {}
+			virtual void accept(expression_visitor& v) override {
+				v.visit(*this);
+			}
 		};
+
+		struct container_variable : variable {
+			type contained_type;
+			container_variable() : container_variable(type::single_precision, type::image_2d) {}
+			container_variable(type innertype) : container_variable(innertype, type::image_2d) {}
+			container_variable(type innertype, type thistype) : variable(thistype), contained_type(innertype) {}
+			container_variable(std::unique_ptr<expression> initilization, type innertype, type thistype) : variable(std::move(initilization), thistype), contained_type(innertype) {}
+
+			virtual void accept(expression_visitor& v) override {
+				v.visit(*this);
+			}
+		};
+
+		struct constant : variable {
+			constant(type x) : variable(x) {}
+
+			virtual void accept(expression_visitor& v) override {
+				v.visit(*this);
+			}
+
+			virtual void write(std::ostream& ostr) = 0;
+		};
+
+		template <typename T>
+		struct typed_constant : constant {
+			T value;
+
+			typed_constant(T value) : typed_constant(value, type_for<T>::value) {}
+			typed_constant(T value, type x) : constant(x), value(value) {}
+
+			virtual void accept(expression_visitor& v) override {
+				v.visit(*this);
+			}
+
+			virtual void write(std::ostream& ostr) override {
+				ostr << value;
+			}
+		};
+
 
 		template <typename T>
 		struct is_variable : std::is_base_of<variable, meta::unqualified_t<T>> {};
 		
 		template <typename T>
-		struct is_expression : meta::all<std::is_base_of<expression, meta::unqualified_t<T>>, meta::not_<std::is_base_of<variable, meta::unqualified_t<T>>>> {};
+		struct is_expression : std::is_base_of<expression, meta::unqualified_t<T>> {};
 
 		template <typename T>
-		struct type_for : std::integral_constant<type, type::user_defined_type> {};
+		struct is_primitive : std::is_arithmetic<meta::unqualified_t<T>> {};
 
-		template <>
-		struct type_for<int32_t> : std::integral_constant<type, type::integer> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec1<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<uint32_t> : std::integral_constant<type, type::unsigned_integer> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec2<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<bool> : std::integral_constant<type, type::boolean> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec3<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<float> : std::integral_constant<type, type::single_precision> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec4<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<double> : std::integral_constant<type, type::double_precision> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat2x2<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::vec2> : std::integral_constant<type, type::single_vector_2> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat2x3<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::vec3> : std::integral_constant<type, type::single_vector_3> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat2x4<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::vec4> : std::integral_constant<type, type::single_vector_4> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat3x2<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::mat2x2> : std::integral_constant<type, type::single_matrix_22> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat3x3<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::mat2x3> : std::integral_constant<type, type::single_matrix_23> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat3x4<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::mat2x4> : std::integral_constant<type, type::single_matrix_24> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat4x2<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::mat3x2> : std::integral_constant<type, type::single_matrix_32> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat4x3<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::mat3x3> : std::integral_constant<type, type::single_matrix_33> {};
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat4x4<T, p>> : std::true_type {};
 
-		template <>
-		struct type_for<glm::mat3x4> : std::integral_constant<type, type::single_matrix_34> {};
+		template <typename T, meta::enable<is_expression<T>> = meta::enabler>
+		inline decltype(auto) make_expression(T&& value) {
+			return std::forward<T>(value);
+		}
 
-		template <>
-		struct type_for<glm::mat4x2> : std::integral_constant<type, type::single_matrix_42> {};
+		template <typename T, meta::enable<is_primitive<T>> = meta::enabler>
+		inline decltype(auto) make_expression(T&& value) {
+			return typed_constant<meta::unqualified_t<T>>(std::forward<T>(value));
+		}
 
-		template <>
-		struct type_for<glm::mat4x3> : std::integral_constant<type, type::single_matrix_43> {};
-
-		template <>
-		struct type_for<glm::mat4x4> : std::integral_constant<type, type::single_matrix_44> {};
-
-		template <>
-		struct type_for<glm::dmat2x2> : std::integral_constant<type, type::double_matrix_22> {};
-
-		template <>
-		struct type_for<glm::dmat2x3> : std::integral_constant<type, type::double_matrix_23> {};
-
-		template <>
-		struct type_for<glm::dmat2x4> : std::integral_constant<type, type::double_matrix_24> {};
-
-		template <>
-		struct type_for<glm::dmat3x2> : std::integral_constant<type, type::double_matrix_32> {};
-
-		template <>
-		struct type_for<glm::dmat3x3> : std::integral_constant<type, type::double_matrix_33> {};
-
-		template <>
-		struct type_for<glm::dmat3x4> : std::integral_constant<type, type::double_matrix_34> {};
-
-		template <>
-		struct type_for<glm::dmat4x2> : std::integral_constant<type, type::double_matrix_42> {};
-
-		template <>
-		struct type_for<glm::dmat4x3> : std::integral_constant<type, type::double_matrix_43> {};
-
-		template <>
-		struct type_for<glm::dmat4x4> : std::integral_constant<type, type::double_matrix_44> {};
-
+		template <typename T>
+		inline decltype(auto) make_unique_expression(T&& value) {
+			decltype(auto) r = make_expression(std::forward<T>(value));
+			return std::make_unique<meta::unqualified_t<decltype(r)>>(std::forward<decltype(r)>(r));
+		}
 	}
 }

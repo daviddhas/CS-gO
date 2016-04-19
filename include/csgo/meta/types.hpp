@@ -45,25 +45,40 @@ namespace csgo { namespace meta {
 		typedef T type;
 	};
 
+	namespace meta_detail {
+		template <typename T>
+		struct tuple_types {
+			typedef types<T> type;
+		};
+
+		template <typename... Args>
+		struct tuple_types<std::tuple<Args...>> {
+			typedef types<Args...> type;
+		};
+	}
+
+	template <typename T>
+	using tuple_types = typename meta_detail::tuple_types<T>::type;
+
 	template <std::ptrdiff_t n, typename T, typename... Tn>
 	struct make_types_n : public make_types_n<n - 1, T, T, Tn... > {};
 
 	template <typename T, typename... Tn>
-	struct make_types_n<0, T, Tn...> : public types < Tn... >{};
+	struct make_types_n<0, T, Tn...> : public types<Tn...>{};
 
 	template<std::ptrdiff_t I, typename... Tn>
-	struct at {
+	struct at_pack {
 		static_assert(I > -1, "index value is negative");
 		static const std::ptrdiff_t value = I;
 		typedef meta::invoke_t<tmp_detail::at_impl<I, Tn...>> type;
 	};
 
 	template <typename T, typename... Tn>
-	struct index_of {
+	struct index_of_pack {
 		static const std::ptrdiff_t value = tmp_detail::index_of_impl<0, T, Tn...>::value;
 	};
 
 	template<std::ptrdiff_t I, typename... Tn>
-	using at_t = meta::invoke_t<at<I, Tn...>>;
+	using at_pack_t = meta::invoke_t<at_pack<I, Tn...>>;
 
 }}

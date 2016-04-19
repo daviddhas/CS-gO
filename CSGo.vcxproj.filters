@@ -42,9 +42,6 @@
     <ClInclude Include="include\csgo\dsl\built_in.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\constant.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\expression.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -186,7 +183,25 @@
     <ClInclude Include="include\csgo\dsl\compiler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\container_variable.hpp">
+    <ClInclude Include="include\csgo\dsl\var.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\entry_point.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\statement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\glsl_generator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\generator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\workgroup.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\variable_id.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

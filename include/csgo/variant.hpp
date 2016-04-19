@@ -139,7 +139,7 @@ namespace csgo {
 	struct union_policy {
 		template <typename... Cn>
 		static auto construct(meta::types<Cn...>) {
-			typedef meta::at_t<0, Cn...> default_t;
+			typedef meta::at_pack_t<0, Cn...> default_t;
 			return default_t();
 		}
 	};
@@ -157,14 +157,14 @@ namespace csgo {
 		typedef meta::types<Cn...> variant_types;
 		typedef Policy policy;
 		template <typename T>
-		using index = meta::index_of<T, Cn...>;
+		using index = meta::index_of_pack<T, Cn...>;
 		// TODO: One day...
 		/*template <typename T>
 		using index_v = meta::index_of<T, Cn...>::value;*/
 		template <std::ptrdiff_t I>
-		using at = meta::at<I, Cn...>;
+		using at = meta::at_pack<I, Cn...>;
 		template <std::ptrdiff_t I>
-		using at_t = meta::at_t<I, Cn...>;
+		using at_t = meta::at_pack_t<I, Cn...>;
 
 	private:
 		friend variant_detail::copy_visitor;
@@ -183,7 +183,7 @@ namespace csgo {
 
 			template <typename Tv, typename TFx, typename... Tn>
 			decltype(auto) walk(std::ptrdiff_t idx, Tv&& var, TFx&& fx, Tn&&... argn) {
-				typedef meta::at_t<n, Cn...> T;
+				typedef meta::at_pack_t<n, Cn...> T;
 				if (n == idx)
 					return fx(meta::types<T>(), meta::int_sequence<n>(), std::forward<Tv>(var), std::forward<Tn>(argn)...);
 				walker<n + 1> w{};
@@ -219,7 +219,7 @@ namespace csgo {
 		template <std::ptrdiff_t I, typename... Tn>
 		void place(in_place_at<I>, Tn&&... argn) {
 			static_assert(I < sizeof...(Cn) && I > -1, "The type desired is not within the bounds for this variant_base");
-			typedef meta::at_t<I, Cn...> T;
+			typedef meta::at_pack_t<I, Cn...> T;
 			typedef variant_detail::storage_t<T> Ts;
 			typedef variant_detail::actual_t<T> Ta;
 			typedef meta::any<std::is_same<Ta, Cn>...> contains_t;
@@ -229,7 +229,7 @@ namespace csgo {
 
 		template <typename T, typename... Tn>
 		void place(in_place_of<T>, Tn&&... argn) {
-			typedef meta::index_of<T, Cn...> index_t;
+			typedef meta::index_of_pack<T, Cn...> index_t;
 			static_assert(index_t::value != -1, "Desired type is not part of this variant");
 			//static_assert(meta::index_of<T, Cn...>::value == meta::last_index_of<T, Cn...>::value, "Cannot determine which type is the correct one to use: specify in_place_at<integer_constant> to give specific type");
 			place(in_place_at<index_t::value>(), std::forward<Tn>(argn)...);
@@ -247,8 +247,8 @@ namespace csgo {
 		}
 
 		template <typename T, typename... Tn>
-		variant_base(in_place_of<T>, Tn&&... argn) : variant_base(in_place_at<meta::index_of<T, Cn...>::value>(), std::forward<Tn>(argn)...) {
-			static_assert(meta::index_of<T, Cn...>::value != -1, "Desired type is not part of this variant");
+		variant_base(in_place_of<T>, Tn&&... argn) : variant_base(in_place_at<meta::index_of_pack<T, Cn...>::value>(), std::forward<Tn>(argn)...) {
+			static_assert(meta::index_of_pack<T, Cn...>::value != -1, "Desired type is not part of this variant");
 			//static_assert(meta::index_of<T, Cn...>::value == meta::last_index_of<T, Cn...>::value, "Cannot determine which type is the correct one to use: specify in_place_at<integer_constant> to give specific type");
 		}
 
@@ -308,7 +308,7 @@ namespace csgo {
 
 		template <typename T>
 		bool is() const {
-			return class_index() == meta::index_of<T, Cn...>::value;
+			return class_index() == meta::index_of_pack<T, Cn...>::value;
 		}
 
 		template <typename T>
@@ -325,13 +325,13 @@ namespace csgo {
 
 		template <typename T>
 		T& get() {
-			assert((class_idx == meta::index_of<T, Cn...>::value));
+			assert((class_idx == meta::index_of_pack<T, Cn...>::value));
 			return unsafe_get<T>();
 		}
 
 		template <typename T>
 		const T& get() const {
-			assert((class_idx == meta::index_of<T, Cn...>::value));
+			assert((class_idx == meta::index_of_pack<T, Cn...>::value));
 			return unsafe_get<T>();
 		}
 

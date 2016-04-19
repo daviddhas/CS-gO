@@ -2,9 +2,9 @@
 
 namespace csgo { namespace meta {
 
-	template <typename T, template <typename...> class Templ>
+	template <template <typename...> class Templ, typename T>
 	struct is_specialization : std::false_type { };
-	template <typename... T, template <typename...> class Templ>
-	struct is_specialization<Templ<T...>, Templ> : std::true_type{ };
+	template <template <typename...> class Templ, typename... T>
+	struct is_specialization<Templ, Templ<T...>> : std::true_type{ };
 
 }}

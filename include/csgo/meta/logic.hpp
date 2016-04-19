@@ -36,7 +36,7 @@ namespace csgo { namespace meta {
 	struct not_ : public meta_bool<!T::value> {};
 
 	template<typename... Tn>
-	struct any : public meta_bool<true> {};
+	struct any : public meta_bool<false> {};
 
 	template<typename T, typename... Tn>
 	struct any<T, Tn...> : public conditional_t<T, meta_bool<true>, invoke_t<any<Tn...>>>{};

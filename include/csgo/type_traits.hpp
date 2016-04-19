@@ -13,3 +13,10 @@
 #include <csgo/meta/qualify.hpp>
 #include <csgo/meta/unwrap.hpp>
 #include <csgo/meta/unqualified.hpp>
+#include <initializer_list>
+
+namespace csgo {
+	namespace detail {
+		using swallow = std::initializer_list<int>;
+	}
+}
