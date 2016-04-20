@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../platform_gl.hpp"
-#include "../shader_stage.hpp"
-#include "../enums.hpp"
+#include <csgo/platform_gl.hpp>
+#include <csgo/shader_stage.hpp>
+#include <csgo/enums.hpp>
 
 namespace csgo {
 	namespace gl_detail {

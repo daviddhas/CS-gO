@@ -1,7 +1,7 @@
 #pragma once
 
 #include <csgo/glsl/glsl_generator.hpp>
-#include <csgo/gl/gl_4_5.core.hpp>
+#include <csgo/gl_detail/gl.hpp>
 #include <GLFW/glfw3.h>
 
 namespace csgo {
@@ -11,7 +11,7 @@ namespace csgo {
             static GLuint compile(const dsl::ir_program& p, const std::string& code, bool makeContextQ) {
                 if (makeContextQ)
                     makeContext();
-
+			 
                 GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
 
@@ -55,6 +55,10 @@ namespace csgo {
 
                 GLFWwindow *window = glfwCreateWindow(1024, 512, "CS Go", nullptr, nullptr);
                 glfwMakeContextCurrent(window);
+
+			 // hook up OpenGL debug callback
+			 // So we get error messages printed out to the console
+			 gl::DebugMessageCallback(gl_detail::debug_callback, nullptr);
             }
         };
     }

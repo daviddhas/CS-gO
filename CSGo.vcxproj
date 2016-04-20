@@ -33,6 +33,8 @@
     <ClInclude Include="include\csgo\dsl\intrinsic.hpp" />
     <ClInclude Include="include\csgo\format_qualifier.hpp" />
     <ClInclude Include="include\csgo\glsl\to_string.hpp" />
+    <ClInclude Include="include\csgo\gl_detail\gl.hpp" />
+    <ClInclude Include="include\csgo\gl_detail\gl_functions.hpp" />
     <ClInclude Include="include\csgo\memory_qualifier.hpp" />
     <ClInclude Include="include\csgo\program.hpp" />
     <ClInclude Include="include\csgo\qualifiers.hpp" />
