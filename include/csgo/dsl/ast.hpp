@@ -1,6 +1,6 @@
 #pragma once
 
-#include <csgo/dsl/entry_point.hpp>
+#include <csgo/entry_point.hpp>
 #include <csgo/dsl/symbol_table.hpp>
 #include <iostream>
 

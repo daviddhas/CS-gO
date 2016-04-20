@@ -24,12 +24,6 @@
     <ClInclude Include="include\csgo\dsl\binary_expression.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\binary_operations.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\dsl\built_in.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\expression.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -46,9 +40,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\dsl\type.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\dsl\unary_operations.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\type_traits.hpp">
@@ -150,9 +141,6 @@
     <ClInclude Include="include\csgo\dsl\var.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\entry_point.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\statement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -193,6 +181,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\gl_detail\gl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\entry_point.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\built_in.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\binary_operations.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\unary_operations.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

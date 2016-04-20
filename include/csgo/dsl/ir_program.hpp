@@ -1,6 +1,6 @@
 #pragma once
 
-#include <csgo/dsl/entry_point.hpp>
+#include <csgo/entry_point.hpp>
 #include <csgo/dsl/ast.hpp>
 #include <csgo/type_traits.hpp>
 #include <memory>

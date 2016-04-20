@@ -2,9 +2,9 @@ INCLUDE = -I/usr/include/
 LIBDIR  = -L/usr/lib
 
 FLAGS = -Wall
-CC = g++                                  # change to gcc if using C
+CC = g++
 CFLAGS = $(FLAGS) $(INCLUDE)
-LIBS =  -lGL -lGLU -lglut
+LIBS =  -lGL -lGLU -lglfw
 
 All: simple
 

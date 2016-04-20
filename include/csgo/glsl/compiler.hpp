@@ -12,6 +12,8 @@ namespace csgo {
                 if (makeContextQ)
                     makeContext();
 			 
+			 std::cout << code;
+
                 GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
 

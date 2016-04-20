@@ -7,7 +7,7 @@ namespace csgo {
     inline dsl::addition operator + (L&& l, R&& r) {
         return dsl::addition(
             dsl::make_unique_expression(std::forward<L>(l)),
-            make_unique_expression(std::forward<R>(r))
+            dsl::make_unique_expression(std::forward<R>(r))
         );
     }
 

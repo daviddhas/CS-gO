@@ -1,8 +1,8 @@
 #pragma once
 
-#include <csgo/dsl/binary_operations.hpp>
-#include <csgo/dsl/unary_operations.hpp>
-#include <csgo/dsl/built_in.hpp>
+#include <csgo/binary_operations.hpp>
+#include <csgo/unary_operations.hpp>
+#include <csgo/built_in.hpp>
 #include <csgo/dsl/intrinsic.hpp>
 #include <vector>
 #include <memory>

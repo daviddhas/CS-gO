@@ -19,4 +19,9 @@ namespace csgo {
 	namespace detail {
 		using swallow = std::initializer_list<int>;
 	}
+
+	template <std::size_t I, typename Tuple>
+	decltype(auto) forward_get(Tuple&& tuple) {
+		return std::forward<std::tuple_element_t<I, meta::unqualified_t<Tuple>>>(std::get<I>(tuple));
+	}
 }
