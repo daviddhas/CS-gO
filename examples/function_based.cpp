@@ -1,6 +1,4 @@
 #include <csgo/program.hpp>
-#include <csgo/dsl/generator.hpp>
-#include <csgo/glsl/glsl_generator.hpp>
 
 #include <iostream>
 

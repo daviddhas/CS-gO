@@ -1,6 +1,7 @@
 #pragma once
 
 #include <csgo/glsl/compiler.hpp>
+#include <csgo/built_in_io.hpp>
 
 namespace csgo {
     struct program {
