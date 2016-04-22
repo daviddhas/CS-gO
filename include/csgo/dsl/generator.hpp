@@ -11,7 +11,9 @@ namespace csgo {
 			std::string generate(ir_program& p) {
 				std::stringstream sstr;
 				generate(p, sstr);
-				return sstr.str();
+				std::string code = sstr.str();
+				std::cout << code << std::endl;
+				return code;
 			}
 
             virtual void generate(ir_program& p, std::ostream& ostr) = 0;

@@ -10,22 +10,22 @@ namespace csgo {
         }
 
         template<typename F>
-        program(F&& f, bool makeContext) {
-            dsl::ir_program p = dsl::make_ir_program(f);
-		  // the ir_program's main has the workgroup count on it
-		  wg = p.main.wg; // save it
+        program(F&& f, bool makeContext) : irp(dsl::make_ir_program(f)) {
             glsl::glsl_generator gen;
-            handle = glsl::compiler::compile(p, dsl::generate(p, gen), makeContext);
+		  std::string code = dsl::generate(irp, gen);
+            handle = glsl::compiler::compile(irp, code, makeContext);
         }
 
         void run() {
             gl::UseProgram(handle);
 		  // Use the workgroups inferred from the entry_point program
-            gl::DispatchCompute(wg.x, wg.y, wg.z);
+		  workgroup& wg = irp.main.wg;
+		  gl::DispatchCompute(wg.x, wg.y, wg.z);
         }
 
     private:
+	    dsl::ir_program irp;
 	    workgroup wg;
-        GLuint handle;
+	    GLuint handle;
     };
 }

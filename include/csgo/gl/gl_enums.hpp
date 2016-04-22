@@ -1,11 +1,11 @@
 #pragma once
 
-#include <csgo/platform_gl.hpp>
+#include <csgo/gl/platform_gl.hpp>
 #include <csgo/shader_stage.hpp>
 #include <csgo/enums.hpp>
 
 namespace csgo {
-	namespace gl_detail {
+	namespace gld {
 		enum class shader_stage {
 			vertex = gl::VERTEX_SHADER,
 			hull = gl::TESS_CONTROL_SHADER,

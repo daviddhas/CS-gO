@@ -14,21 +14,23 @@ namespace csgo {
 			int binding_index = 0;
 
 			// TODO: implement the internals of writer for actual codegen
-			struct writer : dsl::expression_visitor {
+			struct writer : dsl::statement_visitor {
 				std::ostream& ostr;
 				
 				writer(std::ostream& ostr) : ostr(ostr) {}
 
-				virtual void visit(dsl::statement&) override {
-					
+				virtual void visit(dsl::statement& s) override {
+					for (auto& e : s.expressions) {
+						if (e == nullptr)
+							continue;
+						e->accept(*this);
+						ostr << ";";
+						ostr << "\n";
+					}
 				}
 
-				virtual void visit(dsl::expression&) override {
-					
-				}
+				virtual void visit(dsl::expression_reference& e) override {
 
-				virtual void visit(dsl::binary_expression& e) override {
-					
 				}
 
 				virtual void visit(dsl::addition& e) override {
@@ -52,16 +54,36 @@ namespace csgo {
 				}
 
 				virtual void visit(dsl::layout_variable& v) override {
-				
+
+				}
+
+				virtual void visit(dsl::image_variable& v) override {
+
 				}
 
 				virtual void visit(dsl::constant& v) override {
 
 				}
+
+				virtual void visit(dsl::assignment& v) override {
+
+				}
+
+				virtual void visit(dsl::indexing& v) override {
+
+				}
+
+				virtual void visit(dsl::declaration& v) override {
+
+				}
+
+				virtual void visit(dsl::declaration_assignment& v) override {
+
+				}
 			};
 
 			void preamble(dsl::ir_program& p, std::ostream& ostr) {
-				ostr << "#version 430" << "\n\n";
+				ostr << "#version 430";
 			}
 
 			void uniform_variable(bool isoutput, const std::string& name, const dsl::variable& v, dsl::ir_program& p, std::ostream& ostr) {
@@ -91,13 +113,7 @@ namespace csgo {
 				// using lambda to allow early "return" statements
 				// while still exiting at the end
 				[&]() {
-					if (v.initialization == nullptr)
-						return;
-					dsl::constant* c = dynamic_cast<dsl::constant*>(v.initialization.get());
-					if (c == nullptr)
-						return;
-					ostr << " = ";
-					c->write(ostr);
+					
 				}(); // immediately call the lambda
 				
 				// And then close
@@ -105,26 +121,22 @@ namespace csgo {
 				ostr << "\n";
 			}
 
-			void input(dsl::ir_program& p, std::ostream& ostr) {
-				for (std::size_t index = 0; index < p.inputs.size(); ++index ) {
-					dsl::uniform_reference& ud = p.inputs[index];
-					auto namedvar = p.ast.symbols.find(ud.id);
+			void uniform_variables(bool isoutput, dsl::ir_program& p, std::ostream& ostr) {
+				for (std::size_t index = 0; index < p.main.input_variables.size(); ++index) {
+					auto& ud = p.main.input_variables[index];
+					auto namedvar = p.ast.symbols.find(ud->variable_id);
 					const std::string& name = namedvar.first;
 					const dsl::variable& v = namedvar.second;
-					uniform_variable(false, name, v, p, ostr);
+					uniform_variable(isoutput, name, v, p, ostr);
 				}
-				ostr << "\n";
+			}
+
+			void input(dsl::ir_program& p, std::ostream& ostr) {
+				uniform_variables(false, p, ostr);
 			}
 
 			void output(dsl::ir_program& p, std::ostream& ostr) {
-				for (std::size_t index = 0; index < p.outputs.size(); ++index) {
-					dsl::uniform_reference& ud = p.outputs[index];
-					auto namedvar = p.ast.symbols.find(ud.id);
-					const std::string& name = namedvar.first;
-					const dsl::variable& v = namedvar.second;
-					uniform_variable(true, name, v, p, ostr);
-				}
-				ostr << "\n";
+				uniform_variables(true, p, ostr);
 			}
 
 			void open(dsl::ir_program& p, std::ostream& ostr) {
@@ -151,7 +163,7 @@ namespace csgo {
 				ostr << " ) in;\n\n";
 
 				// Now, start main
-				ostr << "void main() {\n";
+				ostr << "void main() {";
 				++indentation_level;
 			}
 
@@ -163,15 +175,21 @@ namespace csgo {
 			virtual void generate(dsl::ir_program& p, std::ostream& ostr) override {
 				// setup variables
 				preamble(p, ostr);
+				ostr << "\n\n";
 				input(p, ostr);
+				ostr << "\n";
 				output(p, ostr);
-				
+				ostr << "\n";
+
 				// open main
 				open(p, ostr);
-				
+				ostr << "\n";
+
 				// Recursive write of the actual ir_program now
 				writer mainwriter(ostr);
-				p.main.accept(mainwriter);
+				for (dsl::statement& s : p.main.statements) {
+					s.accept(mainwriter);
+				}
 
 				// close main
 				close(p, ostr);

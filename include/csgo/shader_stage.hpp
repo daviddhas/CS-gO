@@ -12,7 +12,6 @@ namespace csgo {
 		pixel = 0x04,
 		fragment = pixel,
 		compute = 0x05,
-		unknown = 0x06,
 	};
 
 }

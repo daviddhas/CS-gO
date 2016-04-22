@@ -108,6 +108,9 @@ namespace csgo {
 	struct format_qualifier_for;
 
 	template <>
+	struct format_qualifier_for<uint8_t> : std::integral_constant<format_qualifier, format_qualifier::r8> {};
+
+	template <>
 	struct format_qualifier_for<float> : std::integral_constant<format_qualifier, format_qualifier::r32f> {};
 
 	template <glm::precision p>

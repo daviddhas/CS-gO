@@ -9,16 +9,12 @@ namespace csgo {
 			std::unique_ptr<expression> r;
 
 			binary_expression(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : l(std::move(l)), r(std::move(r)) {}
-			
-			virtual void accept(expression_visitor& v) override {
-				v.visit(*this);
-			}
 		};
 
 		struct addition : binary_expression {
 			addition(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
@@ -26,7 +22,7 @@ namespace csgo {
 		struct subtraction : binary_expression {
 			subtraction(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
@@ -34,7 +30,7 @@ namespace csgo {
 		struct multiplication : binary_expression {
 			multiplication(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
@@ -42,16 +38,24 @@ namespace csgo {
 		struct division : binary_expression {
 			division(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
 
-		struct involution : binary_expression {
-			involution(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
+		struct assignment : binary_expression {
+			assignment(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
+			}
+		};
+
+		struct indexing : binary_expression {
+			indexing(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
+
+			virtual void accept(statement_visitor& v) override {
+				return v.visit(*this);
 			}
 		};
 

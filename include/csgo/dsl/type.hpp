@@ -1,7 +1,9 @@
 #pragma once
 
+#include <csgo/optional.hpp>
 #include <csgo/type_traits.hpp>
 #include <csgo/enums.hpp>
+#include <csgo/qualifiers.hpp>
 #include <glm/glm.hpp>
 #include <string>
 
@@ -141,6 +143,78 @@ namespace csgo {
 			};
 
 			return strs[enums::to_underlying(x)];
+		}
+
+		struct type_result {
+			type result;
+			optional<qualifiers> layout;
+		};
+
+		inline bool is_image_type(type t) {
+			switch (t) {
+			case type::image_1d:
+			case type::image_1d_array:
+			case type::image_2d:
+			case type::image_2d_array:
+			case type::image_2d_multisample:
+			case type::image_2d_multisample_array:
+			case type::image_2d_rect:
+			case type::image_buffer:
+			case type::image_cube:
+			case type::image_cube_array:
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		inline bool is_vector_type(type t) {
+			switch (t) {
+			case type::boolean_vector_2:
+			case type::boolean_vector_3:
+			case type::boolean_vector_4:
+			case type::single_vector_2:
+			case type::single_vector_3:
+			case type::single_vector_4:
+			case type::integer_vector_2:
+			case type::integer_vector_3:
+			case type::integer_vector_4:
+			case type::unsigned_integer_vector_2:
+			case type::unsigned_integer_vector_3:
+			case type::unsigned_integer_vector_4:
+			case type::double_vector_2:
+			case type::double_vector_3:
+			case type::double_vector_4:
+				return true;
+			default:
+				return false;
+			}
+		}
+
+		inline bool is_matrix_type(type t) {
+			switch (t) {
+			case type::double_matrix_22:
+			case type::double_matrix_23:
+			case type::double_matrix_24:
+			case type::double_matrix_32:
+			case type::double_matrix_33:
+			case type::double_matrix_34:
+			case type::double_matrix_42:
+			case type::double_matrix_43:
+			case type::double_matrix_44:
+			case type::single_matrix_22:
+			case type::single_matrix_23:
+			case type::single_matrix_24:
+			case type::single_matrix_32:
+			case type::single_matrix_33:
+			case type::single_matrix_34:
+			case type::single_matrix_42:
+			case type::single_matrix_43:
+			case type::single_matrix_44:
+				return true;
+			default:
+				return false;
+			}
 		}
 
 		template <typename T>

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <csgo/glsl/glsl_generator.hpp>
-#include <csgo/gl_detail/gl.hpp>
-#include <GLFW/glfw3.h>
+#include <csgo/gl/gl.hpp>
 
 namespace csgo {
     namespace glsl {
@@ -12,7 +11,7 @@ namespace csgo {
                 if (makeContextQ)
                     makeContext();
 			 
-			 std::cout << code;
+			 std::cout << "Code:\n" << code << std::endl;
 
                 GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
@@ -60,7 +59,7 @@ namespace csgo {
 
 			 // hook up OpenGL debug callback
 			 // So we get error messages printed out to the console
-			 gl::DebugMessageCallback(gl_detail::debug_callback, nullptr);
+			 gl::DebugMessageCallback(gld::debug_callback, nullptr);
             }
         };
     }

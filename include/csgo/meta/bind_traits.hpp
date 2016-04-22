@@ -11,7 +11,7 @@ namespace csgo { namespace meta {
 			template<class G>
 			static auto test(int) -> decltype(&G::operator(), void());
 			template<class>
-			static auto test(...) -> struct nat;
+			static auto test(...) -> meta::sfinae_small_t;
 
 			using type = std::is_void < decltype(test<F>(0)) >;
 		};
