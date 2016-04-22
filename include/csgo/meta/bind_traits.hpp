@@ -10,7 +10,7 @@ namespace csgo { namespace meta {
 		struct check_deducible_signature {
 			template<class G>
 			static auto test(int) -> decltype(&G::operator(), void());
-			template<class>
+            template<class>
 			static auto test(...) -> struct nat;
 
 			using type = std::is_void < decltype(test<F>(0)) >;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <csgo/glsl/compiler.hpp>
-#include <csgo/built_in_io.hpp>
+#include <csgo/dsl/io_result.hpp>
 
 namespace csgo {
     struct program {
@@ -12,17 +12,20 @@ namespace csgo {
 
         template<typename F>
         program(F&& f, bool makeContext) {
-            dsl::ir_program p = dsl::make_ir_program(f);
-		  // the ir_program's main has the workgroup count on it
-		  wg = p.main.wg; // save it
+            dsl::ir_program p = dsl::make_ir_program(std::forward<F>(f));
+            wg = p.main.wg;
+            p.outputs.size();
+
             glsl::glsl_generator gen;
             handle = glsl::compiler::compile(p, dsl::generate(p, gen), makeContext);
         }
 
-        void run() {
+        template<typename... Args>
+        std::vector<dsl::io_result> operator()(Args... args) {
             gl::UseProgram(handle);
-		  // Use the workgroups inferred from the entry_point program
             gl::DispatchCompute(wg.x, wg.y, wg.z);
+
+            return std::vector<dsl::io_result>();
         }
 
     private:
