@@ -18,7 +18,7 @@ namespace csgo {
             gl::TexImage2D(gl::TEXTURE_2D, 0, getInternalFormat(), width, height, 0, getFormat(), getType(), data.data());
         }
 
-        std::vector<P> read()
+        std::vector<P> read() const
         {
             std::vector<P> data(height * width);
             gl::BindTexture(gl::TEXTURE_2D, textureID);
@@ -26,7 +26,7 @@ namespace csgo {
             return data;
         }
 
-        GLuint getTextureID()
+        GLuint getTextureID() const
         {
             return textureID;
         }
@@ -40,37 +40,37 @@ namespace csgo {
 #pragma region gl type getters
 
         template<typename U = P, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        GLenum getFormat()
+        GLenum getFormat() const
         {
             return gl::RED;
         }
 
         template<typename U = P, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        GLenum getFormat()
+        GLenum getFormat() const
         {
             return gl::RED_INTEGER;
         }
 
         template<typename U = P, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        GLint getInternalFormat()
+        GLint getInternalFormat() const
         {
             return gl::R32F;
         }
 
         template<typename U = P, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        GLenum getInternalFormat()
+        GLenum getInternalFormat() const
         {
             return gl::R32I;
         }
 
         template<typename U = P, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        GLenum getType()
+        GLenum getType() const
         {
             return gl::FLOAT;
         }
 
         template<typename U = P, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        GLenum getType()
+        GLenum getType() const
         {
             return gl::INT;
         }

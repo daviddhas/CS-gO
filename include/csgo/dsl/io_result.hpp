@@ -5,39 +5,55 @@
 
 namespace csgo {
     namespace dsl {
+
+#pragma region converter
+
+        struct texture_data
+        { };
+
+        // TODO: implement converters
+        template<typename T>
+        struct converter {};
+
+        template<>
+        struct converter<image2d_io<float>>
+        {
+            static image2d_io<float> convert(texture_data data)
+            {
+                return image2d_io<float>(std::vector<float>(), 0);
+            }
+        };
+
+        template<>
+        struct converter<image2d_io<int>>
+        {
+            static image2d_io<float> convert(texture_data data) {
+                return image2d_io<float>(std::vector<float>(), 0);
+            }
+        };
+
+#pragma endregion
+
         struct io_result {
-            io_result(image2d_io<float> f)
-                : image2d_float(std::move(image2d_float))
-                , image2d_int(std::vector<int>(), 0)
-                , t(IMAGE2D_FLOAT)
+            io_result(std::vector<texture_data> output)
+                : output(std::move(output))
             { }
 
-            io_result(image2d_io<int> image2d_float)
-                : image2d_int(std::move(image2d_int))
-                , image2d_float(std::vector<float>(), 0)
-                , t(IMAGE2D_INT)
-            { }
-            operator image2d_io<float>()
+            template<typename... Ts>
+            operator std::tuple<Ts...>()
             {
-                if (t == IMAGE2D_INT)
-                    throw std::runtime_error("Cannot cast to float");
-                return image2d_float;
+                return toTuple<Ts...>(std::make_index_sequence<sizeof...(Ts)>());
             }
 
-            operator image2d_io<int>()
-            {
-                if (t == IMAGE2D_FLOAT)
-                    throw std::runtime_error("Cannot cast to int");
-                return image2d_int;
-            }
 
         private:
-            enum result_type { IMAGE2D_FLOAT, IMAGE2D_INT };
+            template<typename... Ts, std::size_t... Indices>
+            std::tuple<Ts...> toTuple(std::index_sequence<Indices...>)
+            {
+                return std::make_tuple(converter<Ts>::convert(output[Indices])...);
+            }
 
-            result_type t;
-
-            image2d_io<float> image2d_float;
-            image2d_io<int> image2d_int;
+            std::vector<texture_data> output;
         };
     }
 }

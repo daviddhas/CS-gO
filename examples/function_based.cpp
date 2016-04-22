@@ -13,10 +13,10 @@ void function_based() {
     std::vector<float> in1(size, 1);
     std::vector<float> in2(size, 3);
 
-    auto results = p(csgo::image2d_io<float>(in1, 1), csgo::image2d_io<float>(in2, 1));
+    auto results_ = p(csgo::image2d_io<float>(in1, 1), csgo::image2d_io<float>(in2, 1));
 
-    csgo::image2d_io<float> result = results[0];
-    for (float f : result.read())
+    std::tuple<csgo::image2d_io<float>> results = results_;
+    for (float f : std::get<0>(results).read())
         std::cout << f << " ";
     std::cout << '\n';
 
