@@ -14,7 +14,7 @@ namespace csgo {
 			ir_entry_point main;
 			abstract_syntax_tree ast;
 
-			ir_program(ir_entry_point main, abstract_syntax_tree ast) : main(std::move(main)), ast(std::move(ast)) {
+			ir_program(ir_entry_point irmain) : main(std::move(irmain)), ast(main) {
 
 			}
 		};
@@ -33,8 +33,7 @@ namespace csgo {
 					blackhole_guard g(b);
 					entry_point ep = f(args...);
 					ir_entry_point irep(std::move(ep), std::move(inputs), std::move(b.statements));
-					abstract_syntax_tree ast(irep);
-					return ir_program(std::move(irep), std::move(ast));
+					return ir_program(std::move(irep));
 				}
 			}
 

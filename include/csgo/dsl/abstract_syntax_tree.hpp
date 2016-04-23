@@ -5,21 +5,37 @@
 #include <csgo/dsl/unary_expression.hpp>
 #include <csgo/dsl/built_in.hpp>
 #include <csgo/dsl/symbol_table.hpp>
+#include <unordered_set>
 
 #include <iostream>
 
 namespace csgo {
 	namespace dsl {
 		struct abstract_syntax_tree {
+			std::unordered_set<id> inputs;
+			std::unordered_set<id> outputs;
 			symbol_table symbols;
 			std::unordered_map<id, std::size_t> expression_indices;
 			std::vector<std::reference_wrapper<expression>> flow;
 
 			abstract_syntax_tree(ir_entry_point& main) {
+				for (auto& in : main.input_variables) {
+					inputs.insert(in->variable_id);
+					symbols.give_name(*in);
+				}
+				for (auto& out : main.input_variables) {
+					outputs.insert(out->variable_id);
+					symbols.give_name(*out);
+				}
+
 				tree_builder builder(*this);
 				for (auto& s : main.statements) {
 					s.accept(builder);
 				}
+			}
+
+			bool is_input_output( const id& i ) const {
+				return inputs.find(i) != inputs.cend() || outputs.find(i) != outputs.cend();
 			}
 
 		private:

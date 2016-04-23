@@ -14,7 +14,7 @@ namespace csgo {
 			}
 		};
 
-		struct declaration_assignment : declaration {
+		struct declaration_assignment : declaration, assignment {
 			std::unique_ptr<expression> initialization;
 
 			declaration_assignment(std::unique_ptr<variable> decl, std::unique_ptr<expression> init) : declaration(std::move(decl)), initialization(std::move(init)) {}

@@ -15,9 +15,10 @@ namespace csgo {
 
 			// TODO: implement the internals of writer for actual codegen
 			struct writer : dsl::statement_visitor {
+				dsl::ir_program& irp;
 				std::ostream& ostr;
 				
-				writer(std::ostream& ostr) : ostr(ostr) {}
+				writer(dsl::ir_program& p, std::ostream& ostr) : irp(p), ostr(ostr) {}
 
 				virtual void visit(dsl::statement& s) override {
 					for (auto& e : s.expressions) {
@@ -78,7 +79,10 @@ namespace csgo {
 				}
 
 				virtual void visit(dsl::declaration_assignment& v) override {
+					auto varop = irp.ast.is_input_output(v.vardecl->variable_id);
+					if () {
 
+					}
 				}
 			};
 
@@ -186,7 +190,7 @@ namespace csgo {
 				ostr << "\n";
 
 				// Recursive write of the actual ir_program now
-				writer mainwriter(ostr);
+				writer mainwriter(p, ostr);
 				for (dsl::statement& s : p.main.statements) {
 					s.accept(mainwriter);
 				}
