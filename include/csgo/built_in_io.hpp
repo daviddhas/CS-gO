@@ -5,37 +5,50 @@
 #include <type_traits>
 
 namespace csgo {
+
+    namespace dsl {
+        struct texture_data {
+            GLuint id, width, height;
+        };
+    }
+
     template <typename P>
     struct image2d_io {
 
         template<typename std::enable_if_t<std::is_same<P, float>::value || std::is_same<P, int>::value, int> = 0>
-        image2d_io(const std::vector<P>& data, int width)
-            : height((int)data.size() / width)
-            , width(width)
+        image2d_io(const std::vector<P>& vals, int width)
         {
+            int height = (int)vals.size() / width;
+
+            GLuint textureID;
             gl::GenTextures(1, &textureID);
             gl::BindTexture(gl::TEXTURE_2D, textureID);
-            gl::TexImage2D(gl::TEXTURE_2D, 0, getInternalFormat(), width, height, 0, getFormat(), getType(), data.data());
+            gl::TexImage2D(gl::TEXTURE_2D, 0, getInternalFormat(), width, height, 0, getFormat(), getType(), vals.data());
+
+            data = dsl::texture_data{ textureID, (GLuint)width, (GLuint)height };
         }
+
+        template<typename std::enable_if_t<std::is_same<P, float>::value || std::is_same<P, int>::value, int> = 0>
+        image2d_io(dsl::texture_data data)
+            : data(data)
+        { }
 
         std::vector<P> read() const
         {
-            std::vector<P> data(height * width);
-            gl::BindTexture(gl::TEXTURE_2D, textureID);
-            gl::GetTexImage(gl::TEXTURE_2D, 0, getFormat(), getType(), data.data());
-            return data;
+            std::vector<P> vals(data.height * data.width);
+            gl::BindTexture(gl::TEXTURE_2D, data.id);
+            gl::GetTexImage(gl::TEXTURE_2D, 0, getFormat(), getType(), vals.data());
+            return vals;
         }
 
         GLuint getTextureID() const
         {
-            return textureID;
+            return data.id;
         }
 
     private:
 
-        int height;
-        int width;
-        GLuint textureID;
+        dsl::texture_data data;
 
 #pragma region gl type getters
 

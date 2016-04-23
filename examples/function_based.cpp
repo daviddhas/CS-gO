@@ -8,8 +8,8 @@ csgo::entry_point average(csgo::image2d<float> in1, csgo::image2d<float> in2) {
 }
 
 void function_based() {
-    csgo::program p(average, true);
-    int size = 100;
+    GLuint size = 100;
+    csgo::program p(average, { {1, size} }, true);
     std::vector<float> in1(size, 1);
     std::vector<float> in2(size, 3);
 

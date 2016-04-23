@@ -6,15 +6,21 @@
 namespace csgo {
     struct program {
 
+        typedef std::vector<std::vector<GLuint>> size_list_t;
+
         template<typename F>
-        program(F&& f)
-            : program(f, false)
+        program(F&& f, size_list_t sizes)
+            : program(std::forward<F>(f), std::move(sizes), false)
         { }
 
         template<typename F>
-        program(F&& f, bool makeContext)
+        program(F&& f, const size_list_t& sizes, bool makeContext)
             : ir(dsl::make_ir_program(std::forward<F>(f)))
+            , sizes(sizes)
         {
+            if (sizes.size() != ir.outputs.size())
+                throw std::runtime_error("Incorrect number of output sizes");
+
             glsl::glsl_generator gen;
             handle = glsl::compiler::compile(ir, dsl::generate(ir, gen), makeContext);
         }
@@ -22,6 +28,9 @@ namespace csgo {
         template<typename... Args>
         dsl::io_result operator()(Args&&... args)
         {
+            if(sizeof...(args) != ir.inputs.size())
+                throw std::runtime_error("Incorrect number of inputs");
+
             gl::UseProgram(handle);
 
             set_inputs(std::forward<Args>(args)...);
@@ -34,14 +43,11 @@ namespace csgo {
 
     private:
 
-#pragma region set inputs
+#pragma region set inputs/outputs
 
         template<typename... Args>
-        void set_inputs(Args&&...args)
+        void set_inputs(Args&&... args)
         {
-            if(sizeof...(args) != ir.inputs.size())
-                throw std::runtime_error("Wrong number of inputs");
-
             set_inputs_impl(0, std::forward<Args>(args)...);
         }
 
@@ -63,20 +69,34 @@ namespace csgo {
             gl::BindTexture(gl::TEXTURE_2D, textureID);
         }
 
-#pragma endregion
-
         std::vector<dsl::texture_data> set_outputs()
         {
-            std::vector<dsl::texture_data> outputs;
-            for(auto& uniform : ir.outputs)
+            GLuint size = (GLuint)ir.outputs.size();
+            std::vector<dsl::texture_data> outputs(size);
+
+            std::vector<GLuint> handles(size);
+            gl::GenTextures(size, handles.data());
+
+            GLuint numInputs = (GLuint)ir.inputs.size();
+            for (GLuint i = 0; i < size; i++)
             {
-                // TODO: set outputs
+                gl::ActiveTexture(gl::TEXTURE0 + numInputs + i);
+                gl::BindTexture(gl::TEXTURE_2D, handles[i]);
+                
+                // get this type from semantic analysis?
+                gl::TexImage2D(gl::TEXTURE_2D, 0, gl::R32F, sizes[i][0], sizes[i][1], 0, gl::RED, gl::FLOAT, nullptr);
+                GLint loc = gl::GetUniformLocation(handle, ir.ast.symbols.find(ir.outputs[i].id).first.c_str());
+                gl::Uniform1i(loc, numInputs + i);
+                outputs[i] = dsl::texture_data{ handles[i], sizes[i][0], sizes[i][1] };
             }
 
             return outputs;
         }
 
+#pragma endregion
+
         dsl::ir_program ir;
         GLuint handle;
+        size_list_t sizes;
     };
 }

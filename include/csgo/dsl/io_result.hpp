@@ -8,9 +8,6 @@ namespace csgo {
 
 #pragma region converter
 
-        struct texture_data
-        { };
-
         // TODO: implement converters
         template<typename T>
         struct converter {};
@@ -20,23 +17,23 @@ namespace csgo {
         {
             static image2d_io<float> convert(texture_data data)
             {
-                return image2d_io<float>(std::vector<float>(), 0);
+                return image2d_io<float>(data);
             }
         };
 
         template<>
         struct converter<image2d_io<int>>
         {
-            static image2d_io<float> convert(texture_data data) {
-                return image2d_io<float>(std::vector<float>(), 0);
+            static image2d_io<int> convert(texture_data data) {
+                return image2d_io<int>(data);
             }
         };
 
 #pragma endregion
 
         struct io_result {
-            io_result(std::vector<texture_data> output)
-                : output(std::move(output))
+            io_result(std::vector<texture_data> outputs)
+                : outputs(std::move(outputs))
             { }
 
             template<typename... Ts>
@@ -50,10 +47,10 @@ namespace csgo {
             template<typename... Ts, std::size_t... Indices>
             std::tuple<Ts...> toTuple(std::index_sequence<Indices...>)
             {
-                return std::make_tuple(converter<Ts>::convert(output[Indices])...);
+                return std::make_tuple(converter<Ts>::convert(outputs[Indices])...);
             }
 
-            std::vector<texture_data> output;
+            std::vector<texture_data> outputs;
         };
     }
 }
