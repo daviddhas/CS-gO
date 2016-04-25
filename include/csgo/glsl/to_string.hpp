@@ -76,6 +76,5 @@ namespace csgo {
 
 			return strs[enums::to_underlying(x)];
 		}
-
 	}
 }

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\csgo\dsl\ast.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\compute_program.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
     <ClInclude Include="include\csgo\error.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\gl_detail\gl_enums.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -109,12 +103,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\graphics_device.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\Input.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\platform_gl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\shader_source.hpp">
@@ -141,9 +129,6 @@
     <ClInclude Include="include\csgo\workgroup.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\variable_id.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\qualifiers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -168,28 +153,85 @@
     <ClInclude Include="include\csgo\glsl\compiler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\gl_detail\gl_functions.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\gl_detail\gl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\entry_point.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\built_in.hpp">
+    <ClInclude Include="include\csgo\optional.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\binary_operations.hpp">
+    <ClInclude Include="include\csgo\uninitialized.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\unary_operations.hpp">
+    <ClInclude Include="include\csgo\nullopt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\gl\gl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\gl\gl_enums.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\gl\gl_functions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\gl\platform_gl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\blackhole.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\abstract_syntax_tree.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\ir_entry_point.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\image_variable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\primitives.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\id.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\expression_consume.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\built_in.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\binary_operations.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\unary_operations.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\lang.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\parser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\writer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\access.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\built_in_io.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\dsl\io_result.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\ast.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\util.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\display.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

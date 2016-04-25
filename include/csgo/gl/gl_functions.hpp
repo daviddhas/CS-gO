@@ -1,6 +1,6 @@
 #pragma once
 
-#include <csgo/platform_gl.hpp>
+#include <csgo/gl/platform_gl.hpp>
 #include <csgo/shader_stage.hpp>
 #include <csgo/enums.hpp>
 
@@ -8,7 +8,7 @@
 #include <string>
 
 namespace csgo {
-	namespace gl_detail {
+	namespace gld {
 		
 		inline void APIENTRY debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
 			const static std::string sources[] = {

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "platform_gl.hpp"
-#include "shader_source.hpp"
-#include "error.hpp"
+#include <csgo/shader_source.hpp>
+#include <csgo/error.hpp>
+#include <csgo/gl/gl.hpp>
+#include <csgo/optional.hpp>
 #include <string>
 
 namespace csgo {
@@ -40,18 +41,18 @@ namespace csgo {
 			return shaderbytecode.stage();
 		}
 
-		shader(shader_source description, shader_stage must_be = shader_stage::unknown) : shader(shader_byte_code(std::move(description)), must_be) {
+		shader(shader_source description, optional<shader_stage> must_be = nullopt) : shader(shader_byte_code(std::move(description)), must_be) {
 
 		}
 
-		shader(shader_byte_code description, shader_stage must_be = shader_stage::unknown) : shaderresource(nullptr), reflection(nullptr), shaderbytecode(std::move(description)) {
-			if (must_be != shader_stage::unknown && must_be != shaderbytecode.stage()) {
-				throw shader_error(0x1, "shader byte code must match the expected shader type");
+		shader(shader_byte_code description, optional<shader_stage> must_be = nullopt) : shaderresource(nullptr), reflection(nullptr), shaderbytecode(std::move(description)) {
+			if (must_be && *must_be != shaderbytecode.stage()) {
+				throw shader_error(0x1, "shader byte code stage type must match the expected shader stage type");
 			}
 			const std::string& sourcebytecode = byte_code().source().source;
 			const GLchar* const code = static_cast<const GLchar* const>(sourcebytecode.data());
 			const GLint codesize = static_cast<GLint>(sourcebytecode.size());
-			gl_detail::shader_stage typedglstage = gl_detail::to_platform(stage());
+			gld::shader_stage typedglstage = gld::to_platform(stage());
 			GLuint glstage = static_cast<GLuint>(typedglstage);
 			GLuint programid = gl::CreateShaderProgramv(glstage, 1, &code);
 			shaderresource.reset(reinterpret_cast<void*>(programid));

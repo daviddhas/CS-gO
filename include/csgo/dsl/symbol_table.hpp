@@ -10,14 +10,14 @@ namespace csgo {
 	namespace dsl {
 
 		struct symbol_table {
-			std::unordered_map<variable_id, std::size_t> variable_id_indices;
+			std::unordered_map<id, std::size_t> variable_id_indices;
 			std::vector<std::string> names;
-			std::vector<std::reference_wrapper<variable>> variables;
+			std::vector<std::reference_wrapper<const variable>> variables;
 
 			symbol_table() {}
 
-			std::pair<const std::string&, const variable&> find(const variable_id& id) const {
-				auto varfind = variable_id_indices.find(id);
+			std::pair<const std::string&, const variable&> find(const id& vid) const {
+				auto varfind = variable_id_indices.find(vid);
 				if (varfind == variable_id_indices.cend()) {
 					throw std::runtime_error("cannot find variable");
 				}
@@ -26,9 +26,9 @@ namespace csgo {
 				return { name, found };
 			}
 
-			const std::string& give_name( variable& v ) {
+			const std::string& give_name( const variable& v ) {
 				// Check if we have a id collision
-				auto varfind = variable_id_indices.find(v.id);
+				auto varfind = variable_id_indices.find(v.variable_id);
 				if (varfind != variable_id_indices.cend()) {
                     variable found = variables[varfind->second];
 					if (v.variable_type != found.variable_type) {
@@ -39,10 +39,10 @@ namespace csgo {
 				std::string name;
 				// names usually aren't too long: 32 reservation should keep use safe from reallocation
 				name.reserve(32);
-				name += "_";
-				name += std::to_string(v.id.id);
+				name += "_var";
+				name += std::to_string(v.variable_id.value);
 				
-				variable_id_indices.insert(varfind, { v.id, variables.size() });
+				variable_id_indices.insert(varfind, { v.variable_id, variables.size() });
 				names.push_back(std::move(name));
 				variables.push_back(v);
 				return names.back();

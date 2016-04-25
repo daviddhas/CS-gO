@@ -1,8 +1,7 @@
 #pragma once
 
 #include <csgo/glsl/glsl_generator.hpp>
-#include <csgo/gl_detail/gl.hpp>
-#include <GLFW/glfw3.h>
+#include <csgo/gl/gl.hpp>
 
 namespace csgo {
     namespace glsl {
@@ -12,10 +11,18 @@ namespace csgo {
 
                 if (makeContextQ)
                     makeContext();
+			 
+                std::cout << "Code:\n" << code << std::endl;
 
                 GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
+                compile(handle, shader, code);
 
+                return handle;
+            }
+
+            static void compile(GLuint handle, GLuint shader, const std::string& code)
+            {
                 char const *codeP = code.c_str();
                 gl::ShaderSource(shader, 1, &codeP, nullptr);
                 gl::CompileShader(shader);
@@ -32,19 +39,17 @@ namespace csgo {
                     throw std::runtime_error("GLSL compilation failure");
 
                 gl::AttachShader(handle, shader);
+
                 gl::LinkProgram(handle);
 
                 gl::GetProgramiv(handle, gl::LINK_STATUS, &status);
                 gl::GetProgramInfoLog(handle, length - 1, nullptr, log);
 
-                std::cerr << "Linker Log: " << std::endl << log << std::endl;
+                std::cerr << "Linker Log: " << std::endl << log << std::endl; // for debugging warnings
                 if (!status)
-                    throw std::runtime_error("GLSL linker failure");
-
-                return handle;
+                    throw std::runtime_error("GLSL compilation failure");
             }
 
-        private:
             static void makeContext() {
                 if (glfwGetCurrentContext() != nullptr)
                     return;
@@ -60,8 +65,8 @@ namespace csgo {
                 glfwMakeContextCurrent(window);
 
                 // hook up OpenGL debug callback
-                // so we get error messages printed out to the console
-                gl::DebugMessageCallback(gl_detail::debug_callback, nullptr);
+                // So we get error messages printed out to the console
+                gl::DebugMessageCallback(gld::debug_callback, nullptr);
             }
         };
     }

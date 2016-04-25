@@ -1,10 +1,11 @@
 #pragma once
 
-#include <csgo/dsl/type.hpp>
-#include <csgo/dsl/expression.hpp>
-#include <csgo/dsl/variable_id.hpp>
+#include <csgo/dsl/expression_consume.hpp>
+#include <csgo/dsl/id.hpp>
 #include <csgo/qualifiers.hpp>
 #include <csgo/type_traits.hpp>
+#include <csgo/dsl/type.hpp>
+#include <csgo/dsl/writer.hpp>
 #include <memory>
 #include <atomic>
 #include <cstdint>
@@ -12,15 +13,13 @@
 namespace csgo {
 	namespace dsl {
 		struct variable : expression {
-			variable_id id = generate_id<variable>();
+			id variable_id = generate_id<variable>();
 			type variable_type;
-			std::shared_ptr<expression> initialization;
-
+			
 			variable() : variable_type(type::user_defined_type) {}
-			variable(type vartype) : variable_type(vartype), initialization(std::move(initialization)) {}
-			variable(std::unique_ptr<expression> initialization, type vartype) : variable_type(vartype), initialization(std::move(initialization)) {}
-
-			virtual void accept(expression_visitor& v) override {
+			variable(type vartype) : variable_type(vartype) {}
+			
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
@@ -31,9 +30,8 @@ namespace csgo {
 			layout_variable() : layout_variable({}, type::image_2d) {}
 			layout_variable(qualifiers q) : layout_variable(q, type::image_2d) {}
 			layout_variable(qualifiers q, type thistype) : variable(thistype), layout(std::move(q)) {}
-			layout_variable(std::unique_ptr<expression> initilization, qualifiers q, type thistype) : variable(std::move(initilization), thistype), layout(std::move(q)) {}
-
-			virtual void accept(expression_visitor& v) override {
+			
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
@@ -41,11 +39,11 @@ namespace csgo {
 		struct constant : variable {
 			constant(type x) : variable(x) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 
-			virtual void write(std::ostream& ostr) = 0;
+			virtual void write(std::ostream& ostr) const = 0;
 		};
 
 		template <typename T>
@@ -55,15 +53,15 @@ namespace csgo {
 			typed_constant(T value) : typed_constant(value, type_for<T>::value) {}
 			typed_constant(T value, type x) : constant(x), value(value) {}
 
-			virtual void accept(expression_visitor& v) override {
+			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 
-			virtual void write(std::ostream& ostr) override {
-				ostr << value;
+			virtual void write(std::ostream& ostr) const override {
+				writer<T> w{};
+				w.write(ostr, value);
 			}
 		};
-
 
 		template <typename T>
 		struct is_variable : std::is_base_of<variable, meta::unqualified_t<T>> {};
