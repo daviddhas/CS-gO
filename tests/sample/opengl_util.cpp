@@ -180,7 +180,7 @@ void initGL() {
 
 	// Setting the window name
 	XTextProperty windowName;
-	windowName.value = (unsigned char *) "OpenGL compute shader demo";
+	windowName.value = (unsigned char *) "OpenGL compute shader example";
 	windowName.encoding = XA_STRING;
 	windowName.format = 8;
 	windowName.nitems = strlen((char *) windowName.value);
