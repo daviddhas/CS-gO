@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\csgo\built_in_io.hpp" />
+    <ClInclude Include="include\csgo\display.hpp" />
     <ClInclude Include="include\csgo\dsl\ast.hpp" />
     <ClInclude Include="include\csgo\compute_program.hpp" />
     <ClInclude Include="include\csgo\dsl\abstract_syntax_tree.hpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="include\csgo\meta\unwrap.hpp" />
     <ClInclude Include="include\csgo\meta\void_type.hpp" />
     <ClInclude Include="include\csgo\uninitialized.hpp" />
+    <ClInclude Include="include\csgo\util.hpp" />
     <ClInclude Include="include\csgo\variant.hpp" />
     <ClInclude Include="include\csgo\enums.hpp" />
     <ClInclude Include="include\csgo\error.hpp" />
@@ -85,7 +87,6 @@
     <ClInclude Include="include\csgo\shader.hpp" />
     <ClInclude Include="include\csgo\gl\gl_4_5.core.hpp" />
     <ClInclude Include="include\csgo\graphics_device.hpp" />
-    <ClInclude Include="include\csgo\platform_gl.hpp" />
     <ClInclude Include="include\csgo\shader_source.hpp" />
     <ClInclude Include="include\csgo\shader_stage.hpp" />
     <ClInclude Include="include\csgo\vendor_glfw.hpp" />

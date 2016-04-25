@@ -23,6 +23,8 @@ namespace csgo {
             GLuint textureID;
             gl::GenTextures(1, &textureID);
             gl::BindTexture(gl::TEXTURE_2D, textureID);
+            gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR);
+            gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR);
             gl::TexImage2D(gl::TEXTURE_2D, 0, getInternalFormat(), width, height, 0, getFormat(), getType(), vals.data());
 
             data = dsl::texture_data{ textureID, (GLuint)width, (GLuint)height };

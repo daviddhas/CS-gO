@@ -107,7 +107,7 @@ namespace csgo {
 					ostr << "imageStore( ";
 					visit(static_cast<const dsl::layout_variable&>(iv));
 					ostr << ", ivec2( ";
-					visit(dsl::gl_LocalInvocationID);
+					visit(dsl::gl_GlobalInvocationID);
 					visit(dsl::xyaccess);
 					ostr << " ), ";
 					a.r->accept(*this);

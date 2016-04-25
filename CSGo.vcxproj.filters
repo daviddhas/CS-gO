@@ -105,9 +105,6 @@
     <ClInclude Include="include\csgo\graphics_device.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\platform_gl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\shader_source.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -229,6 +226,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\dsl\ast.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\util.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\display.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
