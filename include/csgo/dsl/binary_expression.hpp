@@ -51,8 +51,35 @@ namespace csgo {
 			}
 		};
 
+		struct declaration : expression {
+			std::unique_ptr<variable> vardecl;
+
+			declaration(std::unique_ptr<variable> vardecl) : vardecl(std::move(vardecl)) {}
+
+			virtual void accept(statement_visitor& v) override {
+				v.visit(*this);
+			}
+		};
+		
+		struct declaration_assignment : assignment {
+			declaration_assignment(std::unique_ptr<variable> decl, std::unique_ptr<expression> init) : assignment(std::move(decl), std::move(init)) {}
+
+			virtual void accept(statement_visitor& v) override {
+				v.visit(*this);
+			}
+		};
+
 		struct indexing : binary_expression {
 			indexing(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
+
+			template <typename T>
+			indexing& operator= (T&& right) && {
+				consume(assignment(
+					dsl::make_unique_expression(std::move(*this)),
+					dsl::make_unique_expression(std::forward<T>(right))
+				));
+				return *this;
+			}
 
 			virtual void accept(statement_visitor& v) override {
 				return v.visit(*this);

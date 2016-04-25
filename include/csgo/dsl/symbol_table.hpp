@@ -12,7 +12,7 @@ namespace csgo {
 		struct symbol_table {
 			std::unordered_map<id, std::size_t> variable_id_indices;
 			std::vector<std::string> names;
-			std::vector<std::reference_wrapper<variable>> variables;
+			std::vector<std::reference_wrapper<const variable>> variables;
 
 			symbol_table() {}
 
@@ -26,7 +26,7 @@ namespace csgo {
 				return { name, found };
 			}
 
-			const std::string& give_name( variable& v ) {
+			const std::string& give_name( const variable& v ) {
 				// Check if we have a id collision
 				auto varfind = variable_id_indices.find(v.variable_id);
 				if (varfind != variable_id_indices.cend()) {

@@ -2,7 +2,7 @@
 
 #include <csgo/dsl/variable.hpp>
 #include <csgo/dsl/primitives.hpp>
-#include <csgo/dsl/declarations.hpp>
+#include <csgo/dsl/binary_expression.hpp>
 
 namespace csgo {
 	namespace dsl {
@@ -80,6 +80,7 @@ namespace csgo {
 					dsl::make_unique_expression(*this)
 				));
 			}
+
 			template <typename T, meta::enable<is_expression<T>, meta::not_<std::is_same<meta::unqualified_t<T>, image2d>>> = meta::enabler>
 			image2d(T&& expr) : image_variable({ format_qualifier_for<P>::value }, dsl::type::image_2d) {
 				consume(declaration_assignment(

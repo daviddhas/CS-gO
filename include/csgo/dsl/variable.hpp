@@ -5,6 +5,7 @@
 #include <csgo/qualifiers.hpp>
 #include <csgo/type_traits.hpp>
 #include <csgo/dsl/type.hpp>
+#include <csgo/dsl/writer.hpp>
 #include <memory>
 #include <atomic>
 #include <cstdint>
@@ -42,7 +43,7 @@ namespace csgo {
 				v.visit(*this);
 			}
 
-			virtual void write(std::ostream& ostr) = 0;
+			virtual void write(std::ostream& ostr) const = 0;
 		};
 
 		template <typename T>
@@ -56,8 +57,9 @@ namespace csgo {
 				v.visit(*this);
 			}
 
-			virtual void write(std::ostream& ostr) override {
-				ostr << value;
+			virtual void write(std::ostream& ostr) const override {
+				writer<T> w{};
+				w.write(ostr, value);
 			}
 		};
 

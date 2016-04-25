@@ -222,13 +222,13 @@
     <ClInclude Include="include\csgo\lang.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\declaration.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\dsl\declarations.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\parser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\writer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\dsl\access.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

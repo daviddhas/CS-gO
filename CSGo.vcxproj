@@ -21,17 +21,17 @@
   <ItemGroup>
     <ClInclude Include="include\csgo\compute_program.hpp" />
     <ClInclude Include="include\csgo\dsl\abstract_syntax_tree.hpp" />
+    <ClInclude Include="include\csgo\dsl\access.hpp" />
     <ClInclude Include="include\csgo\dsl\binary_expression.hpp" />
     <ClInclude Include="include\csgo\dsl\binary_operations.hpp" />
     <ClInclude Include="include\csgo\dsl\built_in.hpp" />
     <ClInclude Include="include\csgo\dsl\blackhole.hpp" />
-    <ClInclude Include="include\csgo\dsl\declaration.hpp" />
-    <ClInclude Include="include\csgo\dsl\declarations.hpp" />
     <ClInclude Include="include\csgo\dsl\expression_consume.hpp" />
     <ClInclude Include="include\csgo\dsl\image_variable.hpp" />
     <ClInclude Include="include\csgo\dsl\ir_entry_point.hpp" />
     <ClInclude Include="include\csgo\dsl\parser.hpp" />
     <ClInclude Include="include\csgo\dsl\primitives.hpp" />
+    <ClInclude Include="include\csgo\dsl\writer.hpp" />
     <ClInclude Include="include\csgo\entry_point.hpp" />
     <ClInclude Include="include\csgo\dsl\expression.hpp" />
     <ClInclude Include="include\csgo\dsl\function_call.hpp" />

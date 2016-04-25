@@ -10,7 +10,7 @@ namespace csgo {
 		struct statement {
 			std::vector<std::unique_ptr<expression>> expressions;
 
-			virtual void accept(statement_visitor& v) {
+			virtual void accept(statement_visitor& v) const {
 				v.visit(*this);
 			}
 		};

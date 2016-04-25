@@ -25,26 +25,29 @@ namespace csgo {
 
 		struct declaration;
 		struct declaration_assignment;
+		struct dot_access;
 
 		struct statement_visitor {
-			virtual void visit(statement& s) = 0;
+			virtual void visit(const statement& s) = 0;
 
-			virtual void visit(expression_reference& e) = 0;
+			virtual void visit(const expression_reference& e) = 0;
 
-			virtual void visit(declaration& d) = 0;
-			virtual void visit(declaration_assignment& d) = 0;
+			virtual void visit(const declaration& d) = 0;
+			virtual void visit(const declaration_assignment& d) = 0;
 
-			virtual void visit(addition& e) = 0;
-			virtual void visit(subtraction& e) = 0;
-			virtual void visit(division& e) = 0;
-			virtual void visit(multiplication& e) = 0;
-			virtual void visit(assignment& e) = 0;
-			virtual void visit(indexing& u) = 0;
+			virtual void visit(const addition& e) = 0;
+			virtual void visit(const subtraction& e) = 0;
+			virtual void visit(const division& e) = 0;
+			virtual void visit(const multiplication& e) = 0;
+			virtual void visit(const assignment& e) = 0;
+			virtual void visit(const indexing& u) = 0;
 
-			virtual void visit(variable& v) = 0;
-			virtual void visit(layout_variable& v) = 0;
-			virtual void visit(image_variable& v) = 0;
-			virtual void visit(constant& v) = 0;
+			virtual void visit(const variable& v) = 0;
+			virtual void visit(const layout_variable& v) = 0;
+			virtual void visit(const image_variable& v) = 0;
+			virtual void visit(const constant& v) = 0;
+
+			virtual void visit(const dot_access& v) = 0;
 		};
 
 		struct expression {
