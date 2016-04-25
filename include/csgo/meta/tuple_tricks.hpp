@@ -39,5 +39,4 @@ namespace csgo { namespace meta {
 	unqualified_tuple_element_t<0, T> head( T&& t ) {
 		return std::get<0>( std::forward<T>( t ) );
 	}
-
 }}

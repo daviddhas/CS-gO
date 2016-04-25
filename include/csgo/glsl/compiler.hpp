@@ -9,10 +9,9 @@ namespace csgo {
 
         struct compiler {
             static GLuint compile(const dsl::ir_program& p, const std::string& code, bool makeContextQ) {
+
                 if (makeContextQ)
                     makeContext();
-			 
-			 std::cout << code;
 
                 GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
@@ -28,7 +27,7 @@ namespace csgo {
                 gl::GetShaderiv(shader, gl::COMPILE_STATUS, &status);
                 gl::GetShaderInfoLog(shader, length - 1, nullptr, log);
 
-                std::cerr << "Log: " << std::endl << log << std::endl; // for debugging warnings
+                std::cerr << "Compiler Log: " << std::endl << log << std::endl; // for debugging warnings
                 if (!status)
                     throw std::runtime_error("GLSL compilation failure");
 
@@ -37,6 +36,8 @@ namespace csgo {
 
                 gl::GetProgramiv(handle, gl::LINK_STATUS, &status);
                 gl::GetProgramInfoLog(handle, length - 1, nullptr, log);
+
+                std::cerr << "Linker Log: " << std::endl << log << std::endl;
                 if (!status)
                     throw std::runtime_error("GLSL linker failure");
 
@@ -58,9 +59,9 @@ namespace csgo {
                 GLFWwindow *window = glfwCreateWindow(1024, 512, "CS Go", nullptr, nullptr);
                 glfwMakeContextCurrent(window);
 
-			 // hook up OpenGL debug callback
-			 // So we get error messages printed out to the console
-			 gl::DebugMessageCallback(gl_detail::debug_callback, nullptr);
+                // hook up OpenGL debug callback
+                // so we get error messages printed out to the console
+                gl::DebugMessageCallback(gl_detail::debug_callback, nullptr);
             }
         };
     }
