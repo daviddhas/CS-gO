@@ -9,25 +9,25 @@ namespace csgo {
 	struct raw_storage {
 		typedef typename std::aligned_storage<size, align>::type buffer_t;
 		buffer_t buffer;
-
+		
 		template <typename T>
 		T& get(std::size_t n) {
-			return *static_cast<T*>(static_cast<void*>(static_cast<byte*>(static_cast<void*>(std::addressof(this->buffer))) + n));
+			return *static_cast<T*>(static_cast<void*>(static_cast<unsigned char*>(static_cast<void*>(std::addressof(this->buffer))) + n));
 		}
 
 		template <typename T>
 		const T& get(std::size_t n) const {
-			return *static_cast<const T*>(static_cast<const void*>(static_cast<const byte*>(static_cast<const void*>(std::addressof(this->buffer))) + n));
+			return *static_cast<const T*>(static_cast<const void*>(static_cast<const unsigned char*>(static_cast<const void*>(std::addressof(this->buffer))) + n));
 		}
 
 		template <typename T, std::size_t n = 0>
 		T& get() {
-			return *static_cast<T*>(static_cast<void*>(static_cast<byte*>(static_cast<void*>(std::addressof(this->buffer))) + n));
+			return *static_cast<T*>(static_cast<void*>(static_cast<unsigned char*>(static_cast<void*>(std::addressof(this->buffer))) + n));
 		}
 
 		template <typename T, std::size_t n = 0>
 		const T& get() const {
-			return *static_cast<const T*>(static_cast<const void*>(static_cast<const byte*>(static_cast<const void*>(std::addressof(this->buffer))) + n));
+			return *static_cast<const T*>(static_cast<const void*>(static_cast<const unsigned char*>(static_cast<const void*>(std::addressof(this->buffer))) + n));
 		}
 	};
 

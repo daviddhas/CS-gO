@@ -33,7 +33,7 @@ auto simple(csgo::dsl::image2d<float> in) {
 
 void function_based() {
     GLuint size = 32;
-    csgo::program p(average, { {size, size} }, true);
+    csgo::program p(simple, { {size, size} }, true);
     csgo::image2d_io<float> in1(std::vector<float>(size * size, 0), size);
     csgo::image2d_io<float> in2(std::vector<float>(size * size, 1), size);
 

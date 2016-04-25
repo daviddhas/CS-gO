@@ -75,6 +75,7 @@ namespace csgo {
 
 		template <typename P>
 		struct image2d : image_variable {
+
 			image2d() : image_variable({ format_qualifier_for<P>::value }, dsl::type::image_2d) {
 				consume(declaration(
 					dsl::make_unique_expression(*this)

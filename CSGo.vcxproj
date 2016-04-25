@@ -103,6 +103,10 @@
       <Project>{d64ea22e-67c0-3ac1-9e26-da2c1fd19950}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="examples\Makefile" />
+    <None Include="Makefile" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F199F11D-072C-4EEA-A552-0B78CE49E4DC}</ProjectGuid>
     <RootNamespace>CSGo</RootNamespace>
