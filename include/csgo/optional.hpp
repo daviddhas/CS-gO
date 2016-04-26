@@ -236,7 +236,7 @@ namespace csgo {
 
 		}
 
-		optional(optional<Tu>& t) : optional(t ? std::addressof(t.get()) : null) {
+		optional(optional<Tu>& t) : optional(t ? std::addressof(t.get()) : nullptr) {
 
 		}
 
@@ -249,11 +249,11 @@ namespace csgo {
 
 		}
 
-		optional(const optional& that) : storage(that.valid() ? that.get() : null_ref<T>::value) {
+		optional(const optional& that) : storage(that.valid() ? &that.get() : nullptr) {
 
 		}
 
-		optional(optional&& that) : storage(that.valid() ? that.get() : null_ref<T>::value) {
+		optional(optional&& that) : storage(that.valid() ? &that.get() : nullptr) {
 
 		}
 
