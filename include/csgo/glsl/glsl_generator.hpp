@@ -177,10 +177,6 @@ namespace csgo {
 					const dsl::variable* vl = dynamic_cast<const dsl::variable*>(a.l.get());
 					if (vl == nullptr)
 						throw error("declaration assignment cannot declare something that is not a variable");
-					bool isuniform = irp.ast.is_input_output(vl->variable_id);
-					if (isuniform) {
-						return;
-					}
 					if (dynamic_cast<const dsl::layout_variable*>(vl) == nullptr) {
 						// not an image / layout type
 						ostr << glsl::to_string(vl->variable_type);
