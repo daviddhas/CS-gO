@@ -7,9 +7,10 @@ namespace csgo
 {
     struct display
     {
-        static void image(const image2d_io<float>& input)
+        template<typename T>
+        static void image(const image2d_io<T>& input)
         {
-            glsl::compiler::makeContext();
+            glsl::compiler::make_context();
 
             GLuint vertexArrayID;
             gl::GenVertexArrays(1, &vertexArrayID);
@@ -43,7 +44,7 @@ namespace csgo
             gl::VertexAttribPointer(1, 2, gl::FLOAT, gl::FALSE_, 0, nullptr);
 
             gl::ActiveTexture(gl::TEXTURE0);
-            gl::BindTexture(gl::TEXTURE_2D, input.getTextureID());
+            gl::BindTexture(gl::TEXTURE_2D, input.get_texture_ID());
             gl::Uniform1i(gl::GetUniformLocation(handle, "tex"), 0);
 
             gl::DrawArrays(gl::TRIANGLE_STRIP, 0, (GLint)quad.size());
@@ -80,8 +81,7 @@ namespace csgo
                 "in vec2 uv;\n"
                 "uniform sampler2D tex;\n"
                 "void main() {\n"
-                "float color = texture(tex, uv).r;\n"
-                "gl_FragColor = vec4(color, color, color, 1.0);\n"
+                "gl_FragColor = texture(tex, uv);\n"
                 "}\n"
                 ;
         }
@@ -92,8 +92,6 @@ namespace csgo
                 -1.0f, -1.0f, 0.0f,
                 1.0f, 1.0f, 0.0f,
                 1.0f, -1.0f, 0.0f,
-//                1.0f, 1.0f, 0.0f,
-//                -1.0f, -1.0f, 0.0f,
             };
         }
 
@@ -103,8 +101,6 @@ namespace csgo
                 0.0f, 1.0f,
                 1.0f, 0.0f,
                 1.0f, 1.0f,
-//                1.0f, 0.0f,
-//                0.0f, 1.0f,
             };
         }
     };

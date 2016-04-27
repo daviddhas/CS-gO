@@ -40,7 +40,7 @@ namespace csgo {
             gl::ValidateProgram(handle);
             char *log = new char[1024];
             gl::GetProgramInfoLog(handle, 1023, nullptr, log);
-            std::cout << "the log: " << log << std::endl;
+            std::cout << "Validation log: " << log << std::endl;
 
             gl::DispatchCompute(ir.main.wg.x, ir.main.wg.y, ir.main.wg.z);
 
@@ -60,21 +60,20 @@ namespace csgo {
         template<typename Arg, typename... Args>
         void set_inputs_impl(int n, Arg&& arg, Args&&... args)
         {
-            set_input(arg.getTextureID(), n);
+            set_input<typename meta::unqualified_t<Arg>::type>(arg.get_texture_ID(), n);
             set_inputs_impl(n + 1, std::forward<Args>(args)...);
         }
 
         void set_inputs_impl(int) // base case
         {}
 
+        template<typename T>
         void set_input(GLuint textureID, int n)
         {
-            // TODO: add int support
-		  const std::string& name = ir.ast.input_name(n);
-            GLuint loc = gl::GetUniformLocation(handle, name.c_str());
+            GLuint loc = gl::GetUniformLocation(handle, ir.ast.symbols.find(ir.main.input_variables[n]->variable_id).first.c_str());
             gl::ActiveTexture(gl::TEXTURE0 + n);
             gl::BindTexture(gl::TEXTURE_2D, textureID);
-            gl::BindImageTexture(loc, textureID, 0, false, 0, gl::READ_ONLY, gl::R32F);
+            gl::BindImageTexture(loc, textureID, 0, false, 0, gl::READ_ONLY, dsl::gl_type_converter::get_internal_format<T>());
             gl::Uniform1i(loc, n);
         }
 
@@ -89,16 +88,19 @@ namespace csgo {
             GLuint numInputs = (GLuint)ir.main.input_variables.size();
             for (GLuint i = 0; i < size; i++)
             {
-                // TODO: add int support
+                GLenum format = dsl::from_qualifier_to::gl_format(ir.main.output_variables[i]->layout.format);
+                GLenum internal_format = dsl::from_qualifier_to::gl_internal_format(ir.main.output_variables[i]->layout.format);
+                GLenum type = dsl::from_qualifier_to::gl_type(ir.main.output_variables[i]->layout.format);
+
                 gl::ActiveTexture(gl::TEXTURE0 + numInputs + i);
                 gl::BindTexture(gl::TEXTURE_2D, handles[i]);
                 gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR);
                 gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR);
-                gl::TexImage2D(gl::TEXTURE_2D, 0, gl::R32F, sizes[i][0], sizes[i][1], 0, gl::RED, gl::FLOAT, nullptr);
+                gl::TexImage2D(gl::TEXTURE_2D, 0, internal_format, sizes[i][0], sizes[i][1], 0, format, type, nullptr);
 
-			 const std::string& outputname = ir.ast.output_name(i);
-                GLint loc = gl::GetUniformLocation(handle, outputname.c_str());
-                gl::BindImageTexture(loc, handles[i], 0, false, 0, gl::WRITE_ONLY, gl::R32F);
+
+                GLint loc = gl::GetUniformLocation(handle, ir.ast.symbols.find(ir.main.output_variables[i]->variable_id).first.c_str());
+                gl::BindImageTexture(loc, handles[i], 0, false, 0, gl::WRITE_ONLY, internal_format);
                 gl::Uniform1i(loc, numInputs + i);
                 outputs[i] = dsl::texture_data{ handles[i], sizes[i][0], sizes[i][1] };
             }

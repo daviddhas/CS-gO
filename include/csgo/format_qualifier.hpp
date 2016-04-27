@@ -126,6 +126,21 @@ namespace csgo {
 	struct format_qualifier_for<glm::tvec4<float, p>> : std::integral_constant<format_qualifier, format_qualifier::rgba32f> {};
 
 	template <>
+	struct format_qualifier_for<int> : std::integral_constant<format_qualifier, format_qualifier::r32i> {};
+
+	template <glm::precision p>
+	struct format_qualifier_for<glm::tvec1<int, p>> : std::integral_constant<format_qualifier, format_qualifier::r32i> {};
+
+	template <glm::precision p>
+	struct format_qualifier_for<glm::tvec2<int, p>> : std::integral_constant<format_qualifier, format_qualifier::rg32i> {};
+
+	template <glm::precision p>
+	struct format_qualifier_for<glm::tvec3<int, p>> : std::integral_constant<format_qualifier, format_qualifier::rgba32i> {};
+
+	template <glm::precision p>
+	struct format_qualifier_for<glm::tvec4<int, p>> : std::integral_constant<format_qualifier, format_qualifier::rgba32i> {};
+
+	template <>
 	struct format_qualifier_for<uint32_t> : std::integral_constant<format_qualifier, format_qualifier::r32ui> {};
 
 	template <glm::precision p>
@@ -139,5 +154,4 @@ namespace csgo {
 
 	template <glm::precision p>
 	struct format_qualifier_for<glm::tvec4<uint32_t, p>> : std::integral_constant<format_qualifier, format_qualifier::rgba32ui> {};
-
 }

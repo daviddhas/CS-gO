@@ -191,7 +191,7 @@ namespace csgo {
 			};
 
 			void preamble(dsl::ir_program& p, std::ostream& ostr) {
-				ostr << "#version 430";
+				ostr << "#version 450 core";
 			}
 
 			void uniform_variable(bool isoutput, const std::string& name, const dsl::variable& v, dsl::ir_program& p, std::ostream& ostr) {
@@ -229,10 +229,9 @@ namespace csgo {
 				ostr << "\n";
 			}
 
-			void uniform_variables(bool isoutput, std::vector<std::unique_ptr<dsl::variable>>& variables, dsl::ir_program& p, std::ostream& ostr) {
-				for (std::size_t index = 0; index < variables.size(); ++index) {
-					auto& ud = variables[index];
-					auto namedvar = p.ast.symbols.find(ud->variable_id);
+			void uniform_variables(bool isoutput, const std::vector<csgo::dsl::id>& ids, dsl::ir_program& p, std::ostream& ostr) {
+                for(auto id : ids) {
+					auto namedvar = p.ast.symbols.find(id);
 					const std::string& name = namedvar.first;
 					const dsl::variable& v = namedvar.second;
 					uniform_variable(isoutput, name, v, p, ostr);
@@ -240,11 +239,19 @@ namespace csgo {
 			}
 
 			void input(dsl::ir_program& p, std::ostream& ostr) {
-				uniform_variables(false, p.main.input_variables, p, ostr);
+                std::vector<dsl::id> ids;
+                ids.reserve(p.main.input_variables.size());
+                for (auto& v : p.main.input_variables)
+                    ids.push_back(v->variable_id);
+				uniform_variables(false, ids, p, ostr);
 			}
 
 			void output(dsl::ir_program& p, std::ostream& ostr) {
-				uniform_variables(true, p.main.output_variables, p, ostr);
+                std::vector<dsl::id> ids;
+                ids.reserve(p.main.output_variables.size());
+                for (auto& v : p.main.output_variables)
+                    ids.push_back(v->variable_id);
+				uniform_variables(true, ids, p, ostr);
 			}
 
 			void open(dsl::ir_program& p, std::ostream& ostr) {

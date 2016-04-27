@@ -7,13 +7,11 @@ namespace csgo {
     namespace glsl {
 
         struct compiler {
-            static GLuint compile(const dsl::ir_program& p, const std::string& code, bool makeContextQ) {
+            static GLuint compile(const dsl::ir_program& p, const std::string& code, bool make_context_q) {
 
-                if (makeContextQ)
-                    makeContext();
+                if (make_context_q)
+                    make_context();
 			 
-                std::cout << "Code:\n" << code << std::endl;
-
                 GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
                 compile(handle, shader, code);
@@ -50,7 +48,7 @@ namespace csgo {
                     throw std::runtime_error("GLSL compilation failure");
             }
 
-            static void makeContext() {
+            static void make_context() {
                 if (glfwGetCurrentContext() != nullptr)
                     return;
 

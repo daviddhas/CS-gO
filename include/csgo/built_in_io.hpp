@@ -1,8 +1,9 @@
 #pragma once
 
-#include <csgo/gl/gl.hpp>
 #include <vector>
 #include <type_traits>
+
+#include <csgo/dsl/gl_type_converter.hpp>
 
 namespace csgo {
 
@@ -15,7 +16,17 @@ namespace csgo {
     template <typename P>
     struct image2d_io {
 
-        template<typename std::enable_if_t<std::is_same<P, float>::value || std::is_same<P, int>::value, int> = 0>
+        typedef P type;
+
+        typedef typename std::enable_if_t<
+            std::is_same<P, float>::value
+            || std::is_same<P, int>::value
+            || std::is_same<P, glm::vec2>::value
+            || std::is_same<P, glm::vec3>::value
+            || std::is_same<P, glm::vec4>::value
+            , int> is_valid_t;
+
+        template<is_valid_t = 0>
         image2d_io(const std::vector<P>& vals, int width)
         {
             int height = (int)vals.size() / width;
@@ -25,12 +36,13 @@ namespace csgo {
             gl::BindTexture(gl::TEXTURE_2D, textureID);
             gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR);
             gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR);
-            gl::TexImage2D(gl::TEXTURE_2D, 0, getInternalFormat(), width, height, 0, getFormat(), getType(), vals.data());
+            gl::TexImage2D(gl::TEXTURE_2D, 0, dsl::gl_type_converter::get_internal_format<P>(), width, height, 0,
+                dsl::gl_type_converter::get_format<P>(), dsl::gl_type_converter::get_type<P>(), vals.data());
 
             data = dsl::texture_data{ textureID, (GLuint)width, (GLuint)height };
         }
 
-        template<typename std::enable_if_t<std::is_same<P, float>::value || std::is_same<P, int>::value, int> = 0>
+        template<is_valid_t = 0>
         image2d_io(dsl::texture_data data)
             : data(data)
         { }
@@ -39,11 +51,12 @@ namespace csgo {
         {
             std::vector<P> vals(data.height * data.width);
             gl::BindTexture(gl::TEXTURE_2D, data.id);
-            gl::GetTexImage(gl::TEXTURE_2D, 0, getFormat(), getType(), vals.data());
+            gl::GetTexImage(gl::TEXTURE_2D, 0, dsl::gl_type_converter::get_format<P>(),
+                dsl::gl_type_converter::get_type<P>(), vals.data());
             return vals;
         }
 
-        GLuint getTextureID() const
+        GLuint get_texture_ID() const
         {
             return data.id;
         }
@@ -51,47 +64,6 @@ namespace csgo {
     private:
 
         dsl::texture_data data;
-
-#pragma region gl type getters
-
-        template<typename U = P, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        GLenum getFormat() const
-        {
-            return gl::RED;
-        }
-
-        template<typename U = P, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        GLenum getFormat() const
-        {
-            return gl::RED_INTEGER;
-        }
-
-        template<typename U = P, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        GLint getInternalFormat() const
-        {
-            return gl::R32F;
-        }
-
-        template<typename U = P, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        GLenum getInternalFormat() const
-        {
-            return gl::R32I;
-        }
-
-        template<typename U = P, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        GLenum getType() const
-        {
-            return gl::FLOAT;
-        }
-
-        template<typename U = P, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        GLenum getType() const
-        {
-            return gl::INT;
-        }
-
-#pragma endregion
-
     };
 
 }
