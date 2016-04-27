@@ -53,47 +53,84 @@ vec3 calcForceFor (vec3 forcePoint, vec3 pos)
 void main(void)
 {
 	uint index = gl_GlobalInvocationID.x;
-	
+
 	int i;
 	float newDT = dt * 100.0;
-	
-	
+
+
 	vec3 forcePoint = vec3(0);
-	
-	for (i = 0; i < 32; i++) {
-		forcePoint += attractors[i].xyz;
-	}	
-	
+
+	//for (i = 0; i < 32; i++) {
+	//	forcePoint += attractors[i].xyz;
+	//}
+
+	forcePoint += attractors[0].xyz;
+	forcePoint += attractors[1].xyz;
+	forcePoint += attractors[2].xyz;
+	forcePoint += attractors[3].xyz;
+	forcePoint += attractors[4].xyz;
+	forcePoint += attractors[5].xyz;
+	forcePoint += attractors[6].xyz;
+	forcePoint += attractors[7].xyz;
+    forcePoint += attractors[8].xyz;
+    forcePoint += attractors[9].xyz;
+    forcePoint += attractors[10].xyz;
+    forcePoint += attractors[11].xyz;
+    forcePoint += attractors[12].xyz;
+    forcePoint += attractors[13].xyz;
+    forcePoint += attractors[14].xyz;
+
+    forcePoint += attractors[15].xyz;
+    forcePoint += attractors[16].xyz;
+    forcePoint += attractors[17].xyz;
+    forcePoint += attractors[18].xyz;
+    forcePoint += attractors[19].xyz;
+    forcePoint += attractors[20].xyz;
+
+    forcePoint += attractors[21].xyz;
+    forcePoint += attractors[22].xyz;
+    forcePoint += attractors[23].xyz;
+    forcePoint += attractors[24].xyz;
+
+    forcePoint += attractors[25].xyz;
+    forcePoint += attractors[26].xyz;
+    forcePoint += attractors[27].xyz;
+    forcePoint += attractors[28].xyz;
+    forcePoint += attractors[29].xyz;
+    forcePoint += attractors[30].xyz;
+    forcePoint += attractors[31].xyz;
+
+
 	// Read the current position and velocity from the buffers
 	vec4 vel = velocities[index];
 	vec3 pos = positions[index];
 	float newW = lifes[index];
-	
+
 	float k_v = 1.5;
-	
+
 	vec3 f = calcForceFor(forcePoint, pos) + rand(pos.xz)/100.0;
-	
+
 	// Velocity:
 	vec3 v = normalize(vel.xyz + (f * newDT)) * k_v;
-	
+
 	// A slight attraction directional focus
 	v += (forcePoint-pos) * 0.00005;
-	
+
 	// Pos:
 	vec3 s = pos + v * newDT;
-	
+
 	newW -= 0.0001f * newDT;
-	
+
 	// If the particle expires, reset it
 	if (newW <= 0) {
 		s  = -s + rand(s.xy)*20.0 -rand(s.yz)*20.0;
 		//v.xyz *= 0.01f;
 		newW = 0.99f;
 	}
-	
+
 	lifes[index] = newW;
 	// Store the new position and velocity back into the buffers
-	positions[index] = s;	
+	positions[index] = s;
 	velocities[index] = vec4(v,vel.w);
-	
+
 }
