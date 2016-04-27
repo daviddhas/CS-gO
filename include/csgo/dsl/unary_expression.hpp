@@ -1,6 +1,7 @@
 #pragma once
 
 #include <csgo/dsl/variable.hpp>
+#include <csgo/dsl/expression_consume.hpp>
 
 namespace csgo {
 	namespace dsl {
