@@ -9,7 +9,7 @@ namespace csgo {
 	namespace dsl {
 		struct ir_entry_point {
 			std::vector<std::unique_ptr<dsl::variable>> input_variables;
-			std::vector<std::unique_ptr<dsl::variable>> output_variables;
+			std::vector<std::unique_ptr<dsl::layout_variable>> output_variables;
 			workgroup wg;
 			std::vector<dsl::statement> statements;
 

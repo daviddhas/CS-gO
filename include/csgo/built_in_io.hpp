@@ -28,8 +28,8 @@ namespace csgo {
             gl::BindTexture(gl::TEXTURE_2D, textureID);
             gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR);
             gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR);
-            gl::TexImage2D(gl::TEXTURE_2D, 0, dsl::gl_type_converter::getInternalFormat<P>(), width, height, 0,
-                dsl::gl_type_converter::getFormat<P>(), dsl::gl_type_converter::getType<P>(), vals.data());
+            gl::TexImage2D(gl::TEXTURE_2D, 0, dsl::gl_type_converter::get_internal_format<P>(), width, height, 0,
+                dsl::gl_type_converter::get_format<P>(), dsl::gl_type_converter::get_type<P>(), vals.data());
 
             data = dsl::texture_data{ textureID, (GLuint)width, (GLuint)height };
         }
@@ -43,12 +43,12 @@ namespace csgo {
         {
             std::vector<P> vals(data.height * data.width);
             gl::BindTexture(gl::TEXTURE_2D, data.id);
-            gl::GetTexImage(gl::TEXTURE_2D, 0, dsl::gl_type_converter::getFormat<P>(),
-                dsl::gl_type_converter::getType<P>(), vals.data());
+            gl::GetTexImage(gl::TEXTURE_2D, 0, dsl::gl_type_converter::get_format<P>(),
+                dsl::gl_type_converter::get_type<P>(), vals.data());
             return vals;
         }
 
-        GLuint getTextureID() const
+        GLuint get_texture_ID() const
         {
             return data.id;
         }

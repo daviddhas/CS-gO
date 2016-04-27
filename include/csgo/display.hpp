@@ -9,7 +9,7 @@ namespace csgo
     {
         static void image(const image2d_io<float>& input)
         {
-            glsl::compiler::makeContext();
+            glsl::compiler::make_context();
 
             GLuint vertexArrayID;
             gl::GenVertexArrays(1, &vertexArrayID);
@@ -43,7 +43,7 @@ namespace csgo
             gl::VertexAttribPointer(1, 2, gl::FLOAT, gl::FALSE_, 0, nullptr);
 
             gl::ActiveTexture(gl::TEXTURE0);
-            gl::BindTexture(gl::TEXTURE_2D, input.getTextureID());
+            gl::BindTexture(gl::TEXTURE_2D, input.get_texture_ID());
             gl::Uniform1i(gl::GetUniformLocation(handle, "tex"), 0);
 
             gl::DrawArrays(gl::TRIANGLE_STRIP, 0, (GLint)quad.size());
