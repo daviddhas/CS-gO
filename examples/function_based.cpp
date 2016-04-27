@@ -3,10 +3,10 @@
 #include <csgo/util.hpp>
 #include <iostream>
 
-auto average(csgo::dsl::image2d<int> in1, csgo::dsl::image2d<int> in2) {
+auto average(csgo::dsl::image2d<glm::vec4> in1, csgo::dsl::image2d<glm::vec4> in2) {
 	using namespace csgo::dsl;
 	// Perform the desired operations
-	image2d<int> x = ( in1 + in2 ) / 2;
+	image2d<glm::vec4> x = ( in1 + in2 ) / 2;
 	
 	// Return the variables that you desire
 	// They must be uniforms
@@ -34,17 +34,17 @@ auto simple(csgo::dsl::image2d<float> in) {
 void function_based() {
     GLuint size = 32;
     csgo::program p(average, { {size, size} }, true);
-    csgo::image2d_io<int> in1(std::vector<int>(size * size, 1), size);
-    csgo::image2d_io<int> in2(std::vector<int>(size * size, 2), size);
+    csgo::image2d_io<glm::vec4> in1(std::vector<glm::vec4>(size * size, glm::vec4(1)), size);
+    csgo::image2d_io<glm::vec4> in2(std::vector<glm::vec4>(size * size, glm::vec4(1, 0, 0, 1)), size);
 
-    std::tuple<csgo::image2d_io<int>> results = p(in1, in2);
+    std::tuple<csgo::image2d_io<glm::vec4>> results = p(in1, in2);
 
-    for (int f : std::get<0>(results).read())
-        std::cout << f << " ";
-    std::cout << '\n';
+    auto result = std::get<0>(results).read();
+    std::cout << result.size() << " " << size << std::endl;
 
-//    csgo::display::image(std::get<0>(results));
+    for (glm::vec4 v : result)
+        std::cout << v.x << ", " << v.y << ", " << v.z << ", " << v.w << std::endl;
+
+    csgo::display::image(std::get<0>(results));
     while (true);
-
-	// TODO: actual proper codegen
 }

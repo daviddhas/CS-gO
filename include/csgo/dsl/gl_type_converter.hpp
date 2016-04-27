@@ -5,41 +5,55 @@
 namespace csgo { namespace dsl {
     struct gl_type_converter
     {
+        // formats
         template<typename U, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        static GLenum get_format()
-        {
-            return gl::RED;
-        }
+        static GLenum get_format() { return gl::RED; }
 
         template<typename U, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        static GLenum get_format()
-        {
-            return gl::RED_INTEGER;
-        }
+        static GLenum get_format() { return gl::RED_INTEGER; }
 
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec2>::value, int> = 0>
+        static GLenum get_format() { return gl::RG; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec3>::value, int> = 0>
+        static GLenum get_format() { return gl::RGB; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec4>::value, int> = 0>
+        static GLenum get_format() { return gl::RGBA; }
+
+
+        // internal formats
         template<typename U, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        static GLint get_internal_format()
-        {
-            return gl::R32F;
-        }
+        static GLint get_internal_format() { return gl::R32F; }
 
         template<typename U, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        static GLint get_internal_format()
-        {
-            return gl::R32I;
-        }
+        static GLint get_internal_format() { return gl::R32I; }
 
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec2>::value, int> = 0>
+        static GLint get_internal_format() { return gl::RG32F; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec3>::value, int> = 0>
+        static GLint get_internal_format() { return gl::RGBA32F; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec4>::value, int> = 0>
+        static GLint get_internal_format() { return gl::RGBA32F; }
+
+
+        // types
         template<typename U, typename std::enable_if_t<std::is_same<U, float>::value, int> = 0>
-        static GLenum get_type()
-        {
-            return gl::FLOAT;
-        }
+        static GLenum get_type() { return gl::FLOAT; }
 
         template<typename U, typename std::enable_if_t<std::is_same<U, int>::value, int> = 0>
-        static GLenum get_type()
-        {
-            return gl::INT;
-        }
+        static GLenum get_type() { return gl::INT; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec2>::value, int> = 0>
+        static GLenum get_type() { return gl::FLOAT; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec3>::value, int> = 0>
+        static GLenum get_type() { return gl::FLOAT; }
+
+        template<typename U, typename std::enable_if_t<std::is_same<U, glm::vec4>::value, int> = 0>
+        static GLenum get_type() { return gl::FLOAT; }
     };
 
 
@@ -82,21 +96,24 @@ namespace csgo { namespace dsl {
             {
             case format_qualifier::r8:
                 return gl::RED_INTEGER;
-
             case format_qualifier::r32f:
-            case format_qualifier::rg32f:
-            case format_qualifier::rgba32f:
                 return gl::RED;
+            case format_qualifier::rg32f:
+                return gl::RG;
+            case format_qualifier::rgba32f:
+                return gl::RGBA;
 
             case format_qualifier::r32i:
-            case format_qualifier::rg32i:
-            case format_qualifier::rgba32i:
+            case format_qualifier::r32ui:
                 return gl::RED_INTEGER;
 
-            case format_qualifier::r32ui:
+            case format_qualifier::rg32i:
             case format_qualifier::rg32ui:
+                return gl::RG_INTEGER;
+
+            case format_qualifier::rgba32i:
             case format_qualifier::rgba32ui:
-                return gl::UNSIGNED_INT;
+                return gl::RGBA_INTEGER;
 
             default:
                 throw std::runtime_error("Invalid format qualifier");

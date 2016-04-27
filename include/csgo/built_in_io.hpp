@@ -18,7 +18,15 @@ namespace csgo {
 
         typedef P type;
 
-        template<typename std::enable_if_t<std::is_same<P, float>::value || std::is_same<P, int>::value, int> = 0>
+        typedef typename std::enable_if_t<
+            std::is_same<P, float>::value
+            || std::is_same<P, int>::value
+            || std::is_same<P, glm::vec2>::value
+            || std::is_same<P, glm::vec3>::value
+            || std::is_same<P, glm::vec4>::value
+            , int> is_valid_t;
+
+        template<is_valid_t = 0>
         image2d_io(const std::vector<P>& vals, int width)
         {
             int height = (int)vals.size() / width;
@@ -34,7 +42,7 @@ namespace csgo {
             data = dsl::texture_data{ textureID, (GLuint)width, (GLuint)height };
         }
 
-        template<typename std::enable_if_t<std::is_same<P, float>::value || std::is_same<P, int>::value, int> = 0>
+        template<is_valid_t = 0>
         image2d_io(dsl::texture_data data)
             : data(data)
         { }

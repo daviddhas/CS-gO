@@ -29,6 +29,30 @@ namespace csgo {
             }
         };
 
+        template<>
+        struct converter<image2d_io<glm::vec2>>
+        {
+            static image2d_io<glm::vec2> convert(texture_data data) {
+                return image2d_io<glm::vec2>(data);
+            }
+        };
+
+        template<>
+        struct converter<image2d_io<glm::vec3>>
+        {
+            static image2d_io<glm::vec3> convert(texture_data data) {
+                return image2d_io<glm::vec3>(data);
+            }
+        };
+
+        template<>
+        struct converter<image2d_io<glm::vec4>>
+        {
+            static image2d_io<glm::vec4> convert(texture_data data) {
+                return image2d_io<glm::vec4>(data);
+            }
+        };
+
 #pragma endregion
 
         struct io_result {

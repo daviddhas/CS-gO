@@ -7,7 +7,8 @@ namespace csgo
 {
     struct display
     {
-        static void image(const image2d_io<float>& input)
+        template<typename T>
+        static void image(const image2d_io<T>& input)
         {
             glsl::compiler::make_context();
 
@@ -80,8 +81,7 @@ namespace csgo
                 "in vec2 uv;\n"
                 "uniform sampler2D tex;\n"
                 "void main() {\n"
-                "float color = texture(tex, uv).r;\n"
-                "gl_FragColor = vec4(color, color, color, 1.0);\n"
+                "gl_FragColor = texture(tex, uv);\n"
                 "}\n"
                 ;
         }
