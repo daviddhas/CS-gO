@@ -1,6 +1,7 @@
 #pragma once
 
 #include <csgo/dsl/variable.hpp>
+#include <csgo/dsl/expression_consume.hpp>
 #include <csgo/dsl/primitives.hpp>
 #include <csgo/dsl/binary_expression.hpp>
 

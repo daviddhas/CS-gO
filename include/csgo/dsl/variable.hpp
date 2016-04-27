@@ -1,6 +1,6 @@
 #pragma once
 
-#include <csgo/dsl/expression_consume.hpp>
+#include <csgo/dsl/expression.hpp>
 #include <csgo/dsl/id.hpp>
 #include <csgo/qualifiers.hpp>
 #include <csgo/type_traits.hpp>
