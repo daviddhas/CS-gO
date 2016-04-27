@@ -82,5 +82,50 @@ namespace csgo {
 		template <>
 		struct is_terminating_expression<declaration> : std::true_type {};
 
+		template <typename T>
+		struct is_expression : std::is_base_of<expression, meta::unqualified_t<T>> {};
+
+		template <typename T>
+		struct is_primitive : std::is_arithmetic<meta::unqualified_t<T>> {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec1<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec2<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec3<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tvec4<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat2x2<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat2x3<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat2x4<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat3x2<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat3x3<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat3x4<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat4x2<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat4x3<T, p>> : std::true_type {};
+
+		template <typename T, glm::precision p>
+		struct is_primitive<glm::tmat4x4<T, p>> : std::true_type {};
+
 	}
 }

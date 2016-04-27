@@ -16,7 +16,7 @@ auto average(csgo::dsl::image2d<glm::vec4> in1, csgo::dsl::image2d<glm::vec4> in
 auto red_blue_set() {
 	using namespace csgo::dsl;
 	// Perform the desired operations
-	image2d<float> x;
+	image2d<glm::vec4> x;
 	x[gl_LocalInvocationID] = glm::vec4(1.0, 0.0, 1.0, 1.0);
 
 	// Return the variables that you desire
@@ -26,7 +26,7 @@ auto red_blue_set() {
 
 auto simple(csgo::dsl::image2d<glm::vec4> in) {
     using namespace csgo::dsl;
-    image2d<float> x;
+    image2d<glm::vec4> x;
     x = in;
     return x;
 }
