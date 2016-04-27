@@ -5,17 +5,32 @@
 
 namespace csgo {
 	namespace dsl {
-		struct dot_access : expression {
+		struct access : expression {
 			std::string access_name;
 
-			dot_access(std::string x) : access_name(std::move(x)) {}
+			access(std::string x) : access_name(std::move(x)) {}
+
+			virtual void accept(statement_visitor& v) override {
+				v.visit(*this);
+			}
+		};
+		
+		struct dot_access :access {
+			variable& access_into;
+			
+			dot_access(variable& v, std::string x) : access(std::move(x)), access_into(v) {}
 
 			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);
 			}
 		};
 
-		dot_access xyaccess{ "xy" };
-		dot_access xyzaccess{ "xyz" };
+		const access xaccess{ "x" };
+		const access yaccess{ "y" };
+		const access zaccess{ "z" };
+		const access xyaccess{ "xy" };
+		const access xzaccess{ "xz" };
+		const access yzaccess{ "yz" };
+		const access xyzaccess{ "xyz" };
 	}
 }

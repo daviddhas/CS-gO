@@ -7,25 +7,26 @@
 #include <csgo/dsl/built_in.hpp>
 #include <csgo/dsl/symbol_table.hpp>
 #include <unordered_set>
+#include <algorithm>
 
 #include <iostream>
 
 namespace csgo {
 	namespace dsl {
 		struct abstract_syntax_tree {
-			std::unordered_set<id> inputs;
-			std::unordered_set<id> outputs;
+			std::vector<id> inputids;
+			std::vector<id> outputids;
 			symbol_table symbols;
 			std::unordered_map<id, std::size_t> expression_indices;
 			std::vector<std::reference_wrapper<expression>> flow;
 
 			abstract_syntax_tree(ir_entry_point& main) {
 				for (auto& in : main.input_variables) {
-					inputs.insert(in->variable_id);
+					inputids.push_back(in->variable_id);
 					symbols.give_name(*in);
 				}
-				for (auto& out : main.input_variables) {
-					outputs.insert(out->variable_id);
+				for (auto& out : main.output_variables) {
+					outputids.push_back(out->variable_id);
 					symbols.give_name(*out);
 				}
 
@@ -36,7 +37,20 @@ namespace csgo {
 			}
 
 			bool is_input_output( const id& i ) const {
-				return inputs.find(i) != inputs.cend() || outputs.find(i) != outputs.cend();
+				return std::find(inputids.cbegin(), inputids.cend(), i) != inputids.cend() || std::find(outputids.cbegin(), outputids.cend(), i) != outputids.cend();
+			}
+
+			const std::string& name_for(const id& varid) {
+				const auto& s = symbols.find(varid);
+				return s.first;
+			}
+
+			const std::string& input_name(std::size_t idx) {
+				return name_for(inputids[idx]);
+			}
+
+			const std::string& output_name(std::size_t idx) {
+				return name_for(inputids[idx]);
 			}
 
 		private:
@@ -60,12 +74,18 @@ namespace csgo {
 				}
 
 				virtual void visit(const dot_access& e) override {
-					ostr << "[ access - " << e.access_name << " ]";
+					ostr << "[ ";
+					e.access_into.accept(*this);
+					ostr << "." << e.access_name << " ]";
+				}
+
+				virtual void visit(const access& e) override {
+					ostr << "[ ." << e.access_name << " ]";
 				}
 
 				virtual void visit(const variable& v) override {
 					const std::string& name = ast.symbols.give_name(v);
-					ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << " ]";
+					ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << " ]";
 				}
 
 				virtual void visit(const layout_variable& v) override {

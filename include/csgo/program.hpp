@@ -70,7 +70,8 @@ namespace csgo {
         void set_input(GLuint textureID, int n)
         {
             // TODO: add int support
-            GLuint loc = gl::GetUniformLocation(handle, ir.ast.symbols.find(ir.main.input_variables[n]->variable_id).first.c_str());
+		  const std::string& name = ir.ast.input_name(n);
+            GLuint loc = gl::GetUniformLocation(handle, name.c_str());
             gl::ActiveTexture(gl::TEXTURE0 + n);
             gl::BindTexture(gl::TEXTURE_2D, textureID);
             gl::BindImageTexture(loc, textureID, 0, false, 0, gl::READ_ONLY, gl::R32F);
@@ -95,8 +96,8 @@ namespace csgo {
                 gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR);
                 gl::TexImage2D(gl::TEXTURE_2D, 0, gl::R32F, sizes[i][0], sizes[i][1], 0, gl::RED, gl::FLOAT, nullptr);
 
-
-                GLint loc = gl::GetUniformLocation(handle, ir.ast.symbols.find(ir.main.output_variables[i]->variable_id).first.c_str());
+			 const std::string& outputname = ir.ast.output_name(i);
+                GLint loc = gl::GetUniformLocation(handle, outputname.c_str());
                 gl::BindImageTexture(loc, handles[i], 0, false, 0, gl::WRITE_ONLY, gl::R32F);
                 gl::Uniform1i(loc, numInputs + i);
                 outputs[i] = dsl::texture_data{ handles[i], sizes[i][0], sizes[i][1] };

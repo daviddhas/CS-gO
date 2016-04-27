@@ -23,16 +23,20 @@ namespace csgo {
 				writer(dsl::ir_program& p, std::ostream& ostr, int& indentation_level) : irp(p), ostr(ostr), indentation_level(indentation_level) {}
 
 				virtual void visit(const dsl::statement& s) override {
+					typedef std::ostream::pos_type pos_type;
 					if (s.expressions.empty())
 						return;
 					for (int i = 0; i < indentation_level; ++i)
 						ostr << "\t";
+					pos_type start = ostr.tellp();
 					for (auto& e : s.expressions) {
 						if (e == nullptr)
 							continue;
 						e->accept(*this);
 					}
-					ostr << ";";
+					if (start != ostr.tellp()) {
+						ostr << ";";
+					}
 					ostr << "\n";
 				}
 
@@ -40,8 +44,14 @@ namespace csgo {
 
 				}
 
+				virtual void visit(const dsl::access& e) override {
+					ostr << e.access_name;
+				}
+
 				virtual void visit(const dsl::dot_access& e) override {
-					ostr << "." << e.access_name;
+					e.access_into.accept(*this);
+					ostr << ".";
+					visit(static_cast<const dsl::access&>(e));
 				}
 
 				virtual void visit(const dsl::addition& e) override {
@@ -94,8 +104,7 @@ namespace csgo {
 					ostr << "imageLoad( ";
 					visit(static_cast<const dsl::layout_variable&>(v));
 					ostr << ", ivec2( ";
-					visit(dsl::gl_GlobalInvocationID);
-					visit(dsl::xyaccess);
+					visit(dsl::gl_GlobalInvocationID.xy);
 					ostr << " ) )";
 				}
 
@@ -107,8 +116,7 @@ namespace csgo {
 					ostr << "imageStore( ";
 					visit(static_cast<const dsl::layout_variable&>(iv));
 					ostr << ", ivec2( ";
-					visit(dsl::gl_GlobalInvocationID);
-					visit(dsl::xyaccess);
+					visit(dsl::gl_GlobalInvocationID.xy);
 					ostr << " ), ";
 					a.r->accept(*this);
 					ostr << " )";
@@ -117,9 +125,9 @@ namespace csgo {
 				void visit_image_store(const dsl::image_variable& iv, const dsl::indexing& idx, const dsl::assignment& a) {
 					ostr << "imageStore( ";
 					visit(static_cast<const dsl::layout_variable&>(iv));
-					ostr << ", ";
+					ostr << ", ivec2( ";
 					idx.r->accept(*this);
-					ostr << ", ";
+					ostr << " ), ";
 					a.r->accept(*this);
 					ostr << " )";
 				}

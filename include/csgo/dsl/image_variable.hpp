@@ -89,6 +89,15 @@ namespace csgo {
 					dsl::make_unique_expression(std::forward<T>(expr))
 				));
 			}
+			
+			template <typename T>
+			image2d& operator= (T&& right) {
+				consume(assignment(
+					dsl::make_unique_expression(*this),
+					dsl::make_unique_expression(std::forward<T>(right))
+				));
+				return *this;
+			}
 
 			virtual void accept(statement_visitor& v) {
 				v.visit(*this);
