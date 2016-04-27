@@ -3,7 +3,7 @@
 #include <csgo/util.hpp>
 #include <iostream>
 
-auto average(csgo::dsl::image2d<float> in1, csgo::dsl::image2d<float> in2) {
+auto average(csgo::dsl::image2d<float> in1, csgo::dsl::image2d<int> in2) {
 	using namespace csgo::dsl;
 	// Perform the desired operations
 	image2d<float> x = ( in1 + in2 ) / 2;
@@ -35,7 +35,7 @@ void function_based() {
     GLuint size = 32;
     csgo::program p(simple, { {size, size} }, true);
     csgo::image2d_io<float> in1(std::vector<float>(size * size, 0), size);
-    csgo::image2d_io<float> in2(std::vector<float>(size * size, 1), size);
+    csgo::image2d_io<int> in2(std::vector<int>(size * size, 1), size);
 
     std::tuple<csgo::image2d_io<float>> results = p(in1, in2);
 
@@ -47,6 +47,4 @@ void function_based() {
     while (true);
 
 	// TODO: actual proper codegen
-	// TODO: insert compilation, figure out higher level interface to wrap all of this work up into a single call and return a single
-	// csgo::compute_program ...
 }

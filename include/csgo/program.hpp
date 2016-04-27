@@ -60,20 +60,20 @@ namespace csgo {
         template<typename Arg, typename... Args>
         void set_inputs_impl(int n, Arg&& arg, Args&&... args)
         {
-            set_input(arg.getTextureID(), n);
+            set_input<typename meta::unqualified_t<Arg>::type>(arg.getTextureID(), n);
             set_inputs_impl(n + 1, std::forward<Args>(args)...);
         }
 
         void set_inputs_impl(int) // base case
         {}
 
+        template<typename T>
         void set_input(GLuint textureID, int n)
         {
-            // TODO: add int support
             GLuint loc = gl::GetUniformLocation(handle, ir.ast.symbols.find(ir.main.input_variables[n]->variable_id).first.c_str());
             gl::ActiveTexture(gl::TEXTURE0 + n);
             gl::BindTexture(gl::TEXTURE_2D, textureID);
-            gl::BindImageTexture(loc, textureID, 0, false, 0, gl::READ_ONLY, gl::R32F);
+            gl::BindImageTexture(loc, textureID, 0, false, 0, gl::READ_ONLY, dsl::gl_type_converter::getFormat<T>());
             gl::Uniform1i(loc, n);
         }
 

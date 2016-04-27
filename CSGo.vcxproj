@@ -30,6 +30,7 @@
     <ClInclude Include="include\csgo\dsl\built_in.hpp" />
     <ClInclude Include="include\csgo\dsl\blackhole.hpp" />
     <ClInclude Include="include\csgo\dsl\expression_consume.hpp" />
+    <ClInclude Include="include\csgo\dsl\gl_type_converter.hpp" />
     <ClInclude Include="include\csgo\dsl\image_variable.hpp" />
     <ClInclude Include="include\csgo\dsl\ir_entry_point.hpp" />
     <ClInclude Include="include\csgo\dsl\parser.hpp" />

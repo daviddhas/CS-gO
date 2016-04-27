@@ -234,6 +234,9 @@
     <ClInclude Include="include\csgo\display.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\csgo\dsl\gl_type_converter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\gl\gl_4_5.core.cpp">
