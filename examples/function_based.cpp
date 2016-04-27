@@ -24,7 +24,7 @@ auto red_blue_set() {
 	return x;
 }
 
-auto simple(csgo::dsl::image2d<float> in) {
+auto simple(csgo::dsl::image2d<glm::vec4> in) {
     using namespace csgo::dsl;
     image2d<float> x;
     x = in;
@@ -33,7 +33,7 @@ auto simple(csgo::dsl::image2d<float> in) {
 
 void function_based() {
     GLuint size = 32;
-    csgo::program p(average, { {size, size} }, true);
+    csgo::program p(simple, { {size, size} }, true);
     csgo::image2d_io<glm::vec4> in1(std::vector<glm::vec4>(size * size, glm::vec4(1)), size);
     csgo::image2d_io<glm::vec4> in2(std::vector<glm::vec4>(size * size, glm::vec4(1, 0, 0, 1)), size);
 

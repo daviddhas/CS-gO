@@ -54,7 +54,7 @@ namespace csgo {
 			buffer_variable& operator= (T&& right) {
 				consume(assignment(
 					dsl::make_unique_expression(*this),
-					dsl::make_unique_expression(std::forward<R>(right))
+					dsl::make_unique_expression(std::forward<T>(right))
 				));
 				return *this;
 			}
