@@ -157,6 +157,10 @@ namespace csgo {
 					//ostr << " = ";
 					d.r->accept(*this);
 				}
+
+				virtual void visit(const intrinsic& i) override {
+
+				}
 			};
 		};
 	}

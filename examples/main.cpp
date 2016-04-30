@@ -15,7 +15,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 int main(int argc, char* argv[]) {
-	
+
 	csgo::util::window_pointer pwindow = csgo::util::make_window(512, 512);
 	auto& window = *pwindow;
 

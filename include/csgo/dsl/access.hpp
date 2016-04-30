@@ -15,10 +15,19 @@ namespace csgo {
 			}
 		};
 		
-		struct dot_access :access {
+		struct dot_access : access {
 			variable& access_into;
 			
 			dot_access(variable& v, std::string x) : access(std::move(x)), access_into(v) {}
+			
+			template <typename T>
+			dot_access& operator= (T&& right) {
+				consume(assignment(
+					dsl::make_unique_expression(*this),
+					dsl::make_unique_expression(std::forward<T>(right))
+				));
+				return *this;
+			}
 
 			virtual void accept(statement_visitor& v) override {
 				v.visit(*this);

@@ -26,6 +26,7 @@ namespace csgo {
 		struct declaration;
 		struct declaration_assignment;
 
+		struct intrinsic;
 
 		struct access;
 		struct dot_access;
@@ -52,6 +53,8 @@ namespace csgo {
 
 			virtual void visit(const dot_access& v) = 0;
 			virtual void visit(const access& v) = 0;
+
+			virtual void visit(const intrinsic& i) = 0;
 		};
 
 		struct expression {

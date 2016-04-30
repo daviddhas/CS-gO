@@ -184,6 +184,17 @@ namespace csgo {
 					}
 					visit(static_cast<const dsl::assignment&>(a));
 				}
+
+				virtual void visit(const dsl::intrinsic& f) override {
+					ostr << f.name << "(";
+					for (std::size_t i = 0; i < f.params.size(); ++i) {
+						f.params[i]->accept(*this);
+						if (i != f.params.size() - 1) {
+							ostr << ", ";
+						}
+					}
+					ostr << ")";
+				}
 			};
 
 			void preamble(const dsl::ir_program& p, std::ostream& ostr) {

@@ -25,14 +25,14 @@ struct simple : basic {
 	csgo::image2d_io<glm::vec4> in1, in2;
 
 	simple() : p(simple_program), 
-	in1({512 * 512, glm::vec4(1.0, 0.0, 0.0, 1.0)}, 512),
-	in2({ 512 * 512, glm::vec4(1.0, 1.0, 1.0, 1.0) }, 512) {
+	in1({32 * 32, glm::vec4(1.0, 0.0, 0.0, 1.0)}, 32),
+	in2({ 32 * 32, glm::vec4(1.0, 1.0, 1.0, 1.0) }, 32) {
 
 	}
 
 	void operator()(GLFWwindow& window, f_milliseconds time) {
-		int w = 0, h = 0;
-		glfwGetWindowSize(&window, &w, &h);
+		int w = 32, h = 32;
+		//glfwGetWindowSize(&window, &w, &h);
 		p.output_sizes({ { static_cast<GLuint>(w), static_cast<GLuint>(h) } });
 		csgo::image2d_io<glm::vec4> im = p(in1, in2);
 		show(window, time, im.get_texture_ID());
