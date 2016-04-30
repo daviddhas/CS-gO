@@ -13,8 +13,8 @@ inline auto map_roll_program(csgo::dsl::image2d<glm::vec4> in) {
 	image2d<glm::vec4> x;
 	
 	// Perform the desired operations
-	x[gl_GlobalInvocationID.xy] = glm::vec4( 1.0, 0.0, 1.0, 1.0 );
-
+	vec4 v;
+	v.x = length(x / 2) / 2;
 	// Return the variables that you desire
 	// They must be uniforms
 	return x;

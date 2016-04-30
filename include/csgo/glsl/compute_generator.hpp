@@ -186,14 +186,15 @@ namespace csgo {
 				}
 
 				virtual void visit(const dsl::intrinsic& f) override {
-					ostr << f.name << "(";
-					for (std::size_t i = 0; i < f.params.size(); ++i) {
+					ostr << f.name << "( ";
+					f.param->accept(*this);
+					/*for (std::size_t i = 0; i < f.params.size(); ++i) {
 						f.params[i]->accept(*this);
 						if (i != f.params.size() - 1) {
 							ostr << ", ";
 						}
-					}
-					ostr << ")";
+					}*/
+					ostr << " )";
 				}
 			};
 

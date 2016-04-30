@@ -8,10 +8,9 @@ namespace csgo {
 
 		struct intrinsic : expression {
 			std::string name;
-			std::vector<std::unique_ptr<expression>> params;
+			std::unique_ptr<expression> param;
 
-			template <typename... Args>
-			intrinsic(std::string name, Args&&... args) : name(std::move(name)), params(make_unique_expression(std::forward<Args>(args))...) {
+			intrinsic(std::string name, std::unique_ptr<expression> arg) : name(std::move(name)), param(std::move(arg)) {
 
 			}
 
@@ -23,17 +22,17 @@ namespace csgo {
 
 		template <typename T, meta::enable<is_expression<T>> = meta::enabler>
 		intrinsic length( T&& v ) {
-			return intrinsic("length", std::forward<T>(v));
+			return intrinsic("length", make_unique_expression(std::forward<T>(v)));
 		}
 
 		template <typename T, meta::enable<is_expression<T>> = meta::enabler>
 		intrinsic sin(T&& v) {
-			return intrinsic("sin", std::forward<T>(v));
+			return intrinsic("sin", make_unique_expression(std::forward<T>(v)));
 		}
 
 		template <typename T, meta::enable<is_expression<T>> = meta::enabler>
 		intrinsic cos(T&& v) {
-			return intrinsic("cos", std::forward<T>(v));
+			return intrinsic("cos", make_unique_expression(std::forward<T>(v)));
 		}
 
 	}
