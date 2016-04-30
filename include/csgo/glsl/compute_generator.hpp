@@ -49,7 +49,8 @@ namespace csgo {
 				}
 
 				virtual void visit(const dsl::dot_access& e) override {
-					e.access_into.accept(*this);
+					auto r = irp.ast.symbols.find(e.access_into);
+					r.second.accept(*this);
 					ostr << ".";
 					visit(static_cast<const dsl::access&>(e));
 				}

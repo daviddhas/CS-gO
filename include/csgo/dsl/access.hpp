@@ -16,9 +16,9 @@ namespace csgo {
 		};
 		
 		struct dot_access : access {
-			variable& access_into;
+			id access_into;
 			
-			dot_access(variable& v, std::string x) : access(std::move(x)), access_into(v) {}
+			dot_access(variable& v, std::string x) : access(std::move(x)), access_into(v.variable_id) {}
 			
 			template <typename T>
 			dot_access& operator= (T&& right) {
