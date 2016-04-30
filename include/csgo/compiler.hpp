@@ -37,7 +37,7 @@ namespace csgo {
                 gl::GetShaderiv(shader, gl::COMPILE_STATUS, &status);
                 gl::GetShaderInfoLog(shader, length - 1, nullptr, log);
 
-                std::cerr << "Compiler Log: " << std::endl << log << std::endl; // for debugging warnings
+                //std::cerr << "Compiler Log: " << std::endl << log << std::endl; // for debugging warnings
                 if (!status)
                     throw std::runtime_error("GLSL compilation failure");
 
@@ -48,7 +48,7 @@ namespace csgo {
                 gl::GetProgramiv(handle, gl::LINK_STATUS, &status);
                 gl::GetProgramInfoLog(handle, length - 1, nullptr, log);
 
-                std::cerr << "Linker Log: " << std::endl << log << std::endl; // for debugging warnings
+                //std::cerr << "Linker Log: " << std::endl << log << std::endl; // for debugging warnings
                 if (!status)
                     throw std::runtime_error("GLSL compilation failure");
             }

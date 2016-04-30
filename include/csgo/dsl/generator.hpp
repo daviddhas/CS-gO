@@ -13,7 +13,7 @@ namespace csgo {
 				std::stringstream sstr;
 				generate(p, sstr);
 				std::string code = sstr.str();
-				//std::cout << code << std::endl;
+				std::cout << code << std::endl;
 				return code;
 			}
 

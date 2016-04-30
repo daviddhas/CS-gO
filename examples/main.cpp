@@ -3,12 +3,24 @@
 #include <csgo/util/window.hpp>
 #include <array>
 
+std::ptrdiff_t simulation_index = 0;
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
+		--simulation_index;
+	}
+	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
+		++simulation_index;
+	}
+}
+
 int main(int argc, char* argv[]) {
 	
-	csgo::util::window_pointer pwindow = csgo::util::make_window(800, 600);
+	csgo::util::window_pointer pwindow = csgo::util::make_window(512, 512);
 	auto& window = *pwindow;
 
-	std::ptrdiff_t simulation_index = 0;
+	glfwSetKeyCallback(&window, key_callback);
+
 	std::ptrdiff_t simulation_size = 5;
 	straight_color straight_color_sim;
 	simple simple_sim;
@@ -16,6 +28,9 @@ int main(int argc, char* argv[]) {
 	function_demo function_demo_sim;
 	particles particles_sim;
 	for (auto starttime = std::chrono::high_resolution_clock::now();;) {
+		
+		glfwPollEvents();
+		
 		if (simulation_index >= simulation_size) {
 			simulation_index = 0;
 		}

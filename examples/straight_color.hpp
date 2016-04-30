@@ -14,7 +14,7 @@ inline auto straight_color_program() {
 	image2d<glm::vec4> x;
 	
 	// Perform the desired operations
-	x[gl_GlobalInvocationID.xy] = glm::vec4( 1.0, 0.0, 1.0, 1.0 );
+	x[gl_GlobalInvocationID.xy] = glm::vec4( 0.7, 0.5, 1.0, 1.0 );
 
 	// Return the variables that you desire
 	// They must be uniforms

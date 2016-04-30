@@ -42,7 +42,20 @@ namespace csgo {
 
         image2d_io(texture_data data)
             : data(data)
-        { }
+	   { }
+
+	   image2d_io(image2d_io&& o) : data(o.data) {
+		   o.data.id = 0;
+	   }
+
+	   image2d_io& operator=(image2d_io&& o) {
+		   data = o.data;
+		   o.data.id = 0;
+		   return *this;
+	   }
+
+	   image2d_io(const image2d_io& o) = default;
+	   image2d_io& operator=(const image2d_io& o) = default;
 
         std::vector<P> read() const
         {
@@ -57,6 +70,12 @@ namespace csgo {
         {
             return data.id;
         }
+
+	   ~image2d_io() {
+		   if (data.id != 0) {
+			   gl::DeleteTextures(1, &data.id);
+		   }
+	   }
 
     private:
 
