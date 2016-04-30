@@ -8,7 +8,7 @@
 namespace csgo {
 	namespace glsl {
 
-		const std::string& to_string(dsl::type x) {
+		inline const std::string& to_string(dsl::type x) {
 			static const std::string strs[] = {
 				// scalar types
 				"bool",

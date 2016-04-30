@@ -54,7 +54,7 @@ namespace csgo {
 		r8ui,
 	};
 
-	const std::string& to_string(format_qualifier f) {
+	inline const std::string& to_string(format_qualifier f) {
 		static const std::string names[] = {
 			// floating point image types
 			"rgba32f",

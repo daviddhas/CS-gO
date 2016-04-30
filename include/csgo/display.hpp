@@ -1,7 +1,7 @@
 #pragma once
 
 #include <csgo/built_in_io.hpp>
-#include <csgo/glsl/compiler.hpp>
+#include <csgo/compiler.hpp>
 
 namespace csgo
 {
@@ -10,8 +10,6 @@ namespace csgo
         template<typename T>
         static void image(const image2d_io<T>& input)
         {
-            glsl::compiler::make_context();
-
             GLuint vertexArrayID;
             gl::GenVertexArrays(1, &vertexArrayID);
             gl::BindVertexArray(vertexArrayID);

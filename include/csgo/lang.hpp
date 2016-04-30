@@ -5,8 +5,6 @@
 #include <csgo/dsl/primitives.hpp>
 #include <csgo/dsl/built_in.hpp>
 
-#include <csgo/glsl/glsl_generator.hpp>
-
 namespace csgo {
 
 }

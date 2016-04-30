@@ -7,7 +7,7 @@
 namespace csgo {
 	namespace glsl {
 
-		struct glsl_generator : dsl::generator {
+		struct compute_generator : dsl::generator {
 			// TODO: actually use these to control how output looks (waaay later)
 			bool pretty_lines = false;
 			int indentation_level = 0;
@@ -16,11 +16,11 @@ namespace csgo {
 
 			// TODO: implement the internals of writer for actual codegen
 			struct writer : dsl::statement_visitor {
-				dsl::ir_program& irp;
+				const dsl::ir_program& irp;
 				std::ostream& ostr;
 				int& indentation_level;
-				
-				writer(dsl::ir_program& p, std::ostream& ostr, int& indentation_level) : irp(p), ostr(ostr), indentation_level(indentation_level) {}
+
+				writer(const dsl::ir_program& p, std::ostream& ostr, int& indentation_level) : irp(p), ostr(ostr), indentation_level(indentation_level) {}
 
 				virtual void visit(const dsl::statement& s) override {
 					typedef std::ostream::pos_type pos_type;
@@ -186,11 +186,11 @@ namespace csgo {
 				}
 			};
 
-			void preamble(dsl::ir_program& p, std::ostream& ostr) {
+			void preamble(const dsl::ir_program& p, std::ostream& ostr) {
 				ostr << "#version 450 core";
 			}
 
-			void uniform_variable(bool isoutput, const std::string& name, const dsl::variable& v, dsl::ir_program& p, std::ostream& ostr) {
+			void uniform_variable(bool isoutput, const std::string& name, const dsl::variable& v, const dsl::ir_program& p, std::ostream& ostr) {
 				// Do layout bindings
 				ostr << "layout(";
 				ostr << " binding = " << binding_index++;
@@ -209,24 +209,24 @@ namespace csgo {
 				}
 				ostr << " uniform";
 				ostr << " " << glsl::to_string(v.variable_type);
-				
+
 				// Name it
 				ostr << " " << name;
-				
+
 				// Check for initialization
 				// using lambda to allow early "return" statements
 				// while still exiting at the end
 				[&]() {
-					
+
 				}(); // immediately call the lambda
-				
+
 				// And then close
 				ostr << ";";
 				ostr << "\n";
 			}
 
-			void uniform_variables(bool isoutput, const std::vector<csgo::dsl::id>& ids, dsl::ir_program& p, std::ostream& ostr) {
-                for(auto id : ids) {
+			void uniform_variables(bool isoutput, const std::vector<dsl::id>& ids, const dsl::ir_program& p, std::ostream& ostr) {
+				for (auto id : ids) {
 					auto namedvar = p.ast.symbols.find(id);
 					const std::string& name = namedvar.first;
 					const dsl::variable& v = namedvar.second;
@@ -234,24 +234,24 @@ namespace csgo {
 				}
 			}
 
-			void input(dsl::ir_program& p, std::ostream& ostr) {
-                std::vector<dsl::id> ids;
-                ids.reserve(p.main.input_variables.size());
-                for (auto& v : p.main.input_variables)
-                    ids.push_back(v->variable_id);
+			void input(const dsl::ir_program& p, std::ostream& ostr) {
+				std::vector<dsl::id> ids;
+				ids.reserve(p.main.input_variables.size());
+				for (auto& v : p.main.input_variables)
+					ids.push_back(v->variable_id);
 				uniform_variables(false, ids, p, ostr);
 			}
 
-			void output(dsl::ir_program& p, std::ostream& ostr) {
-                std::vector<dsl::id> ids;
-                ids.reserve(p.main.output_variables.size());
-                for (auto& v : p.main.output_variables)
-                    ids.push_back(v->variable_id);
+			void output(const dsl::ir_program& p, std::ostream& ostr) {
+				std::vector<dsl::id> ids;
+				ids.reserve(p.main.output_variables.size());
+				for (auto& v : p.main.output_variables)
+					ids.push_back(v->variable_id);
 				uniform_variables(true, ids, p, ostr);
 			}
 
-			void open(dsl::ir_program& p, std::ostream& ostr) {
-				workgroup& wg = p.main.wg;
+			void open(const dsl::ir_program& p, std::ostream& ostr) {
+				const workgroup& wg = p.main.wg;
 				// Can only drop end if it is 1, plus things before it are also 1
 				bool dropz = wg.z == 1;
 				bool dropy = dropz && wg.y == 1;
@@ -278,12 +278,12 @@ namespace csgo {
 				++indentation_level;
 			}
 
-			void close(dsl::ir_program& p, std::ostream& ostr) {
+			void close(const dsl::ir_program& p, std::ostream& ostr) {
 				ostr << "}";
 				--indentation_level;
 			}
 
-			virtual void generate(dsl::ir_program& p, std::ostream& ostr) override {
+			virtual void generate(const dsl::ir_program& p, std::ostream& ostr) override {
 				// setup variables
 				preamble(p, ostr);
 				ostr << "\n\n";
@@ -304,6 +304,10 @@ namespace csgo {
 
 				// close main
 				close(p, ostr);
+			}
+
+			virtual shader_stage generates_for() const override {
+				return shader_stage::compute;
 			}
 		};
 	}

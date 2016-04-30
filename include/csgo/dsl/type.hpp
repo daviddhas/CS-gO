@@ -76,7 +76,7 @@ namespace csgo {
 
 		};
 
-		const std::string& to_string(type x) {
+		inline const std::string& to_string(type x) {
 			static const std::string strs[] = {
 				// scalar types
 				"boolean",
@@ -144,11 +144,6 @@ namespace csgo {
 
 			return strs[enums::to_underlying(x)];
 		}
-
-		struct type_result {
-			type result;
-			optional<qualifiers> layout;
-		};
 
 		inline bool is_image_type(type t) {
 			switch (t) {

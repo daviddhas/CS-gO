@@ -14,27 +14,27 @@ namespace csgo {
 			id& operator=(const id&) = default;
 		};
 
-		bool operator== (const id& l, const id& r) {
+		inline bool operator== (const id& l, const id& r) {
 			return l.value == r.value;
 		}
 
-		bool operator!= (const id& l, const id& r) {
+		inline bool operator!= (const id& l, const id& r) {
 			return l.value != r.value;
 		}
 
-		bool operator< (const id& l, const id& r) {
+		inline bool operator< (const id& l, const id& r) {
 			return l.value < r.value;
 		}
 
-		bool operator> (const id& l, const id& r) {
+		inline bool operator> (const id& l, const id& r) {
 			return l.value > r.value;
 		}
 
-		bool operator<= (const id& l, const id& r) {
+		inline bool operator<= (const id& l, const id& r) {
 			return l.value <= r.value;
 		}
 
-		bool operator>= (const id& l, const id& r) {
+		inline bool operator>= (const id& l, const id& r) {
 			return l.value >= r.value;
 		}
 

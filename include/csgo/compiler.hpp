@@ -1,18 +1,23 @@
 #pragma once
 
-#include <csgo/glsl/glsl_generator.hpp>
+#include <csgo/glsl/compute_generator.hpp>
 #include <csgo/gl/gl.hpp>
+#include <csgo/shader.hpp>
 
 namespace csgo {
     namespace glsl {
 
         struct compiler {
-            static GLuint compile(const dsl::ir_program& p, const std::string& code, bool make_context_q) {
 
-                if (make_context_q)
-                    make_context();
-			 
-                GLuint handle = gl::CreateProgram();
+		   shader_byte_code compile( const dsl::ir_program& p, dsl::generator& gen ) {
+			   std::string code = gen.generate(p);
+			   shader_source source(gen.generates_for(), std::move(code));
+			   return shader_byte_code(std::move(source));
+		   }
+
+            static GLuint compile(const dsl::ir_program& p, const std::string& code) {
+
+               GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);
                 compile(handle, shader, code);
 
@@ -46,25 +51,6 @@ namespace csgo {
                 std::cerr << "Linker Log: " << std::endl << log << std::endl; // for debugging warnings
                 if (!status)
                     throw std::runtime_error("GLSL compilation failure");
-            }
-
-            static void make_context() {
-                if (glfwGetCurrentContext() != nullptr)
-                    return;
-
-                if (!glfwInit())
-                    throw std::runtime_error("GLFW failed to initialize");
-
-                glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-                glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-                glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-                GLFWwindow *window = glfwCreateWindow(1024, 512, "CS Go", nullptr, nullptr);
-                glfwMakeContextCurrent(window);
-
-                // hook up OpenGL debug callback
-                // So we get error messages printed out to the console
-                gl::DebugMessageCallback(gld::debug_callback, nullptr);
             }
         };
     }

@@ -50,7 +50,7 @@ namespace csgo {
 			}
 
 			const std::string& output_name(std::size_t idx) {
-				return name_for(inputids[idx]);
+				return name_for(outputids[idx]);
 			}
 
 		private:
@@ -74,66 +74,66 @@ namespace csgo {
 				}
 
 				virtual void visit(const dot_access& e) override {
-					ostr << "[ ";
+					//ostr << "[ ";
 					e.access_into.accept(*this);
-					ostr << "." << e.access_name << " ]";
+					//ostr << "." << e.access_name << " ]";
 				}
 
 				virtual void visit(const access& e) override {
-					ostr << "[ ." << e.access_name << " ]";
+					//ostr << "[ ." << e.access_name << " ]";
 				}
 
 				virtual void visit(const variable& v) override {
 					const std::string& name = ast.symbols.give_name(v);
-					ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << " ]";
+					//ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << " ]";
 				}
 
 				virtual void visit(const layout_variable& v) override {
 					const std::string& name = ast.symbols.give_name(v);
-					ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << "<" << to_string(v.layout.format) << ">" << " ]";
+					//ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << "<" << to_string(v.layout.format) << ">" << " ]";
 				}
 
 				virtual void visit(const image_variable& v) override {
 					const std::string& name = ast.symbols.give_name(v);
-					ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << "<" << to_string(v.layout.format) << ">" << " ]";
+					//ostr << "[ " << v.variable_id.value << ", '" << name << "' - " << to_string(v.variable_type) << "<" << to_string(v.layout.format) << ">" << " ]";
 				}
 
 				virtual void visit(const constant& v) override {
-					ostr << "[ " << v.variable_id.value << " - constant " << to_string(v.variable_type) << " ";
+					//ostr << "[ " << v.variable_id.value << " - constant " << to_string(v.variable_type) << " ";
 					v.write(ostr);
-					ostr << "]";
+					//ostr << "]";
 				}
 
 				virtual void visit(const addition& e) override {
-					ostr << "( ";
+					//ostr << "( ";
 					e.l->accept(*this);
-					ostr << " + ";
+					//ostr << " + ";
 					e.r->accept(*this);
-					ostr << " )";
+					//ostr << " )";
 				}
 
 				virtual void visit(const subtraction& e) override {
-					ostr << "( ";
+					//ostr << "( ";
 					e.l->accept(*this);
-					ostr << " - ";
+					//ostr << " - ";
 					e.r->accept(*this);
-					ostr << " )";
+					//ostr << " )";
 				}
 
 				virtual void visit(const division& e) override {
-					ostr << "( ";
+					//ostr << "( ";
 					e.l->accept(*this);
-					ostr << " / ";
+					//ostr << " / ";
 					e.r->accept(*this);
-					ostr << " )";
+					//ostr << " )";
 				}
 
 				virtual void visit(const multiplication& e) override {
-					ostr << "( ";
+					//ostr << "( ";
 					e.l->accept(*this);
-					ostr << " * ";
+					//ostr << " * ";
 					e.r->accept(*this);
-					ostr << " )";
+					//ostr << " )";
 				}
 
 				virtual void visit(const indexing& e) override {
@@ -154,7 +154,7 @@ namespace csgo {
 					if (d.l == nullptr)
 						return;
 					d.l->accept(*this);
-					ostr << " = ";
+					//ostr << " = ";
 					d.r->accept(*this);
 				}
 			};

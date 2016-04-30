@@ -138,9 +138,6 @@
     <ClInclude Include="include\csgo\format_qualifier.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\glsl\glsl_generator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\glsl\to_string.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -148,9 +145,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\program.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\glsl\compiler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\entry_point.hpp">
@@ -210,9 +204,6 @@
     <ClInclude Include="include\csgo\lang.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\parser.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\csgo\dsl\writer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -220,9 +211,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\built_in_io.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\csgo\dsl\io_result.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\csgo\dsl\ast.hpp">
@@ -234,7 +222,43 @@
     <ClInclude Include="include\csgo\display.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\csgo\dsl\gl_type_converter.hpp">
+    <ClInclude Include="include\csgo\util\window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\simple.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\straight_color.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\map_roll.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\io_result.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\shader_program.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\compiler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\glsl\compute_generator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\function_demo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\particles.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\basic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\csgo\gl\gl_type_converter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -245,7 +269,7 @@
     <ClCompile Include="examples\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="examples\function_based.cpp">
+    <ClCompile Include="examples\scratch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
