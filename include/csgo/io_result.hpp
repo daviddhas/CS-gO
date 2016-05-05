@@ -56,7 +56,7 @@ namespace csgo {
 	struct converter<std::tuple<Args...>> {
 		template <std::size_t... Indices>
 		static std::tuple<Args...> convert(std::index_sequence<Indices...>, const std::vector<texture_data>& data) {
-			return std:make_tuple(converter<Args>{}.convert(outputs[Indices])...);
+			return std::make_tuple(converter<Args>{}.convert(outputs[Indices])...);
 		}
 
 		static std::tuple<Args...> convert(const std::vector<texture_data>& data) {

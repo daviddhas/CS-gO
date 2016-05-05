@@ -66,7 +66,7 @@ namespace csgo {
 	   void set_input(T&& arg, int n, const std::string& name)
 	   {
 		   GLuint loc = gl::GetUniformLocation(handle, name.c_str());
-		   gl::Uniform4fv(loc, sizeof(T) / sizeof(float), );
+		   gl::Uniform4fv(loc, sizeof(T) / sizeof(float));
 	   }
 
 	   template<typename T, meta::disable<dsl::is_primitive<T>> = meta::enabler>
