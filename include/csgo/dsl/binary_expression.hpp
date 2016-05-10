@@ -15,7 +15,7 @@ namespace csgo {
 		struct addition : binary_expression {
 			addition(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -23,7 +23,7 @@ namespace csgo {
 		struct subtraction : binary_expression {
 			subtraction(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -31,7 +31,7 @@ namespace csgo {
 		struct multiplication : binary_expression {
 			multiplication(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -39,7 +39,7 @@ namespace csgo {
 		struct division : binary_expression {
 			division(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -47,7 +47,7 @@ namespace csgo {
 		struct assignment : binary_expression {
 			assignment(std::unique_ptr<expression> l, std::unique_ptr<expression> r) : binary_expression(std::move(l), std::move(r)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -57,7 +57,7 @@ namespace csgo {
 
 			declaration(std::unique_ptr<variable> vardecl) : vardecl(std::move(vardecl)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -65,7 +65,7 @@ namespace csgo {
 		struct declaration_assignment : assignment {
 			declaration_assignment(std::unique_ptr<variable> decl, std::unique_ptr<expression> init) : assignment(std::move(decl), std::move(init)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -82,7 +82,7 @@ namespace csgo {
 				return *this;
 			}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				return v.visit(*this);
 			}
 		};

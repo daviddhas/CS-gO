@@ -1,6 +1,6 @@
 #pragma once
 
-#include <csgo/dsl/variable.hpp>
+#include <csgo/dsl/built_in.hpp>
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -17,6 +17,10 @@ namespace csgo {
 			symbol_table() {}
 
 			std::pair<const std::string&, const variable&> find(const id& vid) const {
+				auto bltin = is_builtin_variable(vid);
+				if (bltin) {
+					return *bltin;
+				}
 				auto varfind = variable_id_indices.find(vid);
 				if (varfind == variable_id_indices.cend()) {
 					throw std::runtime_error("cannot find variable");

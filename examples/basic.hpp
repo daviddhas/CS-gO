@@ -2,7 +2,6 @@
 
 #include "types.hpp"
 #include <csgo/util/window.hpp>
-#include <csgo/shader.hpp>
 #include <csgo/compiler.hpp>
 
 struct basic {

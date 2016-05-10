@@ -30,7 +30,7 @@ namespace csgo {
 				return op;
 			}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -69,7 +69,7 @@ namespace csgo {
 				return op;
 			}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -100,7 +100,7 @@ namespace csgo {
 				return *this;
 			}
 
-			virtual void accept(statement_visitor& v) {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};

@@ -88,11 +88,6 @@ namespace csgo {
 				}
 
 				virtual void visit(const dsl::variable& v) override {
-					auto opbuiltin = is_builtin_variable(v.variable_id);
-					if (opbuiltin) {
-						ostr << *opbuiltin;
-						return;
-					}
 					auto p = irp.ast.symbols.find(v.variable_id);
 					ostr << p.first;
 				}

@@ -43,8 +43,6 @@ namespace csgo {
 
     private:
 
-#pragma region set inputs/outputs
-
         template<typename... Args>
         void set_inputs(Args&&... args)
         {
@@ -63,10 +61,11 @@ namespace csgo {
         {}
 
 	   template<typename T, meta::enable<dsl::is_primitive<T>> = meta::enabler>
-	   void set_input(T&& arg, int n, const std::string& name)
+	   void set_input(T&&, int, const std::string&)
 	   {
-		   GLuint loc = gl::GetUniformLocation(handle, name.c_str());
-		   gl::Uniform4fv(loc, sizeof(T) / sizeof(float));
+		   // Unsupported ATM
+		   //GLuint loc = gl::GetUniformLocation(handle, name.c_str());
+		   //gl::Uniform4fv(loc, sizeof(T) / sizeof(float));
 	   }
 
 	   template<typename T, meta::disable<dsl::is_primitive<T>> = meta::enabler>
@@ -113,8 +112,6 @@ namespace csgo {
 
             return outputs;
         }
-
-#pragma endregion
 
         dsl::ir_program ir;
         GLuint handle;

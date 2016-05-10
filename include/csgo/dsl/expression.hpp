@@ -61,14 +61,14 @@ namespace csgo {
 			id expression_id = generate_id<expression>();
 			expression() {}
 			expression(id i) : expression_id(std::move(i)) {}
-			virtual void accept(statement_visitor& v) = 0;
+			virtual void accept(statement_visitor& v) const = 0;
 			virtual ~expression() {}
 		};
 
 		struct expression_reference : expression {
 			expression_reference(id i) : expression(i) {}
 
-			virtual void accept(statement_visitor& v) {
+			virtual void accept(statement_visitor& v) const {
 				v.visit(*this);
 			}
 		};

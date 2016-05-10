@@ -14,7 +14,7 @@ namespace csgo {
 
 			}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 

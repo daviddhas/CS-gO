@@ -2,20 +2,13 @@
 
 #include <csgo/glsl/compute_generator.hpp>
 #include <csgo/gl/gl.hpp>
-#include <csgo/shader.hpp>
 
 namespace csgo {
     namespace glsl {
 
         struct compiler {
 
-		   shader_byte_code compile( const dsl::ir_program& p, dsl::generator& gen ) {
-			   std::string code = gen.generate(p);
-			   shader_source source(gen.generates_for(), std::move(code));
-			   return shader_byte_code(std::move(source));
-		   }
-
-            static GLuint compile(const dsl::ir_program& p, const std::string& code) {
+		   static GLuint compile(const dsl::ir_program& p, const std::string& code) {
 
                GLuint handle = gl::CreateProgram();
                 GLuint shader = gl::CreateShader(gl::COMPUTE_SHADER);

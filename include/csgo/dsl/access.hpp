@@ -10,7 +10,7 @@ namespace csgo {
 
 			access(std::string x) : access_name(std::move(x)) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -29,7 +29,7 @@ namespace csgo {
 				return *this;
 			}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v)  const override {
 				v.visit(*this);
 			}
 		};

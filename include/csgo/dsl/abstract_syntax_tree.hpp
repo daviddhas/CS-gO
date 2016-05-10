@@ -75,7 +75,7 @@ namespace csgo {
 
 				virtual void visit(const dot_access& e) override {
 					//ostr << "[ ";
-					e.access_into.accept(*this);
+					//e.accept(*this);
 					//ostr << "." << e.access_name << " ]";
 				}
 

@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	std::ptrdiff_t simulation_size = 5;
 	straight_color straight_color_sim;
 	simple simple_sim;
-	map_roll map_roll_sim;
+	//map_roll map_roll_sim;
 	function_demo function_demo_sim;
 	particles particles_sim;
 	for (auto starttime = std::chrono::high_resolution_clock::now();;) {
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 			simple_sim(window, elapsed);
 			break;
 		case 2:
-			map_roll_sim(window, elapsed);
+			//map_roll_sim(window, elapsed);
 			break;
 		case 3:
 			function_demo_sim(window, elapsed);

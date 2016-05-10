@@ -1,18 +1,18 @@
-INCLUDE = -I/usr/include/
-LIBDIR  = -L/usr/lib
+INCLUDEDIR = -I/usr/include/ -I../include -I../vendor/glfw/include -I../vendor/glm
+LIBDIR  = -L/usr/lib -L/usr/local/lib 
 
-FLAGS = -Wall
+FLAGS = 
 CC = g++
-CFLAGS = $(FLAGS) $(INCLUDE)
+CFLAGS = $(FLAGS) $(INCLUDEDIR)
 CFLAGS += -std=c++14
 LIBS =  -lGL -lGLU -lglfw
-LIBS += -L/usr/local/lib -lglfw3 -lrt -lXrandr -lXinerama -lXi -lXcursor -lGL -lm -ldl -lXrender -ldrm -lXdamage -lX11-xcb -lxcb-glx -lxcb-dri2 -lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lXxf86vm -lXfixes -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp
+LIBS += -lglfw
 
 All:
-	g++ -std=c++14 main.cpp ../source/gl/gl_4_5.core.cpp -lglfw -lGL -lGLU -I../include -I../vendor/glfw/include -I../vendor/glm -lX11 -o main -L/usr/local/lib -lglfw3 -lrt -lXrandr -lXinerama -lXi -lXcursor -lGL -lm -ldl -lXrender -ldrm -lXdamage -lX11-xcb -lxcb-glx -lxcb-dri2 -lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lXxf86vm -lXfixes -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp  -o main
+	$(CC) $(CFLAGS) main.cpp ../source/gl/gl_4_5.core.cpp $(LIBDIR) $(LIBS) -o main
 
 clean:
-		    rm  main
+	rm  main
 
 attempt:
 	$(CC) -std=c++14 function_based.cpp main.cpp ../source/gl/gl_4_5.core.cpp -I../include -I../vendor/glfw/include -I../vendor/glm -lX11 -o main  $(LIBS)

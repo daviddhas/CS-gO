@@ -69,7 +69,6 @@
     <ClInclude Include="include\csgo\dsl\ir_program.hpp" />
     <ClInclude Include="include\csgo\dsl\type.hpp" />
     <ClInclude Include="include\csgo\dsl\unary_operations.hpp" />
-    <ClInclude Include="include\csgo\shader_program.hpp" />
     <ClInclude Include="include\csgo\type_traits.hpp" />
     <ClInclude Include="include\csgo\dsl\unary_expression.hpp" />
     <ClInclude Include="include\csgo\dsl\variable.hpp" />
@@ -93,7 +92,6 @@
     <ClInclude Include="include\csgo\enums.hpp" />
     <ClInclude Include="include\csgo\error.hpp" />
     <ClInclude Include="include\csgo\gl\gl_enums.hpp" />
-    <ClInclude Include="include\csgo\shader.hpp" />
     <ClInclude Include="include\csgo\gl\gl_4_5.core.hpp" />
     <ClInclude Include="include\csgo\graphics_device.hpp" />
     <ClInclude Include="include\csgo\shader_source.hpp" />
@@ -110,6 +108,9 @@
   <ItemGroup>
     <ProjectReference Include="vendor\glfw.vcxproj">
       <Project>{d64ea22e-67c0-3ac1-9e26-da2c1fd19950}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\glm.vcxproj">
+      <Project>{d0b4b806-7c8f-4978-9ba7-5a940f8e6665}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

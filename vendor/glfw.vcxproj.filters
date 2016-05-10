@@ -14,6 +14,7 @@
     <ClCompile Include="glfw\src\win32_tls.c" />
     <ClCompile Include="glfw\src\win32_window.c" />
     <ClCompile Include="glfw\src\wgl_context.c" />
+    <ClCompile Include="glfw\src\egl_context.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glfw\src\internal.h" />
@@ -23,6 +24,7 @@
     <ClInclude Include="glfw\src\win32_joystick.h" />
     <ClInclude Include="glfw\src\wgl_context.h" />
     <ClInclude Include="config\glfw_config.h" />
+    <ClInclude Include="glfw\src\egl_context.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

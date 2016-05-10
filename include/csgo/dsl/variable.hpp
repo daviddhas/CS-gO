@@ -19,7 +19,7 @@ namespace csgo {
 			variable() : variable_type(type::user_defined_type) {}
 			variable(type vartype) : variable_type(vartype) {}
 			
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -31,7 +31,7 @@ namespace csgo {
 			layout_variable(qualifiers q) : layout_variable(q, type::image_2d) {}
 			layout_variable(qualifiers q, type thistype) : variable(thistype), layout(std::move(q)) {}
 			
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 		};
@@ -39,7 +39,7 @@ namespace csgo {
 		struct constant : variable {
 			constant(type x) : variable(x) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 
@@ -53,7 +53,7 @@ namespace csgo {
 			typed_constant(T value) : typed_constant(value, type_for<T>::value) {}
 			typed_constant(T value, type x) : constant(x), value(value) {}
 
-			virtual void accept(statement_visitor& v) override {
+			virtual void accept(statement_visitor& v) const override {
 				v.visit(*this);
 			}
 

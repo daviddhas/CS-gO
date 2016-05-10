@@ -1,7 +1,6 @@
 #pragma once
 
 #include "program.hpp"
-#include "shader.hpp"
 
 
 namespace csgo {
