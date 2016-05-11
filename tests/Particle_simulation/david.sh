@@ -9,7 +9,7 @@ rm "$programName" 2>/dev/null
 
 # compile
 echo "compiling sources . . ."
-echo " --> gcc -I./ -c -o $(ls -C *.c 2>/dev/null)"
+echo " --> gcc -I src/ -c -o $(ls -C *.c 2>/dev/null)"
 gcc -I./ -c -o vector.o vector.c
 gcc -I./ -c -o imageLoader.o imageLoader.c
 gcc -I./ -c -o main.o main.c

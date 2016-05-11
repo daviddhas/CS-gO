@@ -16,6 +16,12 @@ Linux
 3. A header-only library But you must link against OpenGL 4.3+
 4. Navigate to the library directory using cd
 
+Incase you do not have glfw or glm setup,
+Navigate to the vendors directory and
+```
+    git submodule update --init
+```
+
 Windows
 =======
 1. Visual Studio Project Available on GitHub!
@@ -40,15 +46,15 @@ If you don’t have OpenGL already installed,
 
 Examples
 ========
-The various library functions, types and programs are illustrated through examples below 
- 
-1. Average 
- 
+The various library functions, types and programs are illustrated through examples below
+
+1. Average
+
 The average function contains the CS Go DSL (domain­specific language)
 
 ```C++
 
-    auto average(csgo::dsl::image2d<glm::vec4> in1, csgo::dsl::image2d<glm::vec4> in2) 
+    auto average(csgo::dsl::image2d<glm::vec4> in1, csgo::dsl::image2d<glm::vec4> in2)
     {
 	    using namespace csgo::dsl;
 	    image2d<glm::vec4> x = ( in1 + in2 ) / 2;
@@ -64,7 +70,7 @@ The image2d_io type contains an OpenGL texture, but doesn’t support GLSL opera
 ```C++
 
     void run_average() {
-  
+
     GLuint size = 32;
     csgo::program p(average, { {size, size} }, true);
     csgo::image2d_io<glm::vec4> in1(std::vector<glm::vec4>(size * size, glm::vec4(1)), size);
@@ -80,7 +86,7 @@ The image2d_io type contains an OpenGL texture, but doesn’t support GLSL opera
 
     csgo::display::image(std::get<0>(results));
     while (true);
-}           
+}
 
 ```
 The run_average function specifies specific inputs and outputs
@@ -89,7 +95,7 @@ Program
 =======
 
 
-A program is constructed from a function that takes image2d’s and returns a tuple of image2d’s 
+A program is constructed from a function that takes image2d’s and returns a tuple of image2d’s
 This contains the size of output textures. The program also determines whether or not we need to create an OpenGL context
 
 ```C++
@@ -102,8 +108,8 @@ This contains the size of output textures. The program also determines whether o
 A program is ran by passing image2d\_io’s for each image2d. It returns a tuple of image2d_io’s that can be read from. The program throws a runtime error if the input or the results tuple type are the wrong sizes
 
 ```C++
-   
-    csgo::image2d_io<glm::vec4> in1(std::vector<glm::vec4>(size * size, glm::vec4(1)), size);  
+
+    csgo::image2d_io<glm::vec4> in1(std::vector<glm::vec4>(size * size, glm::vec4(1)), size);
     csgo::image2d_io<glm::vec4> in2(std::vector<glm::vec4>(size * size, glm::vec4(1, 0, 0, 1)), size);
 
     std::tuple<csgo::image2d_io<glm::vec4>> results = p(in1, in2);
@@ -113,5 +119,5 @@ A program is ran by passing image2d\_io’s for each image2d. It returns a tuple
 Running the code:
 =================
 
-1. In case of Linux, the code can be compiled by using the linux make file provided in the library project directory 
+1. In case of Linux, the code can be compiled by using the linux make file provided in the library project directory
 2. In case of Windows, the code can be compiled by using pressing Ctrl+F7 in the visual studio window
